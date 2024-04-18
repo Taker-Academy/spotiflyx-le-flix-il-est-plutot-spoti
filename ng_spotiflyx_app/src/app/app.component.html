@@ -1,11 +1,27 @@
-<section class="navBarSection">
-  <div class="navBarContent">
-    <img src="../assets/logoSpotiFlyx.png" alt="Logo principal">
-  </div>
-  <div class="navBarContainer">
-    
-  </div>
-</section>
+<header class="header">
+  <a href="#" class="logo">
+    <img src="../assets/logoSpotiflyx2.png" alt="Logo Spotiflix">
+  </a>
 
-<button (click)="changeTitle()">click me</button>
+  <nav class="navbar">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#Services">Services</a>
+    <a href="#Countrie">Countrie</a>
+  </nav>
+
+  <div class="icons">
+    <div class="fas fa-search" id="search-btn"></div>
+    <div class="fas fa-user" id="login-btn"></div>
+    <div class ="fas fa-bars" id ="menu-btn"></div>
+  </div>
+
+  <div class="search-form">
+    <input type="search" id="search-box" placeholder="search...">
+    <label for="search-box" class="fas fa-search"></label>
+  </div>
+</header>
+
+
+<!-- <button (click)="changeTitle()">click me</button> -->
 <router-outlet />
