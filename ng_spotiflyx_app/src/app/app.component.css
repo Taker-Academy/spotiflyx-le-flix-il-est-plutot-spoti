@@ -7,7 +7,7 @@
 }
 
 .header {
-    /* background: black; */
+    background-color: rgba(0, 0, 0, 0.25);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -16,7 +16,6 @@
     position: fixed;
     top:0; left: 0 ; right: 0;
     z-index: 1000;
-    margin-top: 2rem;
 }
 
 .header .nav-and-icons {
@@ -25,19 +24,22 @@
 }
 
 .header .logo img {
-    height: 7rem;
+    height: 5rem;
 }
 
 .header .navbar a {
     margin: 0 1rem;
+    padding: 1rem;
     font-size:2rem;
     color: #fff;
 }
 
 .header .navbar a:hover {
-    color: #d3ad7f;
-    border-bottom: .1rem solid #d3ad7f;
+    color: #ffffff;
+    border-bottom: .1rem solid #ffffff;
     padding-bottom: .5rem;
+    font-weight: 500;
+    transition: 0.7s;
 }
 
 .header .icons {
@@ -51,7 +53,7 @@
 }
 
 .header .icons :hover{
-    color: #d3ad7f;
+    color: #ffffff;
 }
 
 #menu-btn {
@@ -59,20 +61,20 @@
 }
 
 .header .search-form {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     border-radius: 30px;
     padding: 10px 30px;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    margin-right: 2rem;
+    margin-right: 4.5rem;
     /* transform: scaleY(0);
     transform-origin: top; */
 }
 
 .header .search-form:hover input {
-    width: 400px;
+    width: 150px;
 }
 
 .header .search-form input {
@@ -83,13 +85,18 @@
 }
 
 .header .search-form a .fas {
-    color: #1daf;
+    color: rgb(255, 0, 0);
     font-size: 18px;
+}
+
+.fa-user {
+    padding: 1rem;
+    cursor: pointer;
 }
 
 
 /* .header .search-form.active {
-    transform: scaleY(1);
+    transform: scaleY(1);z
 } */
 
 /* .header .search-form input {

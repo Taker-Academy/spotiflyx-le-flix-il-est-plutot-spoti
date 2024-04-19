@@ -40,5 +40,9 @@ html::-webkit-scrollbar-thumb {
 }
 
 body {
-    background: #1daf
+    background-image: url('assets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
 }
