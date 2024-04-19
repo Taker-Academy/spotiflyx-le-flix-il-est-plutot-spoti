@@ -1,31 +1,4 @@
-<header class="header">
-  <a href="#" class="logo">
-    <img src="../assets/logoSpotiflyx2.png" alt="Logo Spotiflix">
-  </a>
-  <section class="nav-and-icons">
-    <nav class="navbar" [class.active]="navbarActive">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#Services">Services</a>
-      <a href="#Countrie">Countrie</a>
-    </nav>
-    <div class="icons">
-      <div class="search-form" id="search-form">
-        <input type="search" id="search-box" placeholder="search...">
-          <a href="#">
-            <label for="search-box" class="fas fa-search"></label>
-          </a>
-      </div>
-      <div class="fas fa-user" id="login-btn"></div>
-      <div class ="fas fa-bars" id ="menu-btn" (click)="onMenuButtonClick()"></div>
-    </div>
-  </section>
-  <!-- <div class="search-form" id="search-form" [hidden]="!searchFormVisible">
-    <input type="search" id="search-box" placeholder="search...">
-    <label for="search-box" class="fas fa-search"></label>
-  </div> -->
-</header>
-<router-outlet />
 
+<!-- <app-login></app-login> -->
 <!-- <button (click)="changeTitle()">click me</button> -->
 <router-outlet />
