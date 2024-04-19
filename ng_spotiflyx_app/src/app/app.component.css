@@ -7,7 +7,7 @@
 }
 
 .header {
-    background: black;
+    /* background: black; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,14 +19,19 @@
     margin-top: 2rem;
 }
 
+.header .nav-and-icons {
+    display: flex;
+    align-items: center;
+}
+
 .header .logo img {
     height: 7rem;
 }
 
 .header .navbar a {
     margin: 0 1rem;
-    font-size:3rem;
-    color: #fff
+    font-size:2rem;
+    color: #fff;
 }
 
 .header .navbar a:hover {
@@ -35,14 +40,17 @@
     padding-bottom: .5rem;
 }
 
-.header .icons div{
+.header .icons {
     color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
     font-size: 2.5rem;
     margin-left: 2rem;
 }
 
-.header .icons div:hover{
+.header .icons :hover{
     color: #d3ad7f;
 }
 
@@ -51,45 +59,71 @@
 }
 
 .header .search-form {
-    position: absolute;
-    top: 115%; right: 4%;
     background: #fff;
-    width: 50rem;
-    height: 5rem;
     display: flex;
     align-items: center;
-    transform: scaleY(0);
-    transform-origin: top;
+    border-radius: 30px;
+    padding: 10px 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    margin-right: 2rem;
+    /* transform: scaleY(0);
+    transform-origin: top; */
 }
 
-.header .search-form.active {
-    transform: scaleY(1);
+.header .search-form:hover input {
+    width: 400px;
 }
 
 .header .search-form input {
+    width: 0;
+    font-weight: 500;
+    background: transparent;
+    transition: 0.8s;
+}
+
+.header .search-form a .fas {
+    color: #1daf;
+    font-size: 18px;
+}
+
+
+/* .header .search-form.active {
+    transform: scaleY(1);
+} */
+
+/* .header .search-form input {
     height: 100%;
     width: 100%;
     font-size: 1.6rem;
     color: black;
     padding:1rem;
-    text-transform: none;
+    background: transparent;
+    transition: 0.8s;
 }
 
 .header .search-form label {
     cursor: pointer;
     font-size: 2.2rem;
-    margin-right: 1.5rem;
+    margin-left: 1.5rem;
     color: black;
+    order: -1;
 }
 
+.search-form label .fas {
+    color:  #1daf;
+    font-size: 18px;
+
+}
 .header .search-form label:hover {
     color: #d3ad7f;
-}
+} */
 
-@media (max-width: 685px) {
+@media (max-width:1000px) {
 
     #menu-btn {
         display: inline-block;
+        font-size: 3.5rem;
     }
 
     .header .navbar {
@@ -113,7 +147,15 @@
     }
 
     .header .search-form {
+        display: none;
+    }
+
+    #login-btn {
+        display: none;
+    }
+
+    /* .header .search-form {
         width: 90%;
         right: 2rem;
-    }
+    } */
 }

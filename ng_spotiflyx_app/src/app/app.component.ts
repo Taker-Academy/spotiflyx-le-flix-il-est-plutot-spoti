@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
@@ -11,27 +11,20 @@ import { DOCUMENT } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   title = 'app';
+  searchIconVisible = true;
+  searchFormVisible = false;
+  navbarActive = false;
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  ngOnInit() {
-    this.addEventListeners();
+  ngOnInit() {}
+
+  onMenuButtonClick() {
+    this.navbarActive = !this.navbarActive;
   }
 
-  addEventListeners() {
-    let navbar = this.document.querySelector('.navbar');
-    let searchForm = this.document.querySelector('.search-form');
-
-    this.document.querySelector('#menu-btn')?.addEventListener('click', () => {
-      if (navbar) {
-        navbar.classList.toggle('active');
-      }
-    });
-
-    this.document.querySelector('#search-btn')?.addEventListener('click', () => {
-      if (searchForm) {
-        searchForm.classList.toggle('active');
-      }
-    });
+  onSearchIconClick() {
+    this.searchIconVisible = false;
+    this.searchFormVisible = true;
   }
 }
