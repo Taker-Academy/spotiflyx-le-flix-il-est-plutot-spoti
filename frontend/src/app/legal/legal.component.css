@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 110vh;
+    font-family: "Montserrat", sans-serif;
+    background: rgba(39, 39, 39, 0.4);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.nav {
+    background-color: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding:1.5rem 4%;
+    /* background: linear-gradient(rgba(39,39.39,0.6), transparent); */
+    z-index: 100;
+}
+
+.nav-and-icons {
+    display: flex;
+    align-items: center;
+
+}
+
+.nav-logo img {
+    height: 5rem;
+}
+
+.nav-menu ul {
+    display: flex;
+}
+
+.nav-menu ul li {
+    list-style-type: none;
+    font-size:2rem;
+}
+
+.nav-menu ul li .link {
+    text-decoration: none;
+    font-weight: 500;
+    color: #fff;
+    margin: 0 1rem;
+    padding: 1rem;
+    transition: 0.7s;
+}
+
+.nav-menu ul li .link:hover, .active {
+    color: #ffffff;
+    border-bottom: .1rem solid #ffffff;
+    padding-bottom: .5rem;
+    font-weight: 500;
+    transition: 0.7s;
+}
+
+.nav-button .btn {
+    font-weight: 500;
+    font-size: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.7s;
+    margin-left : 30px;
+    padding: 10px 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+    background: rgba(255,255,255, 0.3);
+}
+
+#register-btn {
+    margin-left: 15px;
+}
+
+.nav-button .white-btn {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn.white-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.nav-menu-btn {
+    display: none;
+}
+@media only screen and (max-width: 844px){
+    .nav-button{
+        display: none;
+    }
+    .nav-menu.responsive{
+        top: 100px;
+    }
+    .nav-menu{
+        position: absolute;
+        top: -800px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 90vh;   
+        transition: .3s;
+    }
+    .nav-menu ul{
+        flex-direction: column;
+        text-align: center;
+    }
+    .nav-menu-btn{
+        display: block;
+    }
+    .nav-menu-btn i{
+        font-size: 25px;
+        color: #fff;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .nav-menu-btn i:hover{
+        background: rgba(255, 255, 255, 0.15);
+    }
+}
+
+.legalContainer {
+    margin-top: 15rem;
+    padding-bottom: 5rem;
+    margin-bottom: 7.5rem;
+    width: 75%;
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+}
+
+.legalInfo {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.legalContainer p {
+    text-align:justify;
+}
+
+.legalContainer h2, h1, p{
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    margin: 0 5%;
+}
+
+.legalInfo h3{
+    margin-left: 5%;
+}
+.legalInfo p {
+    margin-left: 0;
+    margin-right: 5%;
+    text-align: justify;
+}
+
+
+.legalContainer h1 {
+    margin: 5rem 5%;
+    font-size: 6rem;
+}
+.legalContainer h2 {
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+    font-size: 4rem;
+}
+.legalContainer h3 {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+.legalContainer p , a{
+    color: rgb(255, 255, 255);
+    text-align:end;
+    font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 844px) {
+    .legalContainer h1 {
+        font-size: 3rem;
+    }
+    .legalContainer h2 {
+        font-size: 2rem;
+    }
+    .legalContainer h3 {
+        font-size: 1rem;
+    }
+    .legalContainer p , a {
+        font-size: 1rem;
+    }
+}
