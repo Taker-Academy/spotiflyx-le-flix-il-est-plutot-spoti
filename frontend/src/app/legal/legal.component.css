@@ -5,7 +5,6 @@
     justify-content: center;
     align-items: center;
     min-height: 110vh;
-    font-family: "Montserrat", sans-serif;
     background: rgba(39, 39, 39, 0.4);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -40,7 +39,7 @@
 
 .nav-menu ul li {
     list-style-type: none;
-    font-size:2rem;
+    font-size: 2rem;
 }
 
 .nav-menu ul li .link {
