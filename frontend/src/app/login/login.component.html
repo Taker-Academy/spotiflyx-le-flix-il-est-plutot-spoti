@@ -11,8 +11,8 @@
                 </ul>
             </div>
             <div class="nav-button">
-                <button class="btn white-btn" id="login-btn" (click)="navigateToLogin()">Sign In</button>
-                <button class="btn" id="register-btn" (click)="navigateToRegister()">Sign Up</button>
+                <button class="btn" id="login-btn" (click)="navigateToLogin()">Sign In</button>
+                <button class="btn white-btn" id="register-btn" (click)="navigateToRegister()">Sign Up</button>
             </div>
             <div class="nav-menu-btn">
                 <i class="bx bx-menu" onclick="myMenuFunction()"></i>
@@ -22,7 +22,7 @@
     <div class="form-box">
         <div class="login-container" id="login">
             <div class="top">
-                <span>Don't have an account? <a routerLink="/login">Sign Up</a></span>
+                <span>Don't have an account? <a routerLink="/login" (click)="navigateToRegister()">Sign Up</a></span>
                 <header>Login</header>
             </div>
             <div class="input-box">

@@ -61,7 +61,7 @@
 .nav-button .btn {
     font-weight: 500;
     font-size: 2rem;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.5);
     border: none;
     border-radius: 30px;
     cursor: pointer;
@@ -79,7 +79,7 @@
     margin-left: 15px;
 }
 
-.btn.white-btn {
+.nav-button .white-btn {
     background: rgba(255, 255, 255, 0.2);
 }
 
@@ -118,6 +118,12 @@
     font-weight: 500;
     color: #fff;
     margin-left: 5px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.top span a:hover {
+    color: #b6b6b6;
+    transition: .1 ease-in-out;
 }
 header{
     color: #fff;
@@ -185,6 +191,7 @@ header{
 .two label a{
     text-decoration: none;
     color: #fff;
+    cursor: pointer;
 }
 .two label a:hover{
     text-decoration: underline;

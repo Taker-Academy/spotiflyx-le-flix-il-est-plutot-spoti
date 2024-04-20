@@ -18,5 +18,4 @@ export class LoginComponent {
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
-
 }
