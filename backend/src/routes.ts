@@ -6,6 +6,11 @@ export const Routes = [{
     controller: UserController,
     action: "all"
 }, {
+    method: "post",
+    route: "/register",
+    controller: UserController,
+    action: "register"
+}, {
     method: "get",
     route: "/users/:id",
     controller: UserController,
