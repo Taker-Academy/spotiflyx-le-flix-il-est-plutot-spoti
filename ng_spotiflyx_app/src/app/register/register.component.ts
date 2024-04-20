@@ -2,21 +2,20 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent {
+export class RegisterComponent {
 
   constructor(private router: Router) { }
 
-  navigateToRegister() {
-    this.router.navigate(['/register']);
-  }
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
-
+  navigateToRegister() {
+    this.router.navigate(['/register']);
+  }
 }
