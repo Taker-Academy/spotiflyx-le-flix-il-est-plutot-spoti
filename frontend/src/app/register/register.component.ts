@@ -18,7 +18,4 @@ export class RegisterComponent {
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
-  navigateToLegalConditions() {
-    this.router.navigate(['/legal']);
-  }
 }
