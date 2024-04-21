@@ -29,7 +29,7 @@ export class RegisterComponent {
 
   register() {
     if (this.registerForm.valid) {
-      this.http.post<RegisterResponse>('http://localhost:5432/register', this.registerForm.value)
+      this.http.post<RegisterResponse>('http://localhost:3000/register', this.registerForm.value)
         .subscribe({
           next: (response) => {
             if (response.token) {
