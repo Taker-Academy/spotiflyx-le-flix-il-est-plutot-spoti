@@ -3,11 +3,11 @@ version: "3.8"
 services:
   postgres:
     image: postgres:alpine
-    container_name: pst_db
+    container_name: pix_reaction_db
     environment:
-      POSTGRES_USER: pst_user
-      POSTGRES_PASSWORD: pstservice123
-      POSTGRES_DB: pst_db
+      POSTGRES_USER: 'pst_user'
+      POSTGRES_PASSWORD: 'pstservice123'
+      POSTGRES_DB: 'pst_db'
     volumes:
       - ./data/pix_reaction_db:/var/lib/postgresql/data
     ports:

@@ -12,7 +12,10 @@ export class UserController {
     }
 
     async register(request: Request, response: Response) {
-        const { firstname, lastname, email, password } = request.body;
+        console.log("-------------------------------------------------------------------------------");
+        console.log(request.body);
+        console.log("-------------------------------------------------------------------------------");
+        const { firstName, lastName, email, password } = request.body;
 
         const user = await this.userRepository.findOne({ where: { email } });
         if (user) {
@@ -20,8 +23,8 @@ export class UserController {
         }
 
         const newUser = Object.assign(new User(), {
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             email,
             password
         });
