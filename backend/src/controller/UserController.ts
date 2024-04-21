@@ -12,9 +12,9 @@ export class UserController {
     }
 
     async register(request: Request, response: Response) {
-        console.log("-------------------------------------------------------------------------------");
+        console.log("------------------------------------------------------------------------------");
         console.log(request.body);
-        console.log("-------------------------------------------------------------------------------");
+        console.log("------------------------------------------------------------------------------");
         const { firstName, lastName, email, password } = request.body;
 
         const user = await this.userRepository.findOne({ where: { email } });
