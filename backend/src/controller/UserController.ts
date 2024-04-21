@@ -42,19 +42,6 @@ export class UserController {
         return user
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        const {firstName, lastName, email, password} = request.body;
-
-        const user = Object.assign(new User(), {
-            firstName,
-            lastName,
-            email,
-            password
-        })
-
-        return this.userRepository.save(user)
-    }
-
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)
 
