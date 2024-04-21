@@ -12,10 +12,11 @@ export class UserController {
     }
 
     async register(request: Request, response: Response) {
+        const { firstName, lastName, email, password } = request.body;
+        console.log(firstName, lastName, email, password);
         console.log("------------------------------------------------------------------------------");
         console.log(request.body);
         console.log("------------------------------------------------------------------------------");
-        const { firstName, lastName, email, password } = request.body;
 
         const user = await this.userRepository.findOne({ where: { email } });
         if (user) {
@@ -33,6 +34,19 @@ export class UserController {
 
         response.json({ token });
     }
+
+    // async save(request: Request, response: Response, next: NextFunction) {
+    //     const {firstName, lastName, email, password} = request.body;
+
+    //     const user = Object.assign(new User(), {
+    //         firstName,
+    //         lastName,
+    //         email,
+    //         password
+    //     })
+
+    //     return this.userRepository.save(user)
+    // }
 
     async one(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)
