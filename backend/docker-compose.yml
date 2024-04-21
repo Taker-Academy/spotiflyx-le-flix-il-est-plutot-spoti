@@ -12,6 +12,7 @@ services:
       - ./data/pix_reaction_db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+      - container_name
     networks:
       - backend_overlay  # Mise à jour pour correspondre au nom du réseau déclaré
 
