@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: 'pst_user'
       POSTGRES_PASSWORD: 'pstservice123'
-      POSTGRES_DB: 'pst_db' 
+      POSTGRES_DB: 'pst_db'
     volumes:
       - ./data/pix_reaction_db:/var/lib/postgresql/data
     ports:
@@ -17,7 +17,7 @@ services:
 
 networks:
   backend_overlay:  # Mise à jour pour utiliser le nom correct
-    driver: overlay
+    driver: bridge
     attachable: true
 
 volumes:

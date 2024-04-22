@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 interface RegisterResponse {
   token: string;
@@ -11,7 +12,14 @@ interface RegisterResponse {
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [
+    HttpClientModule,
+  ],
+  providers: [
+    HttpClientModule,
+    BrowserModule,
+    Router
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -35,7 +43,7 @@ export class RegisterComponent {
             if (response.token) {
               localStorage.setItem('token', response.token);
             }
-            this.router.navigate(['/home']);
+            this.router.navigate(['/login']);
           },
           error: (error) => {
             console.log(error);
@@ -43,7 +51,6 @@ export class RegisterComponent {
         });
     }
   }
-
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
