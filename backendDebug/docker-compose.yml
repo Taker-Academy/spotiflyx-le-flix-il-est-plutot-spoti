@@ -15,6 +15,21 @@ services:
     networks:
       - backend_overlay
 
+  backend:
+    build: ./
+    container_name: pix_reaction_backend
+    environment:
+      - DATABASE_URL=postgres://pst_user:pstservice123@postgres/pst_db
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: npm run start
+    depends_on:
+      - postgres
+    networks:
+      - backend_overlay
+
 networks:
   backend_overlay:
     driver: bridge
