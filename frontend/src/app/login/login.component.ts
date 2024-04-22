@@ -20,7 +20,7 @@ interface LoginResponse {
     Router
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrl: './login.component.css'
 })
 
 export class LoginComponent {
@@ -40,8 +40,10 @@ export class LoginComponent {
           next: (response) => {
             if (response.token) {
               localStorage.setItem('token', response.token);
+              console.log('Token saved');
             }
             this.router.navigate(['/home']);
+            console.log('Navigated to home');
           },
           error: (error) => {
             console.log(error);
