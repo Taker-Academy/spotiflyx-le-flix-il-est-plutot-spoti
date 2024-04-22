@@ -13,10 +13,10 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - backend_overlay  # Mise à jour pour correspondre au nom du réseau déclaré
+      - backend_overlay
 
 networks:
-  backend_overlay:  # Mise à jour pour utiliser le nom correct
+  backend_overlay:
     driver: bridge
     attachable: true
 
