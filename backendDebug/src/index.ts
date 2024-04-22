@@ -1,6 +1,6 @@
 import * as express from "express"
 import * as bodyParser from "body-parser"
-import * as cors from "cors" // Import cors module
+import * as cors from "cors"
 import { Request, Response } from "express"
 import { AppDataSource } from "./data-source"
 import { Routes } from "./routes"
