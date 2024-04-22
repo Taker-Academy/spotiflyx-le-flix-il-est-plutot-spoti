@@ -20,17 +20,17 @@
         </section>
     </nav>
     <div class="form-box">
-        <form class="login-container" id="login" (submit)="login()">
+        <form class="login-container" id="login" (ngSubmit)="login()" [formGroup]="loginForm">
             <div class="top">
                 <span>Don't have an account? <a routerLink="/login" (click)="navigateToRegister()">Sign Up</a></span>
                 <header>Login</header>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" placeholder="Username or Email" formControlName="username">
+                <input type="text" class="input-field" placeholder="email" formControlName="email">
                 <i class="bx bx-user fa-xl"></i>
             </div>
             <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password" formControlName="password">
+                <input type="password" class="input-field" placeholder="password" formControlName="password">
                 <i class="bx bx-lock-alt fa-xl"></i>
             </div>
             <div class="input-box">

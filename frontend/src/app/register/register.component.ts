@@ -31,8 +31,8 @@ export class RegisterComponent {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
     this.registerForm = this.formBuilder.group({
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -48,7 +48,7 @@ export class RegisterComponent {
             if (response.token) {
               localStorage.setItem('token', response.token);
             }
-            //this.router.navigate(['/login']);
+            this.router.navigate(['/login']);
           },
           error: (error) => {
             console.log(error);

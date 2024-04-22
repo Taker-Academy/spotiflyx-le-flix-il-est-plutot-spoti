@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {  FormGroup, FormControl, FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +13,8 @@ interface LoginResponse {
   standalone: true,
   imports: [
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     HttpClientModule,
@@ -28,22 +30,20 @@ export class LoginComponent {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
   login() {
     if (this.loginForm.valid) {
-      this.http.post<LoginResponse>('http://localhost:3000/api/login', this.loginForm.value)
+      this.http.post<LoginResponse>('http://localhost:3000/login', this.loginForm.value)
         .subscribe({
           next: (response) => {
             if (response.token) {
               localStorage.setItem('token', response.token);
-              console.log('Token saved');
             }
             this.router.navigate(['/home']);
-            console.log('Navigated to home');
           },
           error: (error) => {
             console.log(error);
