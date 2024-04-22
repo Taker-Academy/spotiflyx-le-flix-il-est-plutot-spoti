@@ -19,8 +19,9 @@
             </div>
         </section>
     </nav>
+
     <div class="form-box">
-        <form class="register-container" id="register" (submit)="register()">
+        <form class="register-container" id="register" (ngSubmit)="register()" [formGroup]="registerForm">
             <div class="top">
                 <span>Have an account? <a routerLink="/login" (click)="navigateToLogin()">Sign in</a></span>
                 <header>Sign Up</header>
@@ -48,7 +49,7 @@
             </div>
             <div class="two-col">
                 <div class="one">
-                    <input type="checkbox" id="register-check" formControlName="rememberMe">
+                    <input type="checkbox" id="register-check">
                     <label for="register-check"> Remember Me</label>
                 </div>
                 <div class="two">
