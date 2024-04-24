@@ -5,13 +5,28 @@ services:
     image: postgres:alpine
     container_name: pix_reaction_db
     environment:
-      POSTGRES_USER: 'pst_user'
-      POSTGRES_PASSWORD: 'pstservice123'
-      POSTGRES_DB: 'pst_db'
+      POSTGRES_USER: pst_user
+      POSTGRES_PASSWORD: pstservice123
+      POSTGRES_DB: pst_db
     volumes:
-      - ./data/pix_reaction_db:/var/lib/postgresql/data
+      - pix_reaction_db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - backend_overlay
+
+  backend:
+    build: ./
+    container_name: pix_reaction_backend
+    environment:
+      DATABASE_URL: postgres://pst_user:pstservice123@postgres/pst_db
+    volumes:
+      - /home/jules/Documents/TakerAcademy/spotiflyx/backendDebug:/app
+    ports:
+      - "3000:3000"
+    command: npm run start
+    depends_on:
+      - postgres
     networks:
       - backend_overlay
 
