@@ -20,7 +20,7 @@
         </section>
     </nav>
     <div class="form-box">
-        <form class="login-container" id="login" (submit)="login()">
+        <form class="login-container" id="login" (submit)="login()" [formGroup]="loginForm">
             <div class="top">
                 <span>Don't have an account? <a routerLink="/login" (click)="navigateToRegister()">Sign Up</a></span>
                 <header>Login</header>

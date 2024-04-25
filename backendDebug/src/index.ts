@@ -4,11 +4,13 @@ import { Request, Response } from "express"
 import { AppDataSource } from "./data-source"
 import { Routes } from "./routes"
 import { User } from "./entity/User"
+import * as cors from "cors" // Import cors module
 
 AppDataSource.initialize().then(async () => {
 
     // create express app
     const app = express()
+    app.use(cors()) // Use cors middleware
     app.use(bodyParser.json())
 
     // register express routes from defined application routes

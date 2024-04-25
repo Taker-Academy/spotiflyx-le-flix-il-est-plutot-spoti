@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {  FormGroup, FormControl, FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +13,8 @@ interface LoginResponse {
   standalone: true,
   imports: [
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     HttpClientModule,

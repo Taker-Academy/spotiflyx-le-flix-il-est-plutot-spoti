@@ -19,28 +19,29 @@
             </div>
         </section>
     </nav>
+
     <div class="form-box">
-        <form class="register-container" id="register" (submit)="register()">
+        <form class="register-container" id="register" (ngSubmit)="register()" [formGroup]="registerForm">
             <div class="top">
                 <span>Have an account? <a routerLink="/login" (click)="navigateToLogin()">Sign in</a></span>
                 <header>Sign Up</header>
             </div>
             <div class="two-forms">
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Firstname" formControlName="firstname">
+                    <input type="text" class="input-field" placeholder="firstName" formControlName="firstName">
                     <i class="bx bx-user fa-xl"></i>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Lastname" formControlName="lastname">
+                    <input type="text" class="input-field" placeholder="lastName" formControlName="lastName">
                     <i class="bx bx-user fa-xl"></i>
                 </div>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" placeholder="Email" formControlName="email">
+                <input type="text" class="input-field" placeholder="email" formControlName="email">
                 <i class="bx bx-envelope fa-xl"></i>
             </div>
             <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password" formControlName="password">
+                <input type="password" class="input-field" placeholder="password" formControlName="password">
                 <i class="bx bx-lock-alt fa-xl"></i>
             </div>
             <div class="input-box">
@@ -48,7 +49,7 @@
             </div>
             <div class="two-col">
                 <div class="one">
-                    <input type="checkbox" id="register-check" formControlName="rememberMe">
+                    <input type="checkbox" id="register-check">
                     <label for="register-check"> Remember Me</label>
                 </div>
                 <div class="two">
