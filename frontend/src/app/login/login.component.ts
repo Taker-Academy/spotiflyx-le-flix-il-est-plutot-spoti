@@ -30,7 +30,7 @@ export class LoginComponent {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
