@@ -12,9 +12,14 @@ export const Routes = [{
     action: "one"
 }, {
     method: "post",
-    route: "/users",
+    route: "/register",
     controller: UserController,
-    action: "save"
+    action: "register"
+}, {
+    method: "post",
+    route: "/api/login",
+    controller: UserController,
+    action: "login"
 }, {
     method: "delete",
     route: "/users/:id",

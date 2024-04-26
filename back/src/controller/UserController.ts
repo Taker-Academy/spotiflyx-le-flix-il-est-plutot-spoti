@@ -29,6 +29,7 @@ export class UserController {
 
     async register(request: Request, response: Response) {
         try {
+            console.log("database | Catch request register")
             const { firstName, lastName, email, password } = request.body;
             if (!firstName || !lastName || !email || !password) {
                 response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
@@ -46,7 +47,8 @@ export class UserController {
                 email,
                 password: hashedPassword
             });
-            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, '1234', { expiresIn: '1h' });
+            console.log("database | Register request OK")
+            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, process.env.HASH_PASSWORD, { expiresIn: '1h' });
             response.status(200).json({ token: token });
             return;
         } catch (error) {
@@ -58,6 +60,7 @@ export class UserController {
 
     async login(request: Request, response: Response) {
         try {
+            console.log("database | Catch request Login")
             const { email, password } = request.body;
             if (!email || !password) {
                 response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
@@ -73,6 +76,7 @@ export class UserController {
                 response.status(401).json({ error: 'Mauvais identifiants.' });
                 return;
             }
+            console.log("database | request OK")
             const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName }, '1234', { expiresIn: '1h' });
             response.status(200).json({ token: token });
             return;

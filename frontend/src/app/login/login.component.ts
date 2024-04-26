@@ -36,6 +36,7 @@ export class LoginComponent {
   }
 
   login() {
+    console.log("frontend | Try submit login request")
     if (this.loginForm.valid) {
       this.http.post<LoginResponse>('http://localhost:3000/api/login', this.loginForm.value)
         .subscribe({
@@ -45,7 +46,6 @@ export class LoginComponent {
               console.log('Token saved');
             }
             this.router.navigate(['/home']);
-            console.log('Navigated to home');
           },
           error: (error) => {
             console.log(error);
@@ -60,5 +60,9 @@ export class LoginComponent {
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/home']);
   }
 }

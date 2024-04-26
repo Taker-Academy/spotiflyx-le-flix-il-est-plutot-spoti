@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: spotiflyx_database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - spotiflyx_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend_overlay
+
+  backend:
+    build: ./
+    container_name: spotiflyx_backend
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+    volumes:
+      - /home/jules/Documents/TakerAcademy/spotiflyx/back:/app  # Chemin modifié pour refléter le dossier 'back'
+    ports:
+      - "3000:3000"
+    command: npm run start
+    depends_on:
+      - postgres
+    networks:
+      - backend_overlay
+
+networks:
+  backend_overlay:
+    driver: bridge
+    attachable: true
+
+volumes:
+  spotiflyx_db_data:
