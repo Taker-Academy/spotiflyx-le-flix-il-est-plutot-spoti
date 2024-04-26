@@ -129,7 +129,8 @@
     .header .navbar {
         position: absolute;
         top: 100%; right: -100%;
-        background: #fff;
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         width: 30rem;
         height: calc(100vh - 9.5rem);
     }
@@ -139,7 +140,7 @@
     }
 
     .header .navbar a {
-        color: black;
+        color: rgb(255, 255, 255);
         display: block;
         margin: 1.5rem;
         padding: .5rem;
