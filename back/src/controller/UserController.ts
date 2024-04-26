@@ -48,7 +48,7 @@ export class UserController {
                 password: hashedPassword
             });
             console.log("database | Register request OK")
-            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, process.env.HASH_PASSWORD, { expiresIn: '1h' });
+            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, '1234', { expiresIn: '1h' });
             response.status(200).json({ token: token });
             return;
         } catch (error) {

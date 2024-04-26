@@ -17,7 +17,7 @@ export const Routes = [{
     action: "register"
 }, {
     method: "post",
-    route: "/api/login",
+    route: "/login",
     controller: UserController,
     action: "login"
 }, {

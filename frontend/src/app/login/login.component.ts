@@ -38,7 +38,7 @@ export class LoginComponent {
   login() {
     console.log("frontend | Try submit login request")
     if (this.loginForm.valid) {
-      this.http.post<LoginResponse>('http://localhost:3000/api/login', this.loginForm.value)
+      this.http.post<LoginResponse>('http://localhost:3000/login', this.loginForm.value)
         .subscribe({
           next: (response) => {
             if (response.token) {
