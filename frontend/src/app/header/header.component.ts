@@ -12,6 +12,7 @@ export class HeaderComponent {
   searchIconVisible = true;
   searchFormVisible = false;
   navbarActive = false;
+  menuOpen = false;
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
@@ -22,5 +23,9 @@ export class HeaderComponent {
   onSearchIconClick() {
     this.searchIconVisible = false;
     this.searchFormVisible = true;
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }

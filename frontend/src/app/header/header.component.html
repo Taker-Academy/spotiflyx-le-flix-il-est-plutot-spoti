@@ -16,8 +16,39 @@
               <label for="search-box" class="fas fa-search"></label>
             </a>
         </div>
-        <div class="fas fa-user" id="login-btn"></div>
+        <div class="fas fa-user" id="login-btn" (click)="toggleMenu()"></div>
         <div class ="fas fa-bars" id ="menu-btn" (click)="onMenuButtonClick()"></div>
+
+        <div class="sub-menu-wrap" [class.open-menu]="menuOpen">
+          <div class="sub-menu">
+            <div class="user-info">
+              <img src="../../assets/logoEmpty.png" alt="logo de profile">
+              <h2>User</h2>
+            </div>
+            <hr>
+
+            <a href="#" class="sub-menu-link">
+              <img src="../../assets/DropAccount/profile.png">
+              <p>Edit Profile</p>
+              <span></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+              <img src="../../assets/DropAccount/setting.png">
+              <p>Settings & Privacy</p>
+              <span></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+              <img src="../../assets/DropAccount/help.png">
+              <p>Help & Support</p>
+              <span></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+              <img src="../../assets/DropAccount/logout.png">
+              <p>Logout</p>
+              <span></span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
     <!-- <div class="search-form" id="search-form" [hidden]="!searchFormVisible">
