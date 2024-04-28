@@ -51,16 +51,22 @@ input {
     color: #babbbc !important;
 }
 
+.btn-twitter {
+    border-color: rgba(0, 0, 0, 0);
+    background  : #ffffff;
+    color       : #000000;
+}
+
 .btn-facebook {
     border-color: rgba(0, 0, 0, 0);
-    background  : #3B5998;
-    color       : #fff;
+    background  : #ffffff;
+    color       : #000000;
 }
 
 .btn-instagram {
     border-color: rgba(0, 0, 0, 0);
-    background  : #000;
-    color       : #fff;
+    background  : #ffffff;
+    color       : #000000;
 }
 
 .card {
