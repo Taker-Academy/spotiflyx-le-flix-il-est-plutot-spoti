@@ -4,11 +4,6 @@
     margin-top: 300px;
 }
 
-.container light-style flex-grow-1 container-p-y {
-    width: 100vw;
-    height: 100vh;
-}
-
 .ui-w-80 {
     width : 80px !important;
     height: auto;
@@ -29,26 +24,25 @@ label.btn {
 }
 
 input {
-    font-size: 1em;
+    font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     border: none;
 }
 
 textarea {
-    font-size: 1em;
+    font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     border: none;
 }
 
 select {
-    font-size: 1em;
+    font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     border: none;
 }
-
 
 .btn-save {
     background-color: rgb(255, 0, 0);
@@ -84,9 +78,8 @@ select {
 }
 
 .card {
-    font-size: 2em;
+    font-size: 2.5rem;
     background-clip: padding-box;
-    box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
     background: rgba(0, 0, 0, 0.25);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
@@ -120,7 +113,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     border-color: rgba(24, 28, 33, 0.03) !important;
     background: rgba(0, 0, 0, 0.25);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    color: white;;
+    color: white;
 }
 
 .light-style .account-settings-links .list-group-item.active {
@@ -142,7 +135,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 }
 
 .dark-style .account-settings-links .list-group-item.active {
-    color: #fff !important;
+    color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .light-style .account-settings-links .list-group-item.active {
