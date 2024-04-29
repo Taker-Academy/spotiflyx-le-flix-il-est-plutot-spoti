@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { HelpComponent } from './help/help.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LegalComponent } from './legal/legal.component';
@@ -17,6 +18,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent},
     { path: 'legal', component: LegalComponent},
     { path: 'profile', component: ProfilePageComponent},
+    { path: 'help', component: HelpComponent},
     { path: 'profile/change-password', component: AccountChangePasswordComponent},
     { path: 'profile/account-connections', component: AccountConnectionsComponent},
     { path: 'profile/account-info', component: AccountInfoComponent},
