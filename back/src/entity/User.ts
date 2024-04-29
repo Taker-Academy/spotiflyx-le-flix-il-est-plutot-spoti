@@ -14,4 +14,8 @@ export class User {
     email: string
     @Column()
     password: string
+    @Column({ default: 'user' })
+    username: string;
+    @Column({ default: 'nothing' })
+    company: string;
 }
