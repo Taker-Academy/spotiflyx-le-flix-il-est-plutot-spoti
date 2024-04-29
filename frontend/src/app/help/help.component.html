@@ -1,12 +1,15 @@
-<<<<<<< HEAD
 <app-header> </app-header>
 
-<div class="container">
+<div class="container" [ngClass]="{'hidden': !isDiv1Active}">
     <h1>Contact Form</h1>
-    <input [(ngModel)]="objectForm"  class="inputForm" placeholder="Object...">
+    <input [(ngModel)]="objectForm" class="inputForm" placeholder="Object...">
     <textarea [(ngModel)]="messageForm" rows="5" cols="60" name="message" class="inputForm messageForm" placeholder="Your message..."></textarea>
-    <button (click)="submitForm()">bjr</button>
+    <button (click)="submitForm()">Send message</button>
 </div>
-=======
-<app-header> </app-header>
->>>>>>> c6be607fdb0b2f1e2dff32d0e43f3779670e7f37
+<div [ngClass]="{'hidden': isDiv1Active}">
+    <div class="formSubmittedContainer">
+        <h2>Thanks!</h2>
+        <p class="formThanks">The form was submitted successfully.</p>
+        <p class="goBack" (click)="backToHome()">Go back</p>
+    </div>
+</div>
