@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from '../header/header.component';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-help',
@@ -14,7 +14,8 @@ import { HeaderComponent } from '../header/header.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    HeaderComponent
+    HeaderComponent,
+    CommonModule
   ],
   providers: [
     HttpClientModule,
@@ -30,7 +31,20 @@ export class HelpComponent {
   messageForm: string= '';
 
   submitForm() {
+    if (this.objectForm == '' || this.messageForm == '') {
+      return
+    }
     this.objectForm = ''
     this.messageForm = ''
+    this.toggleDiv()
+  }
+
+  isDiv1Active: boolean = true;
+  toggleDiv() {
+    this.isDiv1Active = !this.isDiv1Active;
+  }
+
+  backToHome() {
+    this.router.navigate(['/home']);
   }
 }
