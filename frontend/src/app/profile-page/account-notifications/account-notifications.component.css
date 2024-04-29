@@ -1,8 +1,7 @@
 @import 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css';
 
 .container {
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 250px;
 }
 
 .ui-w-80 {
@@ -25,11 +24,45 @@ label.btn {
 }
 
 input {
+    font-size: 1.3em;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 30px;
+}
+
+input:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+textarea {
     font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     border: none;
+    border-radius: 30px;
 }
+
+select {
+    font-size: 1.5em;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 30px;
+}
+
+select.custom-select {
+    font-size: 1.5em;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 30px;
+}
+
+.alert.alert-warning.mt-3 {
+    border-radius: 15px;
+}
+
 
 .btn-save {
     background-color: rgb(255, 0, 0);
