@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './help.component.html',
   styleUrl: './help.component.css'
 })
+
 export class HelpComponent {
   constructor(private router: Router) { }
   objectForm: string= '';
@@ -34,6 +35,7 @@ export class HelpComponent {
     if (this.objectForm == '' || this.messageForm == '') {
       return
     }
+    // send email
     this.objectForm = ''
     this.messageForm = ''
     this.toggleDiv()
