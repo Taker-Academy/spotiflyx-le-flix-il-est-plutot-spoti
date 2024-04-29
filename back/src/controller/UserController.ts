@@ -87,6 +87,35 @@ export class UserController {
         }
     }
 
+    async updateProfile(request: Request, response: Response, next: NextFunction) {
+        try {
+            const { username, firstName, lastName, email, company } = request.body;
+            if (!username || !firstName || !lastName || !email) {
+                return response.status(400).json({ message: "Missing required fields." });
+            }
+            const authHeader = request.headers['authorization'];
+            const token = authHeader && authHeader.split(' ')[1];
+            if (!token) {
+                return response.status(401).json({ message: "No token provided." });
+            }
+            let decoded = jwt.verify(token, '1234');
+            const user = await this.userRepository.findOne(decoded.id);
+            if (!user) {
+                return response.status(404).json({ message: "User not found." });
+            }
+            this.userRepository.merge(user, { username, firstName, lastName, email, company });
+            const results = await this.userRepository.save(user);
+            return response.send(results);
+        } catch (err) {
+            if (err instanceof jwt.JsonWebTokenError) {
+                return response.status(403).json({ message: "Failed to authenticate token." });
+            } else {
+                console.error(err);
+                return response.status(500).json({ message: "Internal server error." });
+            }
+        }
+    }
+
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)
 

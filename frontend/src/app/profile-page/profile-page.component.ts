@@ -6,6 +6,9 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from '../header/header.component';
 
+interface RegisterResponse {
+  token: string;
+}
 
 @Component({
   selector: 'app-profile-page',
@@ -25,6 +28,7 @@ import { HeaderComponent } from '../header/header.component';
   styleUrl: './profile-page.component.css'
 })
 export class ProfilePageComponent {
+  profileForm: FormGroup;
   emailProtectionLink = 'https://example.com';
   emailWhenCommented: boolean;
   emailWhenAnswered: boolean;
@@ -32,31 +36,46 @@ export class ProfilePageComponent {
   weeklyProductUpdates: boolean;
   weeklyBlogDigest: boolean;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
+    this.profileForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      company: ['']
+    });
+  }
 
+  saveChanges() {
+    if (this.profileForm.valid) {
+      console.log("frontend | Try submit update request")
+      this.http.put<RegisterResponse>('http://localhost:3000/profile', this.profileForm.value)
+        .subscribe({
+          next: (response) => {
+            if (response.token) {
+              localStorage.setItem('token', response.token);
+            }
+            this.navigateTo('profile');
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
+    }
+  }
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
-
   connectToTwitter(): void {
     // Ajoutez votre logique pour se connecter à Twitter ici...
   }
-
   removeGoogleConnection(): void {
     // Ajoutez votre logique pour supprimer la connexion Google ici...
   }
-
   connectToFacebook(): void {
     // Ajoutez votre logique pour se connecter à Facebook ici...
   }
-
   connectToInstagram(): void {
     // Ajoutez votre logique pour se connecter à Instagram ici...
-  }
-
-  saveChanges(): void {
-    // Ajoutez votre logique pour sauvegarder les changements ici...
-    console.log('Changes saved');
   }
 
   cancel(): void {
