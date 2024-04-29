@@ -25,6 +25,7 @@
     padding: 1rem;
     font-size:2rem;
     color: #fff;
+    cursor: pointer;
 }
 
 .header .navbar a:hover {
