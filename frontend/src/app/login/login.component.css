@@ -49,6 +49,7 @@
     margin: 0 1rem;
     padding: 1rem;
     transition: 0.7s;
+    cursor: pointer;
 }
 
 .nav-menu ul li .link:hover, .active {
@@ -169,6 +170,7 @@ header{
     font-weight: 500;
     color: black;
     height: 45px;
+
     width: 100%;
     border: none;
     border-radius: 30px;

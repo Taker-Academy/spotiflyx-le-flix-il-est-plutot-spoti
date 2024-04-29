@@ -143,25 +143,21 @@
 }
 
 .legalContainer p {
-    text-align:justify;
+    text-align:start;
 }
-
 .legalContainer h2, h1, p{
     font-family: "Roboto", sans-serif;
     font-style: normal;
     margin: 0 5%;
 }
-
 .legalInfo h3{
     margin-left: 5%;
 }
 .legalInfo p {
     margin-left: 0;
     margin-right: 5%;
-    text-align: justify;
+    text-align: start;
 }
-
-
 .legalContainer h1 {
     margin: 5rem 5%;
     font-size: 6rem;
@@ -177,7 +173,7 @@
 }
 .legalContainer p , a{
     color: rgb(255, 255, 255);
-    text-align:end;
+    text-align:justify;
     font-size: 1.5rem;
 }
 
