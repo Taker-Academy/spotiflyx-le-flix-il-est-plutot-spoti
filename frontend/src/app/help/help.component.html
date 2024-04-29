@@ -1,1 +1,8 @@
 <app-header> </app-header>
+
+<div class="container">
+    <h1>Contact Form</h1>
+    <input [(ngModel)]="objectForm"  class="inputForm" placeholder="Object...">
+    <textarea [(ngModel)]="messageForm" rows="5" cols="60" name="message" class="inputForm messageForm" placeholder="Your message..."></textarea>
+    <button (click)="submitForm()">bjr</button>
+</div>

@@ -157,10 +157,11 @@ header{
     background: rgba(255, 255, 255, 0.25);
 }
 ::-webkit-input-placeholder{
-    color: #fff;
+    color: white;
 }
 .input-box i{
-    position: relative;
+    position: relative;    font-size: 15px;
+
     top: -33px;
     left: 17px;
     color: #fff;

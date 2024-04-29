@@ -26,4 +26,11 @@ import { HeaderComponent } from '../header/header.component';
 })
 export class HelpComponent {
   constructor(private router: Router) { }
+  objectForm: string= '';
+  messageForm: string= '';
+
+  submitForm() {
+    this.objectForm = ''
+    this.messageForm = ''
+  }
 }
