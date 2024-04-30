@@ -30,4 +30,9 @@ export const Routes = [{
     route: "/profile",
     controller: UserController,
     action: "update"
+}, {
+    method: "post",
+    route: "/email",
+    controller: UserController,
+    action: "postMail"
 }]
