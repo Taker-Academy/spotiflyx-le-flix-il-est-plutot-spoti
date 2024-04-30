@@ -1,16 +1,16 @@
 <app-header> </app-header>
 
-<div class="container" [ngClass]="{'hidden': !isDiv1Active}">
+<form class="container" [ngClass]="{'hidden': !isDiv1Active}" [formGroup]="emailForm">
     <h1>Contact Form</h1>
     <div class="nameForm">
-        <input [(ngModel)]="firstNameForm" class="inputForm nameInfo firstName" placeholder="First name">
-        <input [(ngModel)]="lastNameForm" class="inputForm nameInfo lastName" placeholder="Last name">        
+        <input formControlName="firstName" class="inputForm nameInfo firstName" placeholder="First name">
+        <input formControlName="lastName" class="inputForm nameInfo lastName" placeholder="Last name">        
     </div>
-    <input [(ngModel)]="emailInputForm" class="inputForm email" placeholder="Email">
-    <input [(ngModel)]="objectForm" class="inputForm" placeholder="Object">
-    <textarea [(ngModel)]="messageForm" rows="5" cols="60" name="message" class="inputForm messageForm" placeholder="Your message..."></textarea>
+    <input formControlName="email" class="inputForm email" placeholder="Email">
+    <input formControlName="object" class="inputForm" placeholder="Object">
+    <textarea formControlName="message" rows="5" cols="60" name="message" class="inputForm messageForm" placeholder="Your message..."></textarea>
     <button (click)="submitForm()">Send message</button>
-</div>
+</form>
 <div [ngClass]="{'hidden': isDiv1Active}">
     <div class="formSubmittedContainer">
         <h2>Thanks!</h2>

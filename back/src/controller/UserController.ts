@@ -134,11 +134,12 @@ export class UserController {
     {
         try {
             console.log("database | Catch request post mail");
-            const { object, message, email } = request.body; // Ajout de l'email ici
-            if (!object || !message || !email) { // Vérifiez aussi que l'email est présent
+            const { object, message, firstName, lastName, email} = request.body; // Ajout de l'email ici
+            if (!object || !message || !email || !firstName || !lastName) { // Vérifiez aussi que l'email est présent
                 response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
                 return;
             }
+            
             console.log("database | Post mail OK");
             response.status(200).json({ token: "OK" });
             return;
