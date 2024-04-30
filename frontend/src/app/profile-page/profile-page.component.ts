@@ -6,8 +6,8 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from '../header/header.component';
 
-interface RegisterResponse {
-  token: string;
+interface UpdateProfileResponse {
+  authToken: string;
 }
 
 @Component({
@@ -39,7 +39,7 @@ export class ProfilePageComponent {
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
     this.profileForm = this.formBuilder.group({
       username: ['', Validators.required],
-      name: ['', Validators.required],
+      firstName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       company: ['']
     });
@@ -48,20 +48,26 @@ export class ProfilePageComponent {
   saveChanges() {
     if (this.profileForm.valid) {
       console.log("frontend | Try submit update request")
-      this.http.put<RegisterResponse>('http://localhost:3000/profile', this.profileForm.value)
+      this.http.patch<UpdateProfileResponse>('http://localhost:3000/profile', this.profileForm.value)
         .subscribe({
           next: (response) => {
-            if (response.token) {
-              localStorage.setItem('token', response.token);
+            if (response && response.authToken) {
+              localStorage.setItem('token', response.authToken);
+              this.navigateTo('profile');
+            } else {
+              console.log('No token in response');
             }
-            this.navigateTo('profile');
           },
           error: (error) => {
-            console.log(error);
+            console.log('Error:', error);
           }
         });
+    } else {
+      console.log('Form is invalid');
     }
   }
+
+
   navigateTo(route: string) {
     this.router.navigate([route]);
   }

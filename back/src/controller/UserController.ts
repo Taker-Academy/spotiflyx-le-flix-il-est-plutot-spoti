@@ -1,5 +1,6 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
+import { Repository } from 'typeorm';
 import { User } from "../entity/User"
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
@@ -87,32 +88,30 @@ export class UserController {
         }
     }
 
-    async updateProfile(request: Request, response: Response, next: NextFunction) {
+    async updateProfile(request, response, next) {
         try {
-            const { username, firstName, lastName, email, company } = request.body;
-            if (!username || !firstName || !lastName || !email) {
-                return response.status(400).json({ message: "Missing required fields." });
-            }
-            const authHeader = request.headers['authorization'];
-            const token = authHeader && authHeader.split(' ')[1];
-            if (!token) {
-                return response.status(401).json({ message: "No token provided." });
-            }
-            let decoded = jwt.verify(token, '1234');
-            const user = await this.userRepository.findOne(decoded.id);
+            const id = parseInt(request.params.id) || 1;
+            const user = await this.userRepository.findOne({ where: { id: id } });
             if (!user) {
-                return response.status(404).json({ message: "User not found." });
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
             }
-            this.userRepository.merge(user, { username, firstName, lastName, email, company });
-            const results = await this.userRepository.save(user);
-            return response.send(results);
-        } catch (err) {
-            if (err instanceof jwt.JsonWebTokenError) {
-                return response.status(403).json({ message: "Failed to authenticate token." });
-            } else {
-                console.error(err);
-                return response.status(500).json({ message: "Internal server error." });
+            const { username, firstName, email, company } = request.body;
+            if (!username && !firstName && !email && !company) {
+                response.status(400).json({ message: "Aucun champ à mettre à jour." });
+                return;
             }
+            if (username) user.username = username;
+            if (firstName) user.firstName = firstName;
+            if (email) user.email = email;
+            if (company) user.company = company;
+            const updatedUser = await this.userRepository.save(user);
+            response.status(200).json(updatedUser);
+            return;
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
         }
     }
 

@@ -17,15 +17,32 @@ AppDataSource.initialize().then(async () => {
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next)
+          if (typeof route.controller[route.action] === 'function') {
+            const result = route.controller[route.action](req, res, next);
             if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined)
-
+              result.then(result => {
+                if (result !== null && result !== undefined) {
+                  // Only return necessary data
+                  res.json({
+                    id: result.id,
+                    username: result.username,
+                    // other necessary properties...
+                  });
+                }
+              });
             } else if (result !== null && result !== undefined) {
-                res.json(result)
+              // Only return necessary data
+              res.json({
+                id: result.id,
+                username: result.username,
+                // other necessary properties...
+              });
             }
-        })
-    })
+          } else {
+            console.error(`Method ${route.action} not found on controller ${route.controller.constructor.name}`);
+          }
+        });
+      });
 
     // setup express app here
     // ...
