@@ -49,20 +49,22 @@ export class HelpComponent {
   }
 
   submitForm() {
-    if (this.objectForm == '' || this.messageForm == '') {
-      return
-    }
+    console.log("debug 1")
+    console.log(this.emailForm.value)
     if (this.emailForm.valid) {
+      console.log("debug 2")
       console.log("frontend | Try submit update request")
-      this.http.put<EmailResponse>('http://localhost:3000/email', this.emailForm.value)
+      this.http.post<EmailResponse>('http://localhost:3000/email', this.emailForm.value)
         .subscribe({
           next: (response) => {
+            console.log("debug 4")
             this.objectForm = ''
             this.messageForm= ''
             this.toggleDiv()
             return
           },
           error: (error) => {
+            console.log("debug 3")
             console.log(error);
             return
           }
