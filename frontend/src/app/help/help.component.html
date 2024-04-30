@@ -2,7 +2,12 @@
 
 <div class="container" [ngClass]="{'hidden': !isDiv1Active}">
     <h1>Contact Form</h1>
-    <input [(ngModel)]="objectForm" class="inputForm" placeholder="Object...">
+    <div class="nameForm">
+        <input [(ngModel)]="firstNameForm" class="inputForm nameInfo firstName" placeholder="First name">
+        <input [(ngModel)]="lastNameForm" class="inputForm nameInfo lastName" placeholder="Last name">        
+    </div>
+    <input [(ngModel)]="emailInputForm" class="inputForm email" placeholder="Email">
+    <input [(ngModel)]="objectForm" class="inputForm" placeholder="Object">
     <textarea [(ngModel)]="messageForm" rows="5" cols="60" name="message" class="inputForm messageForm" placeholder="Your message..."></textarea>
     <button (click)="submitForm()">Send message</button>
 </div>

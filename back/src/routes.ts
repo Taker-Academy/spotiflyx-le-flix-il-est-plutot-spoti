@@ -20,6 +20,11 @@ export const Routes = [{
 }, {
     method: "patch",
     route: "/profile",
-    controller: userController,
-    action: "updateProfile"
+    controller: UserController,
+    action: "update"
+}, {
+    method: "post",
+    route: "/email",
+    controller: UserController,
+    action: "postMail"
 }]

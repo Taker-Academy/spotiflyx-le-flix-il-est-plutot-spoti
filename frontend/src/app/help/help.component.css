@@ -96,3 +96,25 @@ input:focus-within, .messageForm:focus-within{
     text-decoration: underline;
     cursor: pointer;
 }
+
+.nameForm {
+    font-family: Poppins;
+    display: flex;
+    flex-direction: row;
+    width: 18rem;
+    justify-content: center;
+}
+
+.nameInfo {
+    width: 18rem;
+    margin-bottom: 2rem;
+}
+.firstName {
+    margin-right: 2rem;
+}
+.lastName {
+    margin-left: 2rem;
+}
+.email {
+    margin-bottom: 2rem;
+}
