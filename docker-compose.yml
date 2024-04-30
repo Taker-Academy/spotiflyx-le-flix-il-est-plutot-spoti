@@ -16,17 +16,28 @@ services:
       - backend_overlay
 
   backend:
-    build: ./
+    build: ./back
     container_name: spotiflyx_backend
     environment:
       DATABASE_URL: postgres://db_user:db_password@postgres/db_name
     volumes:
-      - /home/mathieu/Taker-Academy/project-4/spotiflyx-le-flix-il-est-plutot-spoti/back:/app
+      - /home/jules/Documents/TakerAcademy/spotiflyx/back:/app
     ports:
       - "3000:3000"
     command: npm run start
     depends_on:
       - postgres
+    networks:
+      - backend_overlay
+
+  frontend:
+    build: ./frontend
+    container_name: spotiflyx_frontend
+    ports:
+      - "4200:4200"
+    command: npm start
+    depends_on:
+      - backend
     networks:
       - backend_overlay
 
