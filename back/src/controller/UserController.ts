@@ -3,7 +3,9 @@ import { NextFunction, Request, Response } from "express"
 import { User } from "../entity/User"
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 const saltRounds = 10;
+const nodemailer = require('nodemailer');
 
 export class UserController {
 
@@ -130,7 +132,7 @@ export class UserController {
         return "user has been removed"
     }
 
-    async postMail(request: Request, response: Response)
+    async supportMail(request: Request, response: Response)
     {
         try {
             console.log("database | Catch request post mail");
@@ -139,7 +141,35 @@ export class UserController {
                 response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
                 return;
             }
-            
+
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com", // Remplacez par l'adresse SMTP de votre fournisseur d'email
+                port: 465, // Port standard pour SMTP
+                secure: true, // Vrai pour le port 465, faux pour les autres ports
+                auth: {
+                    user: "contact.spotiflyx@gmail.com", // Remplacez par votre adresse email
+                    pass: "xdsr kvyu lkaw qnwx", // Remplacez par votre mot de passe
+                },
+            });
+        
+            // Configuration de l'email à envoyer
+            let mailOptions = {
+                from: `"${firstName} ${lastName}" <${email}>`, // Expéditeur formé par les variables firstName, lastName et email
+                to: "juleslordet@gmail.com", // Destinataire fixe
+                subject: `Support : ${object}`, // Sujet de l'email, formé dynamiquement
+                text: `${message}`, // Corps de l'email en texte simple, inséré dynamiquement
+            };    
+        
+            // Envoyer l'email
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(`Error: ${error}`);
+                }
+                console.log(`Message sent: ${info.messageId}`);
+            });
+
+
+
             console.log("database | Post mail OK");
             response.status(200).json({ token: "OK" });
             return;

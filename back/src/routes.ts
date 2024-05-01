@@ -32,7 +32,7 @@ export const Routes = [{
     action: "update"
 }, {
     method: "post",
-    route: "/email",
+    route: "/supportEmail",
     controller: UserController,
-    action: "postMail"
+    action: "supportMail"
 }]
