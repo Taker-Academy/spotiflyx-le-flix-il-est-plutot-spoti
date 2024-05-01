@@ -14,8 +14,26 @@ export class User {
     email: string
     @Column()
     password: string
-    @Column({ default: 'user' })
+    @Column({ default: '' })
     username: string;
-    @Column({ default: 'nothing' })
+    @Column({ default: '' })
     company: string;
+    @Column({ default: '' })
+    phone: string;
+    @Column({ default: '' })
+    birthday: string;
+    @Column({ default: '' })
+    website: string;
+    @Column({ default: '' })
+    bio: string;
+    @Column({ default: '' })
+    Twitter: string;
+    @Column({ default: '' })
+    Facebook: string;
+    @Column({ default: '' })
+    Google: string;
+    @Column({ default: '' })
+    LinkedIn: string;
+    @Column({ default: '' })
+    Instagram: string;
 }

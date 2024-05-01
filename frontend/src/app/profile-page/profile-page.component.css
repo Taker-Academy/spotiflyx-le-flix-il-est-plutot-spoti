@@ -35,6 +35,18 @@ input:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
+input:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input.form-control {
+    color: white;
+}
+
 textarea {
     font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);

@@ -35,9 +35,22 @@ input:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
+input:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input.form-control {
+    color: white;
+}
+
 textarea {
     font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);
+    color: white;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     border: none;
     border-radius: 30px;
@@ -45,6 +58,15 @@ textarea {
 
 textarea:hover {
     background: rgba(255, 255, 255, 0.3);
+}
+
+textarea:focus {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+textarea::placeholder {
+    color: transparent;
 }
 
 select {
@@ -59,12 +81,21 @@ select:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
+select:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 select.custom-select {
     font-size: 1.5em;
     background: rgba(255, 255, 255, 0.2);
+    color: white;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     border: none;
     border-radius: 30px;
+}
+
+.custom-select {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .alert.alert-warning.mt-3 {

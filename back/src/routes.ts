@@ -22,4 +22,19 @@ export const Routes = [{
     route: "/profile",
     controller: userController,
     action: "updateProfile"
+}, {
+    method: "patch",
+    route: "/profile/change-password",
+    controller: userController,
+    action: "changePassword"
+}, {
+    method: "patch",
+    route: "/profile/account-info",
+    controller: userController,
+    action: "updateProfileInfo"
+}, {
+    method: "patch",
+    route: "/profile/account-social-links",
+    controller: userController,
+    action: "updateSocialLinks"
 }]

@@ -90,8 +90,10 @@ export class UserController {
 
     async updateProfile(request, response, next) {
         try {
-            const id = parseInt(request.params.id) || 1;
-            const user = await this.userRepository.findOne({ where: { id: id } });
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
                 response.status(404).json({ message: "Utilisateur non trouvé." });
                 return;
@@ -105,6 +107,100 @@ export class UserController {
             if (firstName) user.firstName = firstName;
             if (email) user.email = email;
             if (company) user.company = company;
+            const updatedUser = await this.userRepository.save(user);
+            response.status(200).json(updatedUser);
+            return;
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
+        }
+    }
+
+    async changePassword(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            const { password, newPassword, confirmPassword } = request.body;
+            if (!password || !newPassword || !confirmPassword) {
+                response.status(400).json({ message: "Les champs 'password', 'newPassword' et 'confirmPassword' sont requis." });
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                response.status(400).json({ message: "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas." });
+                return;
+            }
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                response.status(400).json({ message: "Le mot de passe actuel est incorrect." });
+                return;
+            }
+            user.password = await bcrypt.hash(newPassword, 10);
+            const updatedUser = await this.userRepository.save(user);
+            response.status(200).json(updatedUser);
+            return;
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
+        }
+    }
+
+    async updateProfileInfo(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            const { bio, birthday, phone, website } = request.body;
+            if (!bio && !birthday && !phone && !website) {
+                response.status(400).json({ message: "Aucun champ à mettre à jour." });
+                return;
+            }
+            if (bio) user.bio = bio;
+            if (birthday) user.birthday = birthday;
+            if (phone) user.phone = phone;
+            if (website) user.website = website;
+            const updatedUser = await this.userRepository.save(user);
+            response.status(200).json(updatedUser);
+            return;
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
+        }
+    }
+
+    async updateSocialLinks(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            const { Twitter, Facebook, Google, LinkedIn, Instagram } = request.body;
+            if (!Twitter && !Facebook && !Google && !LinkedIn && !Instagram) {
+                response.status(400).json({ message: "Aucun champ à mettre à jour." });
+                return;
+            }
+            if (Twitter) user.Twitter = Twitter;
+            if (Facebook) user.Facebook = Facebook;
+            if (Google) user.Google = Google;
+            if (LinkedIn) user.LinkedIn = LinkedIn;
+            if (Instagram) user.Instagram = Instagram;
             const updatedUser = await this.userRepository.save(user);
             response.status(200).json(updatedUser);
             return;
