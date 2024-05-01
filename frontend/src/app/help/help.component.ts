@@ -7,6 +7,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 
+interface EmailResponse {
+  token: string;
+}
+
 @Component({
   selector: 'app-help',
   standalone: true,
@@ -27,18 +31,46 @@ import { CommonModule } from '@angular/common';
 })
 
 export class HelpComponent {
-  constructor(private router: Router) { }
   objectForm: string= '';
   messageForm: string= '';
+  firstNameForm: string= '';
+  lastNameForm: string= '';
+  emailInputForm: string= '';
+  emailForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
+    this.emailForm = this.formBuilder.group({
+      object: [this.objectForm, Validators.required],
+      message: [this.messageForm, Validators.required],
+      firstName: [this.firstNameForm, Validators.required],
+      lastName: [this.lastNameForm, Validators.required],
+      email: [this.emailInputForm, [Validators.required, Validators.email]]
+    });
+  }
 
   submitForm() {
-    if (this.objectForm == '' || this.messageForm == '') {
-      return
+    console.log("debug 1")
+    console.log(this.emailForm.value)
+    if (this.emailForm.valid) {
+      console.log("debug 2")
+      console.log("frontend | Try submit update request")
+      this.http.post<EmailResponse>('http://localhost:3000/supportEmail', this.emailForm.value)
+        .subscribe({
+          next: (response) => {
+            console.log("debug 4")
+            this.objectForm = ''
+            this.messageForm= ''
+            this.toggleDiv()
+            return
+          },
+          error: (error) => {
+            console.log("debug 3")
+            console.log(error);
+            return
+          }
+        });
     }
-    // send email
-    this.objectForm = ''
-    this.messageForm = ''
-    this.toggleDiv()
+    return
   }
 
   isDiv1Active: boolean = true;

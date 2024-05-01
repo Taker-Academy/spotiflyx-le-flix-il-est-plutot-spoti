@@ -34,8 +34,8 @@ services:
   #   build: ./frontend
   #   container_name: spotiflyx_frontend
   #   ports:
-  #     - "4200:4200"
-  #   command: npm run start
+  #     - "80:80"
+  #   command: npm start
   #   depends_on:
   #     - backend
   #   networks:

@@ -37,4 +37,9 @@ export const Routes = [{
     route: "/profile/account-social-links",
     controller: userController,
     action: "updateSocialLinks"
+}, {
+    method: "post",
+    route: "/supportEmail",
+    controller: UserController,
+    action: "supportMail"
 }]
