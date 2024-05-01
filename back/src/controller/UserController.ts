@@ -50,6 +50,58 @@ export class UserController {
                 email,
                 password: hashedPassword
             });
+
+            // Configuration nodemailer
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com", // Remplacez par l'adresse SMTP de votre fournisseur d'email
+                port: 465, // Port standard pour SMTP
+                secure: true, // Vrai pour le port 465, faux pour les autres ports
+                auth: {
+                    user: "contact.spotiflyx@gmail.com", // Remplacez par votre adresse email
+                    pass: "xdsr kvyu lkaw qnwx", // Remplacez par votre mot de passe
+                },
+            });
+            // Configuration de l'email à envoyer
+            let mailOptions = {
+                from: `"Spotiflyx" <contact.spotiflyx@gmail.com>`,
+                to: "juleslordet@gmail.com",
+                subject: `Confirme ton adresse e-mail`,
+                text: `pas html`,
+                html: `
+                <html>
+                <body style="font-family: Noto Sans, sans-serif; margin: 0; padding: 0px; background-color: white; margin-top: 50px; margin-bottom: 50px">
+                    <div style="max-width: 500px; margin: auto; background-color: white; padding: 20px; padding-left: 30px; border: 0.5px solid #ececec; border-radius: 7px">
+                        <div style="font-size: 26px; color: #020202; font-weight: 600; margin-bottom: 30px; margin-top: 40px">
+                            <strong>👋 Coucou</strong>
+                            <a style="text-decoration:underline; color:rgb(0, 47, 255)">${email}</a>
+                        </div>
+                        <div style="margin-top: 20px; font-size: 15px; line-height: 1.6; color: #858585">
+                            On est très heureux de t'avoir sur Spotiflyx 💜. Merci de confirmer ton email 👇
+                        </div>
+                        <div style="margin-top: 30px; text-align: start;">
+                            <a href="http://localhost:4200/home" style="font-weight: 700;background-color: #000000; color: white; padding: 12px 22px; text-decoration: none; font-size: 13px; border-radius: 5px; display: inline-block;">
+                                CONFIRMER MON E-MAIL
+                            </a>
+                        </div>
+                        <div style="padding-top: 50px; margin-top: 50px; font-size: 13px; text-align: start; color: #999; border-top: 2px solid #ececec; display: flex; flex-direction: column">
+                            Spotiflyx, SAS<br>
+                            2 Rue du Professeur Charles Appleton<br>
+                            69007 Lyon
+                        </div>
+                    </div>
+                </body>
+                </html>
+                `, // Corps de l'email
+            };    
+            // Envoyer l'email
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(`Error: ${error}`);
+                }
+                console.log(`Message sent: ${info.messageId}`);
+            });
+            
+
             console.log("database | Register request OK")
             const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, '1234', { expiresIn: '1h' });
             response.status(200).json({ token: token });
@@ -141,6 +193,7 @@ export class UserController {
                 return;
             }
 
+            // Configuration nodemailer
             let transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com", // Remplacez par l'adresse SMTP de votre fournisseur d'email
                 port: 465, // Port standard pour SMTP
@@ -150,7 +203,6 @@ export class UserController {
                     pass: "xdsr kvyu lkaw qnwx", // Remplacez par votre mot de passe
                 },
             });
-        
             // Configuration de l'email à envoyer
             let mailOptions = {
                 from: `"${firstName} ${lastName}" <${email}>`, // Expéditeur formé par les variables firstName, lastName et email
@@ -158,7 +210,6 @@ export class UserController {
                 subject: `Support : ${object}`, // Sujet de l'email, formé dynamiquement
                 text: `${message}`, // Corps de l'email en texte simple, inséré dynamiquement
             };    
-        
             // Envoyer l'email
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
@@ -166,8 +217,6 @@ export class UserController {
                 }
                 console.log(`Message sent: ${info.messageId}`);
             });
-
-
 
             console.log("database | Post mail OK");
             response.status(200).json({ token: "OK" });
