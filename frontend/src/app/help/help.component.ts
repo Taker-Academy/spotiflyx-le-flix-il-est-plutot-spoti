@@ -54,7 +54,7 @@ export class HelpComponent {
     if (this.emailForm.valid) {
       console.log("debug 2")
       console.log("frontend | Try submit update request")
-      this.http.post<EmailResponse>('http://localhost:3000/email', this.emailForm.value)
+      this.http.post<EmailResponse>('http://localhost:3000/supportEmail', this.emailForm.value)
         .subscribe({
           next: (response) => {
             console.log("debug 4")
