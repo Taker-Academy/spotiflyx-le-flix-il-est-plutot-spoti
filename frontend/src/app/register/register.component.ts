@@ -4,6 +4,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angul
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { GlobalService } from '../global.service';
 
 interface RegisterResponse {
   token: string;
@@ -28,7 +29,7 @@ interface RegisterResponse {
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private globalService: GlobalService) {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -61,7 +62,7 @@ export class RegisterComponent {
     this.router.navigate(['/register']);
   }
   navigateToHome() {
-    this.router.navigate(['/home']);
+    this.globalService.backToHome()
   }
   navigateToLegalConditions() {
     this.router.navigate(['/legal']);

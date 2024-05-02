@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
+import { GlobalService } from '../global.service';
 
 interface EmailResponse {
   token: string;
@@ -38,7 +39,7 @@ export class HelpComponent {
   emailInputForm: string= '';
   emailForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private globalService: GlobalService) {
     this.emailForm = this.formBuilder.group({
       object: [this.objectForm, Validators.required],
       message: [this.messageForm, Validators.required],
@@ -79,6 +80,6 @@ export class HelpComponent {
   }
 
   backToHome() {
-    this.router.navigate(['/home']);
+    this.globalService.backToHome()
   }
 }

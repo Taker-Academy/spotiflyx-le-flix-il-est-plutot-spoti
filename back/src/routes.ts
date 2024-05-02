@@ -1,6 +1,8 @@
+import { SpotifyController } from "./controller/SpotifyController";
 import { UserController } from "./controller/UserController"
 
 const userController = new UserController();
+const spotifyController = new SpotifyController();
 
 export const Routes = [{
     method: "post",
@@ -40,6 +42,17 @@ export const Routes = [{
 }, {
     method: "post",
     route: "/supportEmail",
-    controller: UserController,
+    controller: userController,
     action: "supportMail"
-}]
+}, {
+    method: "get",
+    route: "/connectSpotify",
+    controller: spotifyController,
+    action: "connectSpotifyAPI"
+}, {
+    method: "get",
+    route: "/api/spotify/getUserInfo",
+    controller: spotifyController,
+    action: "getUserInfo"
+}
+]
