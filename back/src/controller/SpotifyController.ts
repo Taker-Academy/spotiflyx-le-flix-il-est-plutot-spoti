@@ -12,8 +12,6 @@ export class SpotifyController {
 
     async connectSpotifyAPI(request: Request, response: Response)  {
         try {
-            console.log("backend | connexion a l'api spotify");
-
             const authOptions = {
                 method: 'POST',
                 url: 'https://accounts.spotify.com/api/token',
