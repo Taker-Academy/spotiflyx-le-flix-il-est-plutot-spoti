@@ -21,7 +21,7 @@ services:
     environment:
       DATABASE_URL: postgres://db_user:db_password@postgres/db_name
     volumes:
-      - /home/mathieu/Taker-Academy/project-4/spotiflyx-le-flix-il-est-plutot-spoti/back:/app
+      - /home/jules/Documents/TakerAcademy/spotiflyx/back:/app
     ports:
       - "3000:3000"
     command: npm run start
