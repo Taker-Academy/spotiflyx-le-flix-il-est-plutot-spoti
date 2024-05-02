@@ -1,1 +1,17 @@
 <app-header></app-header>
+<div class="imgNavigation">
+    <div class="imgg">
+        <img src="../../assets/logoSpotiflyx2.png" alt="">
+    </div>
+</div>
+<div class="navigation">
+    <form class="search-container" [formGroup]="searchForm">
+        <input type="text" placeholder="Rechercher Film ou Série..." formControlName="searchInput">
+        <a href="#">
+            <label (click)="searchRequest()" for="search-box" class="fas fa-search fa-2xl"></label>
+        </a>
+    </form>
+</div>
+<section class="container">
+    // corps du home
+</section>

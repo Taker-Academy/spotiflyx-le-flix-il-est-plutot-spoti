@@ -28,21 +28,24 @@ import { HeaderComponent } from '../header/header.component';
 export class HomeComponent {
   variable = false;
   tokenSpotify: string= ''
+  searchForm: FormGroup;
 
-  constructor (private globalService : GlobalService, private http: HttpClient,) { }
+  constructor (private globalService : GlobalService, private http: HttpClient, private formBuilder: FormBuilder) {
+    this.searchForm = this.formBuilder.group({
+      searchInput: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.catchSpotifyToken();
   }
 
   catchSpotifyToken() {
-    console.log('Fonction exécutée à l\'arrivée sur /home');
     this.http.get<{token: string}>('http://localhost:3000/connectSpotify')
     .subscribe({
       next: (response) => {
         if (response.token) {
-          console.log("token : ", response.token)
-          localStorage.setItem('tokenSpotify', response.token)
+          this.tokenSpotify = response.token
         }
       },
       error: (error) => {
@@ -50,4 +53,12 @@ export class HomeComponent {
       }
     });
   }
+
+  searchRequest() {
+    if (this.searchForm.valid) {
+      console.log("Recherche en cours....")
+    }
+  }
+
+
 }

@@ -55,7 +55,7 @@
 }
 
 .header .search-form {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     border-radius: 30px;
@@ -82,6 +82,7 @@
 .header .search-form a .fas {
     color: rgb(255, 0, 0);
     font-size: 18px;
+    cursor: pointer;
 }
 
 .fa-user {
