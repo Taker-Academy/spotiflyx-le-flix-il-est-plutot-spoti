@@ -1,9 +1,4 @@
 <app-header></app-header>
-<div class="imgNavigation">
-    <div class="imgg">
-        <img src="../../assets/logoSpotiflyx2.png" alt="">
-    </div>
-</div>
 <div class="navigation">
     <form class="search-container" [formGroup]="searchForm">
         <input type="text" placeholder="Rechercher Film ou Série..." formControlName="searchInput">
@@ -12,6 +7,27 @@
         </a>
     </form>
 </div>
-<section class="container">
-    // corps du home
+<section class="containerHome">
+    <div class="settings">
+        <h2>Popular :</h2>
+        <div class="typeSettings">
+            <h3 class="videoSettings" (click)="settingsVideo()" [style.border-bottom]="typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">VIDEOS</h3>
+            <h3 class="musicSettings" (click)="settingsMusic()" [style.border-bottom]="!typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">MUSICS</h3>
+        </div>
+        <div class="videoContent" [style.display]="typeSettings ? 'initial' : 'none'">
+            <!-- 5 popular vidéo -->
+            <div class="boxPopVideo">
+                <!-- info about the vidéo -->
+            </div>
+        </div>
+        <div class="musicContent" [style.display]="!typeSettings ? 'initial' : 'none'">
+            <!-- 5 popular music -->
+            <div class="boxPopMusic">
+                <!-- info about the music -->
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Content</h2>
+    </div>
 </section>

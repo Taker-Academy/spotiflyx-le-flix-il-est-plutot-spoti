@@ -15,7 +15,7 @@
     list-style: none;
     box-sizing: border-box;
     outline: none; border: none;
-    transition: all 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
 
 html {

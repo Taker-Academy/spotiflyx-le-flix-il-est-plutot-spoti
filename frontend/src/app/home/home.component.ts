@@ -29,6 +29,7 @@ export class HomeComponent {
   variable = false;
   tokenSpotify: string= ''
   searchForm: FormGroup;
+  typeSettings: boolean = true
 
   constructor (private globalService : GlobalService, private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -60,5 +61,17 @@ export class HomeComponent {
     }
   }
 
+  settingsMusic() {
+    if (this.typeSettings == false) {
+      return
+    }
+    this.typeSettings = !this.typeSettings
+  }
 
+  settingsVideo() {
+    if (this.typeSettings == true) {
+      return
+    }
+    this.typeSettings = !this.typeSettings
+  }
 }
