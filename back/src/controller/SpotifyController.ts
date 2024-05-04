@@ -32,7 +32,11 @@ export class SpotifyController {
     }
 
     async popularContent(request: Request, response: Response) {
-        const tokenSpotify = request.query.tokenSpotify;
+        const tokenSpotify = request.query.tokenSpotify as string;
+
+        if (!tokenSpotify) {
+            return response.status(400).send('Spotify access token is required');
+        }
 
         try {
             const spotifyResponse = await axios.get('https://api.spotify.com/v1/browse/new-releases', {
@@ -56,8 +60,29 @@ export class SpotifyController {
 
             response.json(popularTracks);
         } catch (error) {
-            console.error('Error fetching popular content from Spotify:', error);
             response.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
+
+    async allCategories(request: Request, response: Response) {
+        const tokenSpotify = request.query.tokenSpotify as string;
+
+        if (!tokenSpotify) {
+            return response.status(400).send('Spotify access token is required');
+        }
+
+        const url = 'https://api.spotify.com/v1/browse/categories';
+        const headers = {
+            'Authorization': `Bearer ${tokenSpotify}`,  // Authentification avec le token OAuth
+            'Content-Type': 'application/json'
+        };
+
+        try {
+            const spotifyResponse = await axios.get(url, { headers });  // Envoi de la requête à Spotify
+            const categories = spotifyResponse.data.categories.items;  // Extraction des catégories
+            response.send(categories);  // Envoi des catégories au client
+        } catch (error) {
+            response.status(500).send('Failed to fetch categories from Spotify');
         }
     }
 }

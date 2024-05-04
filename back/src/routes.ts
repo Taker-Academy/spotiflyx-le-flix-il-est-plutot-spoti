@@ -54,5 +54,10 @@ export const Routes = [{
     route: "/api/spotify/popular-content",
     controller: spotifyController,
     action: "popularContent"
+}, {
+    method: "get",
+    route: "/api/spotify/categories",
+    controller: spotifyController,
+    action: "allCategories"
 }
 ]
