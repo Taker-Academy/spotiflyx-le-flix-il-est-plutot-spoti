@@ -20,6 +20,16 @@ interface PopularTracksResponse {
   popularTracks: Track[];
 }
 
+interface SpotifyCategoriesResponse {
+  categories: Category[];
+}
+
+interface Category {
+  id: string;
+  name: string;
+  // Ajoutez d'autres propriétés que vous attendez pour chaque catégorie
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -60,6 +70,7 @@ export class HomeComponent {
       next: (response) => {
         if (response.token) {
           this.popularMusicContent(response.token)
+          this.catchAllSpotifyCategories(response.token)
         }
       },
       error: (error) => {
@@ -83,6 +94,23 @@ export class HomeComponent {
       }
     });
   }
+
+  tabCategories: Category[] = [];
+  // récuper toutes les catégories spotify
+  catchAllSpotifyCategories(tokenSpotify: string) {
+  this.http.get<SpotifyCategoriesResponse>('http://localhost:3000/api/spotify/categories', {
+    params: { tokenSpotify: tokenSpotify }
+  })
+  .subscribe({
+    next: (response: SpotifyCategoriesResponse) => {
+      this.tabCategories = response.categories; // Stocke les catégories dans tabCategories
+      console.log('Retrieved categories:', this.tabCategories);
+    },
+    error: (error) => {
+      console.error('Error fetching categories:', error);
+    }
+  });
+}
 
 
   searchRequest() {
