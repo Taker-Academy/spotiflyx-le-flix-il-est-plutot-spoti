@@ -46,13 +46,13 @@ export const Routes = [{
     action: "supportMail"
 }, {
     method: "get",
-    route: "/connectSpotify",
+    route: "/api/spotify/connection",
     controller: spotifyController,
     action: "connectSpotifyAPI"
 }, {
     method: "get",
-    route: "/api/spotify/getUserInfo",
+    route: "/api/spotify/popular-content",
     controller: spotifyController,
-    action: "getUserInfo"
+    action: "popularContent"
 }
 ]

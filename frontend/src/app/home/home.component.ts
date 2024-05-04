@@ -8,6 +8,18 @@ import { CommonModule } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { HeaderComponent } from '../header/header.component';
 
+interface Track {
+  title: string;
+  artist: string;
+  releaseDate: string;
+  trackUrl: string;
+  albumImage: string;
+}
+
+interface PopularTracksResponse {
+  popularTracks: Track[];
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -27,9 +39,9 @@ import { HeaderComponent } from '../header/header.component';
 })
 export class HomeComponent {
   variable = false;
-  tokenSpotify: string= ''
   searchForm: FormGroup;
   typeSettings: boolean = true
+  typeCategories: boolean = true
 
   constructor (private globalService : GlobalService, private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -38,15 +50,16 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    this.catchSpotifyToken();
+    this.catchSpotifyToken()
   }
 
+  // récuperer le token spotify
   catchSpotifyToken() {
-    this.http.get<{token: string}>('http://localhost:3000/connectSpotify')
+    this.http.get<{token: string}>('http://localhost:3000/api/spotify/connection')
     .subscribe({
       next: (response) => {
         if (response.token) {
-          this.tokenSpotify = response.token
+          this.popularMusicContent(response.token)
         }
       },
       error: (error) => {
@@ -54,6 +67,23 @@ export class HomeComponent {
       }
     });
   }
+
+  popularAlbumTab: any = []
+  // récuperer des musiques et des vidéos populaire
+  popularMusicContent(tokenSpotify: string) {
+    this.http.get<{popularTracks: Track[]}>('http://localhost:3000/api/spotify/popular-content', {
+      params: {tokenSpotify : tokenSpotify}
+    })
+    .subscribe({
+      next: (response: any) => {
+        this.popularAlbumTab = response
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
 
   searchRequest() {
     if (this.searchForm.valid) {
@@ -73,5 +103,19 @@ export class HomeComponent {
       return
     }
     this.typeSettings = !this.typeSettings
+  }
+
+  categoriesMusic() {
+    if (this.typeCategories == false) {
+      return
+    }
+    this.typeCategories = !this.typeCategories
+  }
+
+  categoriesVideo() {
+    if (this.typeCategories == true) {
+      return
+    }
+    this.typeCategories = !this.typeCategories
   }
 }

@@ -11,23 +11,92 @@
     <div class="settings">
         <h2>Popular :</h2>
         <div class="typeSettings">
-            <h3 class="videoSettings" (click)="settingsVideo()" [style.border-bottom]="typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">VIDEOS</h3>
-            <h3 class="musicSettings" (click)="settingsMusic()" [style.border-bottom]="!typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">MUSICS</h3>
+            <h3 class="videoSettings" (click)="settingsVideo()" [style.border-bottom]="typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">MUSICS</h3>
+            <h3 class="musicSettings" (click)="settingsMusic()" [style.border-bottom]="!typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">VIDEOS</h3>
         </div>
-        <div class="videoContent" [style.display]="typeSettings ? 'initial' : 'none'">
+        <div class="popContent" [style.display]="typeSettings ? 'initial' : 'none'">
             <!-- 5 popular vidéo -->
-            <div class="boxPopVideo">
-                <!-- info about the vidéo -->
+            <div class="boxPop">
+                <p class="boxPopId"><b>1</b></p>
+                <img src="{{popularAlbumTab[0].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <div class="infoPop">
+                    <p class="boxPopTitle">{{popularAlbumTab[0].title}}</p>
+                    <div class="moreInfoPop">
+                        <p class="boxPopArtist">{{popularAlbumTab[0].artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[0].releaseDate}}</p>
+                    </div>
+                </div>
             </div>
+
+            <div class="boxPop">
+                <p class="boxPopId"><b>2</b></p>
+                <img src="{{popularAlbumTab[1].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <div class="infoPop">
+                    <p class="boxPopTitle">{{popularAlbumTab[1].title}}</p>
+                    <div class="moreInfoPop">
+                        <p class="boxPopArtist">{{popularAlbumTab[1].artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[1].releaseDate}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxPop">
+                <p class="boxPopId"><b>3</b></p>
+                <img src="{{popularAlbumTab[2].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <div class="infoPop">
+                    <p class="boxPopTitle">{{popularAlbumTab[2].title}}</p>
+                    <div class="moreInfoPop">
+                        <p class="boxPopArtist">{{popularAlbumTab[2].artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[2].releaseDate}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxPop">
+                <p class="boxPopId"><b>4</b></p>
+                <img src="{{popularAlbumTab[3].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <div class="infoPop">
+                    <p class="boxPopTitle">{{popularAlbumTab[3].title}}</p>
+                    <div class="moreInfoPop">
+                        <p class="boxPopArtist">{{popularAlbumTab[3].artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[3].releaseDate}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="boxPop">
+                <p class="boxPopId"><b>5</b></p>
+                <img src="{{popularAlbumTab[4].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <div class="infoPop">
+                    <p class="boxPopTitle">{{popularAlbumTab[4].title}}</p>
+                    <div class="moreInfoPop">
+                        <p class="boxPopArtist">{{popularAlbumTab[4].artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[4].releaseDate}}</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="musicContent" [style.display]="!typeSettings ? 'initial' : 'none'">
-            <!-- 5 popular music -->
-            <div class="boxPopMusic">
-                <!-- info about the music -->
+        <div class="popContent" [style.display]="!typeSettings ? 'initial' : 'none'">
+            <!-- 5 popular video -->
+        </div>
+
+        <div class="categories">
+            <h2>Catégories :</h2>
+            <div class="typeSettings">
+                <h3 class="videoSettings" (click)="categoriesVideo()" [style.border-bottom]="typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">MUSICS</h3>
+                <h3 class="musicSettings" (click)="categoriesMusic()" [style.border-bottom]="!typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">VIDEOS</h3>
+            </div>
+            <div class="contentCategories">
+                <section class="boxCategories">
+                    <p class="boxCategoriesTitle">test</p>
+                    <p class="boxCategoriesNb">+246</p>
+                </section>
             </div>
         </div>
     </div>
     <div class="content">
         <h2>Content</h2>
+
     </div>
 </section>
