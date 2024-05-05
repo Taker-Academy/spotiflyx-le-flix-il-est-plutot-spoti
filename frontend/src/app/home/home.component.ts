@@ -8,6 +8,10 @@ import { CommonModule } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { HeaderComponent } from '../header/header.component';
 
+interface PopularTracksResponse {
+  popularTracks: Track[];
+}
+
 interface Track {
   title: string;
   artist: string;
@@ -16,14 +20,9 @@ interface Track {
   albumImage: string;
 }
 
-interface PopularTracksResponse {
-  popularTracks: Track[];
-}
-
 interface SpotifyCategoriesResponse {
   categories: Category[];
 }
-
 interface Category {
   href: string;
   id: string;
@@ -31,6 +30,20 @@ interface Category {
   name: string;
   // Ajoutez d'autres propriétés que vous attendez pour chaque catégorie
 }
+
+interface SpotifyCategoriesTracksResponse {
+  categoriesTracks: categoryTracks[];
+}
+
+interface categoryTracks {
+  href: string;
+  id: string;
+  icons: string;
+  name: string;
+  // Ajoutez d'autres propriétés que vous attendez pour chaque catégorie
+}
+
+  
 
 @Component({
   selector: 'app-home',
@@ -73,6 +86,7 @@ export class HomeComponent {
         if (response.token) {
           this.popularMusicContent(response.token)
           this.catchAllSpotifyCategories(response.token)
+          this.catchAllSpotifyCategoriesTracks(response.token)
         }
       },
       error: (error) => {
@@ -100,19 +114,37 @@ export class HomeComponent {
   tabCategories: any = [];
   // récuper toutes les catégories spotify
   catchAllSpotifyCategories(tokenSpotify: string) {
-  this.http.get<{categories: Category[]}>('http://localhost:3000/api/spotify/categories', {
-    params: { tokenSpotify: tokenSpotify }
-  })
-  .subscribe({
-    next: (response: any) => {
-        this.tabCategories = response; // Stocke les catégories dans tabCategories
-    },
-    error: (error) => {
-      console.error('Error fetching categories:', error);
-    }
-  });
-}
+    this.http.get<{categories: Category[]}>('http://localhost:3000/api/spotify/categories', {
+      params: { tokenSpotify: tokenSpotify }
+    })
+    .subscribe({
+      next: (response: any) => {
+          this.tabCategories = response; // Stocke les catégories dans tabCategories
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    });
+  }
 
+  tabCategoriesTracks: any = [];
+  // récuper toutes les catégories spotify
+  catchAllSpotifyCategoriesTracks(tokenSpotify: string) {
+    this.http.get<{categoriesTracks: categoryTracks[];}>('http://localhost:3000/api/spotify/categories/tracks', {
+      params: {
+                tokenSpotify: tokenSpotify,
+                category: this.category
+              }
+    })
+    .subscribe({
+      next: (response: any) => {
+          this.tabCategoriesTracks = response; // Stocke les catégories dans tabCategories
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    });
+  }
 
   searchRequest() {
     if (this.searchForm.valid) {
