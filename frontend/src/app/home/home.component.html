@@ -18,65 +18,65 @@
             <!-- 5 popular vidéo -->
             <div class="boxPop">
                 <p class="boxPopId"><b>1</b></p>
-                <img src="{{popularAlbumTab[0].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <img src="{{popularAlbumTab[0]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
                 <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[0].title}}</p>
+                    <p class="boxPopTitle">{{popularAlbumTab[0]?.title}}</p>
                     <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[0].artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[0].releaseDate}}</p>
+                        <p class="boxPopArtist">{{popularAlbumTab[0]?.artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[0]?.releaseDate}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="boxPop">
                 <p class="boxPopId"><b>2</b></p>
-                <img src="{{popularAlbumTab[1].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <img src="{{popularAlbumTab[1]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
                 <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[1].title}}</p>
+                    <p class="boxPopTitle">{{popularAlbumTab[1]?.title}}</p>
                     <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[1].artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[1].releaseDate}}</p>
+                        <p class="boxPopArtist">{{popularAlbumTab[1]?.artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[1]?.releaseDate}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="boxPop">
                 <p class="boxPopId"><b>3</b></p>
-                <img src="{{popularAlbumTab[2].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <img src="{{popularAlbumTab[2]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
                 <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[2].title}}</p>
+                    <p class="boxPopTitle">{{popularAlbumTab[2]?.title}}</p>
                     <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[2].artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[2].releaseDate}}</p>
+                        <p class="boxPopArtist">{{popularAlbumTab[2]?.artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[2]?.releaseDate}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="boxPop">
                 <p class="boxPopId"><b>4</b></p>
-                <img src="{{popularAlbumTab[3].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <img src="{{popularAlbumTab[3]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
                 <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[3].title}}</p>
+                    <p class="boxPopTitle">{{popularAlbumTab[3]?.title}}</p>
                     <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[3].artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[3].releaseDate}}</p>
+                        <p class="boxPopArtist">{{popularAlbumTab[3]?.artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[3]?.releaseDate}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="boxPop">
                 <p class="boxPopId"><b>5</b></p>
-                <img src="{{popularAlbumTab[4].albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                <img src="{{popularAlbumTab[4]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
                 <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[4].title}}</p>
+                    <p class="boxPopTitle">{{popularAlbumTab[4]?.title}}</p>
                     <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[4].artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[4].releaseDate}}</p>
+                        <p class="boxPopArtist">{{popularAlbumTab[4]?.artist}}</p>
+                        <p class="boxPopDate">{{popularAlbumTab[4]?.releaseDate}}</p>
                     </div>
                 </div>
             </div>
-
         </div>
+
         <div class="popContent" [style.display]="!typeSettings ? 'initial' : 'none'">
             <!-- 5 popular video -->
         </div>
@@ -84,13 +84,89 @@
         <div class="categories">
             <h2>Catégories :</h2>
             <div class="typeSettings">
-                <h3 class="videoSettings" (click)="categoriesVideo()" [style.border-bottom]="typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">MUSICS</h3>
-                <h3 class="musicSettings" (click)="categoriesMusic()" [style.border-bottom]="!typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">VIDEOS</h3>
+                <h3 class="videoSettings" (click)="categoriesVideo()" [style.border-bottom]="typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="typeCategories ? 'white' : 'grey'">MUSICS</h3>
+                <h3 class="musicSettings" (click)="categoriesMusic()" [style.border-bottom]="!typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="!typeCategories ? 'white' : 'grey'">VIDEOS</h3>
             </div>
-            <div class="contentCategories">
-                <section class="boxCategories">
-                    <p class="boxCategoriesTitle">test</p>
-                    <p class="boxCategoriesNb">+246</p>
+            <div class="contentCategoriesMusic" [style.display]="typeCategories ? 'block' : 'none'">
+                <section class="boxCategories" (click)="addCategory(tabCategories[0]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[0]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[0]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[1]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[1]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[1]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[2]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[2]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[2]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[3]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[3]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[3]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[4]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[4]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[4]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[5]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[5]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[5]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[6]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[6]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[6]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[7]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[7]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[7]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[8]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[8]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[8]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[9]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[9]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[9]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[10]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[10]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[10]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[11]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[11]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[11]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[12]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[12]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[12]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[13]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[13]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[13]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[14]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[14]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[14]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[15]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[15]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[15]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[16]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[16]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[16]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[17]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[17]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[17]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[18]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[18]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[18]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
+                </section>
+                <section class="boxCategories" (click)="addCategory(tabCategories[19]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[19]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{tabCategories[19]?.name}}</p>
+                    <i class="fa-solid fa-music"></i>
                 </section>
             </div>
         </div>

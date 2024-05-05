@@ -25,7 +25,9 @@ interface SpotifyCategoriesResponse {
 }
 
 interface Category {
+  href: string;
   id: string;
+  icons: string;
   name: string;
   // Ajoutez d'autres propriétés que vous attendez pour chaque catégorie
 }
@@ -95,16 +97,15 @@ export class HomeComponent {
     });
   }
 
-  tabCategories: Category[] = [];
+  tabCategories: any = [];
   // récuper toutes les catégories spotify
   catchAllSpotifyCategories(tokenSpotify: string) {
-  this.http.get<SpotifyCategoriesResponse>('http://localhost:3000/api/spotify/categories', {
+  this.http.get<{categories: Category[]}>('http://localhost:3000/api/spotify/categories', {
     params: { tokenSpotify: tokenSpotify }
   })
   .subscribe({
-    next: (response: SpotifyCategoriesResponse) => {
-      this.tabCategories = response.categories; // Stocke les catégories dans tabCategories
-      console.log('Retrieved categories:', this.tabCategories);
+    next: (response: any) => {
+        this.tabCategories = response; // Stocke les catégories dans tabCategories
     },
     error: (error) => {
       console.error('Error fetching categories:', error);
@@ -145,5 +146,25 @@ export class HomeComponent {
       return
     }
     this.typeCategories = !this.typeCategories
+  }
+
+
+  category: string[] = [];
+  addCategory(categoryName: string): void {
+    const index = this.category.indexOf(categoryName);
+    if (index === -1) {
+      this.category.push(categoryName);
+    } else {
+      this.category.splice(index, 1);
+    }
+  }
+
+  categoryAddedOrNot(categoryName: string) {
+    const index = this.category.indexOf(categoryName);
+    if (index === -1) {
+      return false
+    } else {
+      return true
+    }
   }
 }
