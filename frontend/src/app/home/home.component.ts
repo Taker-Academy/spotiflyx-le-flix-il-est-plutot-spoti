@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHandler, HttpParams } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { GlobalService } from '../global.service';
+import { switchMap } from 'rxjs/operators';
 import { HeaderComponent } from '../header/header.component';
 
 interface PopularTracksResponse {
@@ -67,6 +68,7 @@ export class HomeComponent {
   searchForm: FormGroup;
   typeSettings: boolean = true
   typeCategories: boolean = true
+  tokenSp: string
 
   constructor (private globalService : GlobalService, private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -86,7 +88,7 @@ export class HomeComponent {
         if (response.token) {
           this.popularMusicContent(response.token)
           this.catchAllSpotifyCategories(response.token)
-          this.catchAllSpotifyCategoriesTracks(response.token)
+          this.tokenSp = response.token
         }
       },
       error: (error) => {
@@ -120,6 +122,7 @@ export class HomeComponent {
     .subscribe({
       next: (response: any) => {
           this.tabCategories = response; // Stocke les catégories dans tabCategories
+          
       },
       error: (error) => {
         console.error('Error fetching categories:', error);
@@ -129,20 +132,29 @@ export class HomeComponent {
 
   tabCategoriesTracks: any = [];
   // récuper toutes les catégories spotify
-  catchAllSpotifyCategoriesTracks(tokenSpotify: string) {
-    this.http.get<{categoriesTracks: categoryTracks[];}>('http://localhost:3000/api/spotify/categories/tracks', {
-      params: {
-                tokenSpotify: tokenSpotify,
-                category: this.category
-              }
-    })
-    .subscribe({
-      next: (response: any) => {
-          this.tabCategoriesTracks = response; // Stocke les catégories dans tabCategories
-      },
-      error: (error) => {
-        console.error('Error fetching categories:', error);
-      }
+  catchAllSpotifyCategoriesTracks() {
+    this.http.get<{token: string}>('http://localhost:3000/api/spotify/connection').pipe(
+        switchMap((response) => {
+            if (response.token) {
+                let tokenSpotify = response.token;
+                let params = new HttpParams().append('tokenSpotify', tokenSpotify);
+                for (const category of this.category) {
+                    params = params.append('category', category);
+                }
+
+                return this.http.get<{categoriesTracks: categoryTracks[]}>('http://localhost:3000/api/spotify/categories/tracks', { params });
+            } else {
+                throw new Error('No token received');
+            }
+        })
+    ).subscribe({
+        next: (response: any) => {
+            console.log(response);
+            this.tabCategoriesTracks = response; // Stocke les catégories dans tabCategoriesTracks
+        },
+        error: (error) => {
+            console.error('Error fetching categories:', error);
+        }
     });
   }
 
@@ -189,6 +201,10 @@ export class HomeComponent {
     } else {
       this.category.splice(index, 1);
     }
+    if (this.category.length > 0) {
+      this.catchAllSpotifyCategoriesTracks()
+    }
+    // else catégory classique
   }
 
   categoryAddedOrNot(categoryName: string) {

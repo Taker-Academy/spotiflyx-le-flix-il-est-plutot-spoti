@@ -85,4 +85,59 @@ export class SpotifyController {
             response.status(500).send('Failed to fetch categories from Spotify');
         }
     }
+
+    async categoryTracks(request: Request, response: Response) {
+        const tokenSpotify = request.query.tokenSpotify;
+        const categories = request.query.category;
+
+        console.log(categories)
+        console.log(tokenSpotify)
+    
+        // Assurer que categories est toujours un tableau
+        const categoriesArray = Array.isArray(categories) ? categories : [categories];
+    
+        try {
+            let tracksPerCategory = [];
+            
+            for (let category of categoriesArray) {
+                // Obtenir les playlists pour chaque catégorie
+                const playlistsUrl = `https://api.spotify.com/v1/browse/categories/${category}/playlists`;
+                console.log("----------------------------------------------------------------------")
+                const playlistsRes = await axios.get(playlistsUrl, {
+                    headers: { 'Authorization': `Bearer ${tokenSpotify}` }
+                });
+
+                let tracks = [];
+                // Parcourir les playlists et obtenir les tracks
+                for (let playlist of playlistsRes.data.playlists.items) {
+                    if (tracks.length >= 5) break; // Arrêter si nous avons déjà 5 tracks
+    
+                    const tracksUrl = `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`;
+                    const trackRes = await axios.get(tracksUrl, {
+                        headers: { 'Authorization': `Bearer ${tokenSpotify}` }
+                    });
+    
+                    // Ajouter les tracks au tableau jusqu'à atteindre 5
+                    trackRes.data.items.forEach(item => {
+                        if (tracks.length < 5 && item.track) {
+                            tracks.push(item.track.name);
+                        }
+                    });
+                }
+    
+                // Ajouter les résultats pour la catégorie actuelle
+                tracksPerCategory.push({
+                    category: category,
+                    tracks: tracks
+                });
+            }
+    
+            // Envoyer la réponse avec les tracks par catégorie
+            response.json(tracksPerCategory);
+        } catch (error) {
+            console.error('Error fetching category tracks:', error);
+            response.status(500).send('Failed to fetch tracks');
+        }
+
+    }
 }
