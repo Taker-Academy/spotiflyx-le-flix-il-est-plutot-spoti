@@ -16,65 +16,17 @@
         </div>
         <div class="popContent" [style.display]="typeSettings ? 'initial' : 'none'">
             <!-- 5 popular vidéo -->
-            <div class="boxPop">
-                <p class="boxPopId"><b>1</b></p>
-                <img src="{{popularAlbumTab[0]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+            <div class="boxPop" *ngFor="let album of popularAlbumTab; let i = index">
+                <p class="boxPopId"><b>{{ i + 1 }}</b></p>
+                <img src="{{album?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
                 <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[0]?.title}}</p>
+                    <p class="boxPopTitle">{{album?.title}}</p>
                     <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[0]?.artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[0]?.releaseDate}}</p>
+                        <p class="boxPopArtist">{{album?.artist}}</p>
+                        <p class="boxPopDate">{{album?.releaseDate}}</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="boxPop">
-                <p class="boxPopId"><b>2</b></p>
-                <img src="{{popularAlbumTab[1]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
-                <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[1]?.title}}</p>
-                    <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[1]?.artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[1]?.releaseDate}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="boxPop">
-                <p class="boxPopId"><b>3</b></p>
-                <img src="{{popularAlbumTab[2]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
-                <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[2]?.title}}</p>
-                    <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[2]?.artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[2]?.releaseDate}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="boxPop">
-                <p class="boxPopId"><b>4</b></p>
-                <img src="{{popularAlbumTab[3]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
-                <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[3]?.title}}</p>
-                    <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[3]?.artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[3]?.releaseDate}}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="boxPop">
-                <p class="boxPopId"><b>5</b></p>
-                <img src="{{popularAlbumTab[4]?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
-                <div class="infoPop">
-                    <p class="boxPopTitle">{{popularAlbumTab[4]?.title}}</p>
-                    <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{popularAlbumTab[4]?.artist}}</p>
-                        <p class="boxPopDate">{{popularAlbumTab[4]?.releaseDate}}</p>
-                    </div>
-                </div>
-            </div>
+            </div>            
         </div>
 
         <div class="popContent" [style.display]="!typeSettings ? 'initial' : 'none'">
@@ -88,47 +40,14 @@
                 <h3 class="musicSettings" (click)="categoriesMusic()" [style.border-bottom]="!typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="!typeCategories ? 'white' : 'grey'">VIDEOS</h3>
             </div>
             <div class="contentCategoriesMusic" [style.display]="typeCategories ? 'block' : 'none'">
-                <section class="boxCategories" (click)="addCategory(tabCategories[3]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[3]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[3]?.name}}</p>
+                <section *ngFor="let category of tabCategories" 
+                         class="boxCategories" 
+                         (click)="addCategory(category?.name)"
+                         [style.background-color]="categoryAddedOrNot(category?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                    <p class="boxCategoriesTitle">{{ category?.name }}</p>
                     <i class="fa-solid fa-music"></i>
                 </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[5]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[5]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[5]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[8]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[8]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[8]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[9]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[9]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[9]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[12]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[12]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[12]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[13]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[13]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[13]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[15]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[15]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[15]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[17]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[17]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[17]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[18]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[18]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[18]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[19]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[19]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[19]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-            </div>
+            </div>            
         </div>
     </div>
     <div class="content">

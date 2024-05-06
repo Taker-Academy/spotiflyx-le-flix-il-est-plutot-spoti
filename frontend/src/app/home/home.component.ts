@@ -10,7 +10,6 @@ import { switchMap } from 'rxjs/operators';
 import { HeaderComponent } from '../header/header.component';
 import { NgModule } from '@angular/core';
 
-
 interface PopularTracksResponse {
   popularTracks: Track[];
 }
@@ -45,8 +44,6 @@ interface categoryTracks {
   name: string;
   // Ajoutez d'autres propriétés que vous attendez pour chaque catégorie
 }
-
-  
 
 @Component({
   selector: 'app-home',
@@ -125,48 +122,39 @@ export class HomeComponent {
     .subscribe({
       next: (response: any) => {
         this.tabCategories = response; // Stocke les catégories dans tabCategories
-        // console.log(this.tabCategories)
-        // console.log(this.tabCategories.length)
-        // this.tabCategories.splice(0, 1)
-        // console.log(this.tabCategories.length)
-
-        // console.log(this.tabCategories)
-        // this.tabCategories.splice(14, 1)
-        // this.tabCategories.splice(10, 1)
-        // this.tabCategories.splice(7, 1)
-        // this.tabCategories.splice(6, 1)
-        // this.tabCategories.splice(4, 1)
-        // this.tabCategories.splice(2, 1)
-        // this.tabCategories.splice(1, 1)
-        // this.tabCategories.splice(0, 1)
-
-          // gestion d'erreur des catégories
-          // for (let category of this.tabCategories) {
-            // const index = this.tabCategories.indexOf(category);
-            // let params = new HttpParams()
-              // .append('tokenSpotify', tokenSpotify)
-              // .append('categoryName', category); // Assurez-vous que 'name' est la propriété correcte
-            // if (index == -1) {
-              // continue
-            // } else {
-              
-              // this.http.get<{popularTracks: Track[]}>('http://localhost:3000/api/spotify/categories/errorhandling', { params })
-              // .subscribe({
-                // next: (response: any) => {
-                  // la catégorie fonctionne donc on ne la supprime pas
-                // },
-                // error: (error) => {
-                  // la catégories est invalide donc on la supprime
-                  // this.tabCategories.splice(index, 1)
-                // }
-              // });  
-            // }
-          // }
       },
       error: (error) => {
         console.error('Error fetching categories:', error);
       }
     });
+
+    // gestion d'erreur des catégories
+
+    let errors = ['Made For You', 'New Releases', 'Hip-Hop',
+    'French Variety', 'Charts', 'In the car', 'Dance/Electronic',
+    'Discover', 'R&B', 'K-pop']
+
+    for (let i = 0; i < this.tabCategories.length; i++) {
+      console.log(this.tabCategories[i]?.name)
+      let foundError = false; // Flag pour vérifier si une correspondance a été trouvée
+  
+      for (let j = 0; j < errors.length; j++) {
+        if (this.tabCategories[i]?.name === errors[j]) {
+          let deleted = this.tabCategories.splice(i, 1)
+          console.log('Supprimé:', deleted)
+          i--;
+          foundError = true;
+          break;
+        }
+      }
+
+      if (foundError) {
+          continue; // Continuez la boucle principale si un élément a été supprimé
+      }
+    }
+    console.log(this.tabCategories)
+
+
   }
 
   tabCategoriesTracks: any = [];

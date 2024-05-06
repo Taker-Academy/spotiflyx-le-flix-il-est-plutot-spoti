@@ -151,10 +151,9 @@ export class SpotifyController {
     }
 
     // async errorhandlingCategory(response: Response, request: Request) {
-    //     const tokenSpotify = request.query.tokenSpotify as string;
-    //     const categories = request.query.categoryName as string;
-
-    //     console.log(categories)
-    //     console.log(tokenSpotify)
+        // const tokenSpotify = request.query.tokenSpotify;
+        // const categories = request.query.categoryName;
+        // console.log(categories)
+        // console.log(tokenSpotify)
     // }
 }
