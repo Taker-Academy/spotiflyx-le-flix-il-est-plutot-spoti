@@ -121,8 +121,44 @@ export class HomeComponent {
     })
     .subscribe({
       next: (response: any) => {
-          this.tabCategories = response; // Stocke les catégories dans tabCategories
-          
+        this.tabCategories = response; // Stocke les catégories dans tabCategories
+        // console.log(this.tabCategories)
+        // console.log(this.tabCategories.length)
+        // this.tabCategories.splice(0, 1)
+        // console.log(this.tabCategories.length)
+
+        // console.log(this.tabCategories)
+        // this.tabCategories.splice(14, 1)
+        // this.tabCategories.splice(10, 1)
+        // this.tabCategories.splice(7, 1)
+        // this.tabCategories.splice(6, 1)
+        // this.tabCategories.splice(4, 1)
+        // this.tabCategories.splice(2, 1)
+        // this.tabCategories.splice(1, 1)
+        // this.tabCategories.splice(0, 1)
+
+          // gestion d'erreur des catégories
+          // for (let category of this.tabCategories) {
+            // const index = this.tabCategories.indexOf(category);
+            // let params = new HttpParams()
+              // .append('tokenSpotify', tokenSpotify)
+              // .append('categoryName', category); // Assurez-vous que 'name' est la propriété correcte
+            // if (index == -1) {
+              // continue
+            // } else {
+              
+              // this.http.get<{popularTracks: Track[]}>('http://localhost:3000/api/spotify/categories/errorhandling', { params })
+              // .subscribe({
+                // next: (response: any) => {
+                  // la catégorie fonctionne donc on ne la supprime pas
+                // },
+                // error: (error) => {
+                  // la catégories est invalide donc on la supprime
+                  // this.tabCategories.splice(index, 1)
+                // }
+              // });  
+            // }
+          // }
       },
       error: (error) => {
         console.error('Error fetching categories:', error);

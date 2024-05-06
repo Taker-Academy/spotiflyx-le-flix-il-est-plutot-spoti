@@ -102,7 +102,6 @@ export class SpotifyController {
             for (let category of categoriesArray) {
                 // Obtenir les playlists pour chaque catégorie
                 const playlistsUrl = `https://api.spotify.com/v1/browse/categories/${category}/playlists`;
-                console.log("----------------------------------------------------------------------")
                 const playlistsRes = await axios.get(playlistsUrl, {
                     headers: { 'Authorization': `Bearer ${tokenSpotify}` }
                 });
@@ -138,6 +137,13 @@ export class SpotifyController {
             console.error('Error fetching category tracks:', error);
             response.status(500).send('Failed to fetch tracks');
         }
-
     }
+
+    // async errorhandlingCategory(response: Response, request: Request) {
+    //     const tokenSpotify = request.query.tokenSpotify as string;
+    //     const categories = request.query.categoryName as string;
+
+    //     console.log(categories)
+    //     console.log(tokenSpotify)
+    // }
 }
