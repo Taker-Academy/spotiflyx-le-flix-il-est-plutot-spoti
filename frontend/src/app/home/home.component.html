@@ -104,10 +104,6 @@
                     <p class="boxCategoriesTitle">{{tabCategories[9]?.name}}</p>
                     <i class="fa-solid fa-music"></i>
                 </section>
-                <section class="boxCategories" (click)="addCategory(tabCategories[11]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[11]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{tabCategories[11]?.name}}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
                 <section class="boxCategories" (click)="addCategory(tabCategories[12]?.name)" [style.background-color]="categoryAddedOrNot(tabCategories[12]?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
                     <p class="boxCategoriesTitle">{{tabCategories[12]?.name}}</p>
                     <i class="fa-solid fa-music"></i>
@@ -136,6 +132,20 @@
         </div>
     </div>
     <div class="content">
-        <h2>Content</h2>
+        <div *ngFor="let category of tabCategoriesTracks" class="categoryContainer">
+            <h2>{{ category.category }}</h2> <!-- Affiche le nom de la catégorie -->
+            <div class="allTrack">
+                <div *ngFor="let track of category.tracks" class="boxTrack">
+                    <div class="boxInfoTracks">
+                        <img src="{{track?.albumImageUrl}}" alt="img album">                
+                        <p class="trackName">{{track?.name}}</p>
+                        <div class="boxMoreInfoTracks">
+                            <p class="trackArtist">{{track?.artists[0]}}</p> 
+                            <p class="trackPopularity">{{track?.popularity}}</p>                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>

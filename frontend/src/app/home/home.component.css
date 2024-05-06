@@ -75,7 +75,7 @@ input[type="text"] {
     color: white;
     display: flex;
     width: calc(81vw - 20rem - 3rem);
-    background-color: rgba(25, 236, 6, 0.1);
+    /* background-color: rgba(25, 236, 6, 0.1); */
 }
 
 .content h2, .settings h2 {
@@ -213,4 +213,69 @@ input[type="text"] {
 .fa-music {
     padding-right: 2rem;
     color: rgb(194, 38, 38);
+}
+
+.categoryContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.categoryContainer h2 {
+    margin-left:5px;
+}
+
+.boxTrack {
+    justify-content: start;
+    display: flex;
+    flex-direction: row;
+}
+
+.boxInfoTracks {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+    border-radius: 10px;
+    width: 130px;
+}
+
+.boxInfoTracks img {
+    width: 120px;
+    margin-top:5px;
+    margin-bottom:8px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.trackName {
+    margin: 0 5px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.trackArtist {
+    margin: 0 5px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgb(194, 38, 38);
+}
+
+.trackPopularity {
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+}
+
+.boxMoreInfoTracks {
+    display: flex;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.allTrack {
+    display: flex;
+    justify-content: start;
 }

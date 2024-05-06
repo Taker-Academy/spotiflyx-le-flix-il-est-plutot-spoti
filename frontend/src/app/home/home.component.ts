@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { switchMap } from 'rxjs/operators';
 import { HeaderComponent } from '../header/header.component';
+import { NgModule } from '@angular/core';
+
 
 interface PopularTracksResponse {
   popularTracks: Track[];
@@ -53,6 +55,7 @@ interface categoryTracks {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
     HeaderComponent
   ],
   providers: [
@@ -185,8 +188,8 @@ export class HomeComponent {
         })
     ).subscribe({
         next: (response: any) => {
-            console.log(response);
-            this.tabCategoriesTracks = response; // Stocke les catégories dans tabCategoriesTracks
+            this.tabCategoriesTracks = response
+            console.log(this.tabCategoriesTracks)
         },
         error: (error) => {
             console.error('Error fetching categories:', error);
@@ -228,7 +231,6 @@ export class HomeComponent {
     this.typeCategories = !this.typeCategories
   }
 
-
   category: string[] = [];
   addCategory(categoryName: string): void {
     const index = this.category.indexOf(categoryName);
@@ -239,8 +241,9 @@ export class HomeComponent {
     }
     if (this.category.length > 0) {
       this.catchAllSpotifyCategoriesTracks()
+    } else {
+      this.tabCategoriesTracks = ['']
     }
-    // else catégory classique
   }
 
   categoryAddedOrNot(categoryName: string) {

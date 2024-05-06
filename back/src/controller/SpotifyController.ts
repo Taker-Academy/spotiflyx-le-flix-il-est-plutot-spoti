@@ -119,7 +119,18 @@ export class SpotifyController {
                     // Ajouter les tracks au tableau jusqu'à atteindre 5
                     trackRes.data.items.forEach(item => {
                         if (tracks.length < 5 && item.track) {
-                            tracks.push(item.track.name);
+                            tracks.push({
+                                name: item.track.name,
+                                id: item.track.id,
+                                artists: item.track.artists.map(artist => artist.name), // Liste des noms des artistes
+                                albumName: item.track.album.name,
+                                albumImageUrl: item.track.album.images[0]?.url, // Image de l'album
+                                duration_ms: item.track.duration_ms,
+                                popularity: item.track.popularity,
+                                preview_url: item.track.preview_url,
+                                explicit: item.track.explicit,
+                                uri: item.track.uri
+                            });
                         }
                     });
                 }
