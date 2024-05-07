@@ -51,8 +51,8 @@
         </div>
     </div>
     <div class="content">
-        <div *ngFor="let category of tabCategoriesTracks" class="categoryContainer">
-            <h2>{{ category.category }}</h2> <!-- Affiche le nom de la catégorie -->
+        <div *ngFor="let category of categoryTaked" class="categoryContainer">
+            <h2>{{ category?.category }}</h2> <!-- Affiche le nom de la catégorie -->
             <div class="allTrack">
                 <div *ngFor="let track of category.tracks" class="boxTrack">
                     <div class="boxInfoTracks">

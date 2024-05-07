@@ -149,11 +149,4 @@ export class SpotifyController {
             response.status(500).send('Failed to fetch tracks');
         }
     }
-
-    // async errorhandlingCategory(response: Response, request: Request) {
-        // const tokenSpotify = request.query.tokenSpotify;
-        // const categories = request.query.categoryName;
-        // console.log(categories)
-        // console.log(tokenSpotify)
-    // }
 }

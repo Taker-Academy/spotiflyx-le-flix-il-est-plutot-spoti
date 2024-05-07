@@ -121,51 +121,49 @@ export class HomeComponent {
     })
     .subscribe({
       next: (response: any) => {
-        this.tabCategories = response; // Stocke les catégories dans tabCategories
+        this.tabCategories = response
       },
       error: (error) => {
         console.error('Error fetching categories:', error);
       }
     });
-
+    
     // gestion d'erreur des catégories
-
+    
     let errors = ['Made For You', 'New Releases', 'Hip-Hop',
     'French Variety', 'Charts', 'In the car', 'Dance/Electronic',
-    'Discover', 'R&B', 'K-pop']
+    'Discover', 'R&B', 'K-pop', 'Pop']
 
     for (let i = 0; i < this.tabCategories.length; i++) {
-      console.log(this.tabCategories[i]?.name)
-      let foundError = false; // Flag pour vérifier si une correspondance a été trouvée
-  
+      let foundError = false;
       for (let j = 0; j < errors.length; j++) {
         if (this.tabCategories[i]?.name === errors[j]) {
-          let deleted = this.tabCategories.splice(i, 1)
-          console.log('Supprimé:', deleted)
+          this.tabCategories.splice(i, 1)
           i--;
           foundError = true;
           break;
         }
       }
-
       if (foundError) {
-          continue; // Continuez la boucle principale si un élément a été supprimé
+        continue;
       }
     }
-    console.log(this.tabCategories)
-
-
+    let categories = []
+    for (let i = 0; i < this.tabCategories.length; i++) {
+      categories.push(this.tabCategories[i]?.name)
+    }
+    this.catchAllSpotifyCategoriesTracks(categories)
   }
 
   tabCategoriesTracks: any = [];
   // récuper toutes les catégories spotify
-  catchAllSpotifyCategoriesTracks() {
+  catchAllSpotifyCategoriesTracks(categories: string[]) {
     this.http.get<{token: string}>('http://localhost:3000/api/spotify/connection').pipe(
         switchMap((response) => {
             if (response.token) {
                 let tokenSpotify = response.token;
                 let params = new HttpParams().append('tokenSpotify', tokenSpotify);
-                for (const category of this.category) {
+                for (const category of categories) {
                     params = params.append('category', category);
                 }
 
@@ -177,7 +175,6 @@ export class HomeComponent {
     ).subscribe({
         next: (response: any) => {
             this.tabCategoriesTracks = response
-            console.log(this.tabCategoriesTracks)
         },
         error: (error) => {
             console.error('Error fetching categories:', error);
@@ -227,10 +224,18 @@ export class HomeComponent {
     } else {
       this.category.splice(index, 1);
     }
-    if (this.category.length > 0) {
-      this.catchAllSpotifyCategoriesTracks()
-    } else {
-      this.tabCategoriesTracks = ['']
+    this.updateCategories()
+  }
+
+  categoryTaked: any[] = [];
+  updateCategories() {
+    this.categoryTaked = []
+    for (let i = 0; i < this.category.length; i++) {
+      for (let j = 0; j < this.tabCategoriesTracks.length; j++) {
+        if (this.category[i] == this.tabCategoriesTracks[j]?.category) {
+          this.categoryTaked.push(this.tabCategoriesTracks[j])
+        }
+      }
     }
   }
 
