@@ -89,11 +89,8 @@ export class SpotifyController {
     async categoryTracks(request: Request, response: Response) {
         const tokenSpotify = request.query.tokenSpotify;
         const categories = request.query.category;
-
-        console.log(categories)
-        console.log(tokenSpotify)
     
-        // Assurer que categories est toujours un tableau
+        // s'assurer que categories est toujours un tableau
         const categoriesArray = Array.isArray(categories) ? categories : [categories];
     
         try {
