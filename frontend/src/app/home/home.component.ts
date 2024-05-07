@@ -69,6 +69,7 @@ export class HomeComponent {
   typeSettings: boolean = true
   typeCategories: boolean = true
   tokenSp: string
+  doneRequest: boolean = false
 
   constructor (private globalService : GlobalService, private http: HttpClient, private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -175,6 +176,7 @@ export class HomeComponent {
     ).subscribe({
         next: (response: any) => {
             this.tabCategoriesTracks = response
+            this.doneRequest = true
         },
         error: (error) => {
             console.error('Error fetching categories:', error);

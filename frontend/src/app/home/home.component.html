@@ -1,70 +1,86 @@
 <app-header></app-header>
-<div class="navigation">
-    <form class="search-container" [formGroup]="searchForm">
-        <input type="text" placeholder="Rechercher Film ou Série..." formControlName="searchInput">
-        <a href="#">
-            <label (click)="searchRequest()" for="search-box" class="fas fa-search fa-2xl"></label>
-        </a>
-    </form>
-</div>
-<section class="containerHome">
-    <div class="settings">
-        <h2>Popular :</h2>
-        <div class="typeSettings">
-            <h3 class="videoSettings" (click)="settingsVideo()" [style.border-bottom]="typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">MUSICS</h3>
-            <h3 class="musicSettings" (click)="settingsMusic()" [style.border-bottom]="!typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">VIDEOS</h3>
-        </div>
-        <div class="popContent" [style.display]="typeSettings ? 'initial' : 'none'">
-            <!-- 5 popular vidéo -->
-            <div class="boxPop" *ngFor="let album of popularAlbumTab; let i = index">
-                <p class="boxPopId"><b>{{ i + 1 }}</b></p>
-                <img src="{{album?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
-                <div class="infoPop">
-                    <p class="boxPopTitle">{{album?.title}}</p>
-                    <div class="moreInfoPop">
-                        <p class="boxPopArtist">{{album?.artist}}</p>
-                        <p class="boxPopDate">{{album?.releaseDate}}</p>
-                    </div>
-                </div>
-            </div>            
-        </div>
-
-        <div class="popContent" [style.display]="!typeSettings ? 'initial' : 'none'">
-            <!-- 5 popular video -->
-        </div>
-
-        <div class="categories">
-            <h2>Catégories :</h2>
-            <div class="typeSettings">
-                <h3 class="videoSettings" (click)="categoriesVideo()" [style.border-bottom]="typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="typeCategories ? 'white' : 'grey'">MUSICS</h3>
-                <h3 class="musicSettings" (click)="categoriesMusic()" [style.border-bottom]="!typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="!typeCategories ? 'white' : 'grey'">VIDEOS</h3>
-            </div>
-            <div class="contentCategoriesMusic" [style.display]="typeCategories ? 'block' : 'none'">
-                <section *ngFor="let category of tabCategories" 
-                         class="boxCategories" 
-                         (click)="addCategory(category?.name)"
-                         [style.background-color]="categoryAddedOrNot(category?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                    <p class="boxCategoriesTitle">{{ category?.name }}</p>
-                    <i class="fa-solid fa-music"></i>
-                </section>
-            </div>            
-        </div>
+<div [style.display]="!doneRequest ? 'block' : 'none'">
+    <div class="waitingScreen">
+        <div class="spinner"></div>
     </div>
-    <div class="content">
-        <div *ngFor="let category of categoryTaked" class="categoryContainer">
-            <h2>{{ category?.category }}</h2> <!-- Affiche le nom de la catégorie -->
-            <div class="allTrack">
-                <div *ngFor="let track of category.tracks" class="boxTrack">
-                    <div class="boxInfoTracks">
-                        <img src="{{track?.albumImageUrl}}" alt="img album">                
-                        <p class="trackName">{{track?.name}}</p>
-                        <div class="boxMoreInfoTracks">
-                            <p class="trackArtist">{{track?.artists[0]}}</p> 
-                            <p class="trackPopularity">{{track?.popularity}}</p>                       
+</div>
+<div [style.display]="doneRequest ? 'block' : 'none'">
+    <div class="navigation">
+        <form class="search-container" [formGroup]="searchForm">
+            <input type="text" placeholder="Rechercher Film ou Série..." formControlName="searchInput">
+            <a href="#">
+                <label (click)="searchRequest()" for="search-box" class="fas fa-search fa-2xl"></label>
+            </a>
+        </form>
+    </div>
+</div>
+<section [style.display]="doneRequest ? 'block' : 'none'">
+    <section class="containerHome">
+        <div class="settings">
+            <h2>Popular :</h2>
+            <div class="typeSettings">
+                <h3 class="videoSettings" (click)="settingsVideo()" [style.border-bottom]="typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="typeSettings ? 'white' : 'grey'">MUSICS</h3>
+                <h3 class="musicSettings" (click)="settingsMusic()" [style.border-bottom]="!typeSettings ? '3px solid #6C3F49' : 'none'" [style.color]="!typeSettings ? 'white' : 'grey'">VIDEOS</h3>
+            </div>
+
+            <div [style.display]="typeSettings ? 'block' : 'none'">
+                <div class="popContent">
+                    <!-- 5 popular vidéo -->
+                    <div class="boxPop" *ngFor="let album of popularAlbumTab; let i = index">
+                        <p class="boxPopId"><b>{{ i + 1 }}</b></p>
+                        <img src="{{album?.albumImage}}" alt="Img Album" class="imgBoxPopVideo">
+                        <div class="infoPop">
+                            <p class="boxPopTitle">{{album?.title}}</p>
+                            <div class="moreInfoPop">
+                                <p class="boxPopArtist">{{album?.artist}}</p>
+                                <p class="boxPopDate">{{album?.releaseDate}}</p>
+                            </div>
+                        </div>
+                    </div>            
+                </div>
+            </div>
+    
+            <div [style.display]="!typeSettings ? 'initial' : 'none'">
+                <div class="popContent">
+                    <!-- 5 popular video -->
+                </div>
+            </div>
+    
+            <div class="categories">
+                <h2>Catégories :</h2>
+                <div class="typeSettings">
+                    <h3 class="videoSettings" (click)="categoriesVideo()" [style.border-bottom]="typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="typeCategories ? 'white' : 'grey'">MUSICS</h3>
+                    <h3 class="musicSettings" (click)="categoriesMusic()" [style.border-bottom]="!typeCategories ? '3px solid #6C3F49' : 'none'" [style.color]="!typeCategories ? 'white' : 'grey'">VIDEOS</h3>
+                </div>
+                <div [style.display]="typeCategories ? 'block' : 'none'">
+                    <div class="contentCategoriesMusic">
+                        <section *ngFor="let category of tabCategories" 
+                                 class="boxCategories" 
+                                 (click)="addCategory(category?.name)"
+                                 [style.background-color]="categoryAddedOrNot(category?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
+                            <p class="boxCategoriesTitle">{{ category?.name }}</p>
+                            <i class="fa-solid fa-music"></i>
+                        </section>
+                    </div>            
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div *ngFor="let category of categoryTaked" class="categoryContainer">
+                <h2>{{ category?.category }}</h2> <!-- Affiche le nom de la catégorie -->
+                <div class="allTrack">
+                    <div *ngFor="let track of category.tracks" class="boxTrack">
+                        <div class="boxInfoTracks">
+                            <img src="{{track?.albumImageUrl}}" alt="img album">                
+                            <p class="trackName">{{track?.name}}</p>
+                            <div class="boxMoreInfoTracks">
+                                <p class="trackArtist">{{track?.artists[0]}}</p> 
+                                <p class="trackPopularity">{{track?.popularity}}</p>                       
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </section>
