@@ -114,46 +114,10 @@ export class HomeComponent {
     });
   }
 
-  tabCategories: any = [];
+  categories: string[] = ['Chill', 'Party', 'Mood', 'Rock']
   // récuper toutes les catégories spotify
   catchAllSpotifyCategories(tokenSpotify: string) {
-    this.http.get<{categories: Category[]}>('http://localhost:3000/api/spotify/categories', {
-      params: { tokenSpotify: tokenSpotify }
-    })
-    .subscribe({
-      next: (response: any) => {
-        this.tabCategories = response
-      },
-      error: (error) => {
-        console.error('Error fetching categories:', error);
-      }
-    });
-    
-    // gestion d'erreur des catégories
-    
-    let errors = ['Made For You', 'New Releases', 'Hip-Hop',
-    'French Variety', 'Charts', 'In the car', 'Dance/Electronic',
-    'Discover', 'R&B', 'K-pop', 'Pop']
-
-    for (let i = 0; i < this.tabCategories.length; i++) {
-      let foundError = false;
-      for (let j = 0; j < errors.length; j++) {
-        if (this.tabCategories[i]?.name === errors[j]) {
-          this.tabCategories.splice(i, 1)
-          i--;
-          foundError = true;
-          break;
-        }
-      }
-      if (foundError) {
-        continue;
-      }
-    }
-    let categories = []
-    for (let i = 0; i < this.tabCategories.length; i++) {
-      categories.push(this.tabCategories[i]?.name)
-    }
-    this.catchAllSpotifyCategoriesTracks(categories)
+    this.catchAllSpotifyCategoriesTracks(this.categories)
   }
 
   tabCategoriesTracks: any = [];
@@ -161,6 +125,7 @@ export class HomeComponent {
   catchAllSpotifyCategoriesTracks(categories: string[]) {
     this.http.get<{token: string}>('http://localhost:3000/api/spotify/connection').pipe(
         switchMap((response) => {
+            console.log("DEBUGGGG")
             if (response.token) {
                 let tokenSpotify = response.token;
                 let params = new HttpParams().append('tokenSpotify', tokenSpotify);
@@ -175,6 +140,7 @@ export class HomeComponent {
         })
     ).subscribe({
         next: (response: any) => {
+            console.log("DEBUGGGG")
             this.tabCategoriesTracks = response
             this.doneRequest = true
         },
@@ -184,9 +150,13 @@ export class HomeComponent {
     });
   }
 
+  searchedTerms : string[] = []
   searchRequest() {
     if (this.searchForm.valid) {
-      console.log("Recherche en cours....")
+      const searchTerm = this.searchForm.value.searchInput
+      this.searchedTerms.push(searchTerm)
+      console.log(this.searchedTerms)
+      this.searchForm.reset()
     }
   }
 

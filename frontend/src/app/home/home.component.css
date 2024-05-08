@@ -17,6 +17,10 @@
     border-radius: 30px;
 }
 
+.search-container a {
+    cursor: pointer;
+}
+
 input[type="text"] {
     padding: 14px;
     padding-left: 25px;
@@ -72,6 +76,7 @@ input[type="text"] {
 }
 
 .content {
+    justify-content: center;
     color: white;
     display: flex;
     width: calc(81vw - 20rem - 3rem);
@@ -217,11 +222,19 @@ input[type="text"] {
 
 .categoryContainer {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-direction: row;
 }
 
 .categoryContainer h2 {
     margin-left:5px;
+    text-align: end;
+    align-items: center;
+    writing-mode:vertical-rl;
+    margin-top: 5px;
+    margin-right: 15px;
+    letter-spacing: 3px;
+    /* transform: rotate(180deg); */
 }
 
 .boxTrack {
@@ -236,6 +249,12 @@ input[type="text"] {
     margin-right: 5px;
     border-radius: 10px;
     width: 130px;
+}
+
+.boxInfoTracks:hover {
+    background-color: rgba(45, 45, 45, 0.5);
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 .boxInfoTracks img {
@@ -277,7 +296,7 @@ input[type="text"] {
 
 .allTrack {
     display: flex;
-    justify-content: start;
+    justify-content: center;
 }
 
 .spinner {
@@ -301,4 +320,34 @@ input[type="text"] {
     to {
         transform: rotate(360deg);
     }
+}
+
+.emptyContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(100vw - 400px);
+    height: 100%;
+}
+
+.emptyContent h1, h2, p {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: "DM Sans", sans-serif;
+    color: white;
+}
+
+.emptyContent h1 {
+    margin-top: 10rem
+}
+
+.emptyContent p {
+    font-size:small;
+    font-weight: 700;
+    color: rgb(194, 38, 38);
+}
+
+.content h2 {
+    text-align: start;
 }

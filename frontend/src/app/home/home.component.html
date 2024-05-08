@@ -7,10 +7,10 @@
 </div>
 <div [style.display]="doneRequest ? 'block' : 'none'">
     <div class="navigation">
-        <form class="search-container" [formGroup]="searchForm">
+        <form class="search-container" [formGroup]="searchForm" (ngSubmit)="searchRequest()">
             <input type="text" placeholder="Rechercher Film ou Série..." formControlName="searchInput">
-            <a href="#">
-                <label (click)="searchRequest()" for="search-box" class="fas fa-search fa-2xl"></label>
+            <a href="#" (click)="searchRequest()">
+                <label for="search-box" class="fas fa-search fa-2xl"></label>
             </a>
         </form>
     </div>
@@ -55,18 +55,25 @@
                 </div>
                 <div [style.display]="typeCategories ? 'block' : 'none'">
                     <div class="contentCategoriesMusic">
-                        <section *ngFor="let category of tabCategories" 
+                        <section *ngFor="let category of categories" 
                                  class="boxCategories" 
-                                 (click)="addCategory(category?.name)"
-                                 [style.background-color]="categoryAddedOrNot(category?.name) ? 'rgba(111, 111, 111, 0.5)' : null">
-                            <p class="boxCategoriesTitle">{{ category?.name }}</p>
+                                 (click)="addCategory(category)"
+                                 [style.background-color]="categoryAddedOrNot(category) ? 'rgba(111, 111, 111, 0.5)' : null">
+                            <p class="boxCategoriesTitle">{{ category }}</p>
                             <i class="fa-solid fa-music"></i>
                         </section>
                     </div>            
                 </div>
             </div>
         </div>
-        <div class="content">
+        <div>
+            <div class="emptyContent" [style.display]="category.length === 0 ? 'block' : 'none'">
+                <h1>Welcome to SPOTIFLYX</h1>
+                <h2>the leader in music-video streaming!</h2>
+                <p>To access available videos/music, choose a category or search directly for the title.</p>
+            </div>
+        </div>
+        <div class="content" [style.display]="category.length > 0 ? 'block' : 'none'">
             <div *ngFor="let category of categoryTaked" class="categoryContainer">
                 <h2>{{ category?.category }}</h2> <!-- Affiche le nom de la catégorie -->
                 <div class="allTrack">

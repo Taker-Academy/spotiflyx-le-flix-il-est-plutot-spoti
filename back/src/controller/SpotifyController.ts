@@ -89,6 +89,8 @@ export class SpotifyController {
     async categoryTracks(request: Request, response: Response) {
         const tokenSpotify = request.query.tokenSpotify;
         const categories = request.query.category;
+
+        console.log(categories)
     
         // s'assurer que categories est toujours un tableau
         const categoriesArray = Array.isArray(categories) ? categories : [categories];
@@ -142,7 +144,7 @@ export class SpotifyController {
             // Envoyer la réponse avec les tracks par catégorie
             response.json(tracksPerCategory);
         } catch (error) {
-            console.error('Error fetching category tracks:', error);
+            console.error('Error fetching category tracks:', categories ,error);
             response.status(500).send('Failed to fetch tracks');
         }
     }
