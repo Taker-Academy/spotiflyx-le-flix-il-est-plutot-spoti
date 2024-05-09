@@ -5,9 +5,12 @@ import { User } from "../entity/User"
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
-const saltRounds = 10;
+import * as multer from 'multer';
+import * as fs from 'fs';
+import * as path from 'path'
+import { profile } from "console";
 
-
+const upload = multer({ storage: multer.memoryStorage() });
 
 export class UserController {
 
@@ -72,8 +75,8 @@ export class UserController {
                 <html>
                 <body style="font-family: Noto Sans, sans-serif; margin: 0; padding: 0px; background-color: white; margin-top: 50px; margin-bottom: 50px">
                     <div style="max-width: 500px; margin: auto; background-color: white; padding: 20px; padding-left: 30px; border: 0.5px solid #ececec; border-radius: 7px">
-                        <div style="font-size: 26px; color: #020202; font-weight: 600; margin-bottom: 30px; margin-top: 40px">
-                            <strong>👋 Coucou</strong>
+                    <div style="font-size: 26px; color: #020202; font-weight: 600; margin-bottom: 30px; margin-top: 40px">
+                    <strong>👋 Coucou</strong>
                             <a style="text-decoration:underline; color:rgb(0, 47, 255)">${email}</a>
                         </div>
                         <div style="margin-top: 20px; font-size: 15px; line-height: 1.6; color: #858585">
@@ -93,7 +96,7 @@ export class UserController {
                 </body>
                 </html>
                 `, // Corps de l'email
-            };    
+            };
             // Envoyer l'email
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
@@ -101,8 +104,6 @@ export class UserController {
                 }
                 console.log(`Message sent: ${info.messageId}`);
             });
-            
-
             console.log("database | Register request OK")
             const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, '1234', { expiresIn: '1h' });
             response.status(200).json({ token: token });
@@ -150,20 +151,56 @@ export class UserController {
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
-                response.status(404).json({ message: "Utilisateur non trouvé." });
-                return;
+              response.status(404).json({ message: "Utilisateur non trouvé." });
+              return;
             }
-            const { username, firstName, email, company } = request.body;
-            if (!username && !firstName && !email && !company) {
-                response.status(400).json({ message: "Aucun champ à mettre à jour." });
-                return;
+            const { username, firstName, email, company, profileImage } = request.body;
+            if (!username && !firstName && !email && !company && !request.profileImage) {
+              response.status(400).json({ message: "Aucun champ à mettre à jour." });
+              return;
             }
             if (username) user.username = username;
             if (firstName) user.firstName = firstName;
             if (email) user.email = email;
             if (company) user.company = company;
+            if (profileImage) {
+                const imageBuffer = Buffer.from(profileImage.split(',')[1], 'base64');
+                const dirPath = path.join(__dirname, 'uploads', 'profileImages');
+                const filePath = path.join(dirPath, `${user.id}.png`);
+                fs.mkdirSync(dirPath, { recursive: true });
+                fs.writeFileSync(filePath, imageBuffer);
+                user.profileImage = `/profileImages/${user.id}.png`;
+            }
             const updatedUser = await this.userRepository.save(user);
             response.status(200).json(updatedUser);
+            return;
+          } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
+          }
+    }
+
+    async printGeneralValues(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            const imagePath = path.join(__dirname, 'uploads', 'profileImages', `${userId}.png`);
+            const image = fs.readFileSync(imagePath);
+            const base64Image = Buffer.from(image).toString('base64');
+            response.status(200).json({
+                profileImage: base64Image,
+                username: user.username,
+                firstName: user.firstName,
+                email: user.email,
+                company: user.company
+            });
             return;
         } catch (error) {
             console.error(error);
@@ -236,6 +273,30 @@ export class UserController {
         }
     }
 
+    async printInfoValues(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            response.status(200).json({
+                bio: user.bio,
+                birthday: user.birthday,
+                phone: user.phone,
+                website: user.website
+            });
+            return;
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
+        }
+    }
+
     async updateSocialLinks(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
@@ -266,6 +327,30 @@ export class UserController {
         }
     }
 
+    async printSocialLinksValues(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            response.status(200).json({
+                Twitter: user.Twitter,
+                Facebook: user.Facebook,
+                Google: user.Google,
+                LinkedIn: user.LinkedIn,
+                Instagram: user.Instagram
+            });
+            return;
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: "Erreur interne du serveur." });
+            return;
+        }
+    }
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)
 

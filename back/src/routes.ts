@@ -1,8 +1,11 @@
 import { SpotifyController } from "./controller/SpotifyController";
 import { UserController } from "./controller/UserController"
+import * as multer from 'multer';
 
 const userController = new UserController();
 const spotifyController = new SpotifyController();
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 export const Routes = [{
     method: "post",
@@ -23,7 +26,8 @@ export const Routes = [{
     method: "patch",
     route: "/profile",
     controller: userController,
-    action: "updateProfile"
+    action: "updateProfile",
+    middleware: upload.single('profileImage')
 }, {
     method: "patch",
     route: "/profile/change-password",
@@ -39,6 +43,21 @@ export const Routes = [{
     route: "/profile/account-social-links",
     controller: userController,
     action: "updateSocialLinks"
+}, {
+    method: "get",
+    route: "/profile",
+    controller: userController,
+    action: "printGeneralValues"
+}, {
+    method: "get",
+    route: "/profile/account-info",
+    controller: userController,
+    action: "printInfoValues"
+}, {
+    method: "get",
+    route: "/profile/account-social-links",
+    controller: userController,
+    action: "printSocialLinksValues"
 }, {
     method: "post",
     route: "/supportEmail",
@@ -73,6 +92,5 @@ export const Routes = [{
     method: "get",
     route: "/api/spotify/search/track",
     controller: spotifyController,
-    action: "searchTrack"
-}
-]
+    action: "getUserInfo"
+}]
