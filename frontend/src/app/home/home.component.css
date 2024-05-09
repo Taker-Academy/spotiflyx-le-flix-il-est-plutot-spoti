@@ -75,14 +75,6 @@ input[type="text"] {
     color: white;
 }
 
-.content {
-    justify-content: center;
-    color: white;
-    display: flex;
-    width: calc(81vw - 20rem - 3rem);
-    /* background-color: rgba(25, 236, 6, 0.1); */
-}
-
 .content h2, .settings h2 {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
@@ -292,6 +284,20 @@ input[type="text"] {
 .content {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    color: white;
+    display: flex;
+    width: calc(81vw - 20rem - 3rem);
+}
+
+.contentSearch {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: calc(81vw - 20rem - 3rem)
+    color: white;
+    width: calc(81vw - 20rem - 3rem);
+    flex-wrap: wrap;
 }
 
 .allTrack {
@@ -350,4 +356,17 @@ input[type="text"] {
 
 .content h2 {
     text-align: start;
+}
+
+.trackContainer {
+    display: flex;
+    width: auto;
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }

@@ -67,22 +67,40 @@
             </div>
         </div>
         <div>
-            <div class="emptyContent" [style.display]="category.length === 0 ? 'block' : 'none'">
-                <h1>Welcome to SPOTIFLYX</h1>
+            <div class="emptyContent" [style.display]="category.length === 0 && search.length === 0 ? 'block' : 'none'">                <h1>Welcome to SPOTIFLYX</h1>
                 <h2>the leader in music-video streaming!</h2>
                 <p>To access available videos/music, choose a category or search directly for the title.</p>
             </div>
         </div>
-        <div class="content" [style.display]="category.length > 0 ? 'block' : 'none'">
-            <div *ngFor="let category of categoryTaked" class="categoryContainer">
-                <h2>{{ category?.category }}</h2> <!-- Affiche le nom de la catégorie -->
-                <div class="allTrack">
-                    <div *ngFor="let track of category.tracks" class="boxTrack">
+        <div class="container">
+            <div class="content" [style.display]="category.length > 0 ? 'block' : 'none'">
+                <div *ngFor="let category of categoryTaked" class="categoryContainer">
+                    <h2>{{ category?.category }}</h2> <!-- Affiche le nom de la catégorie -->
+                    <div class="allTrack">
+                        <div *ngFor="let track of category.tracks" class="boxTrack">
+                            <div class="boxInfoTracks">
+                                <img src="{{track?.albumImageUrl}}" alt="img album">                
+                                <p class="trackName">{{track?.name}}</p>
+                                <div class="boxMoreInfoTracks">
+                                    <p class="trackArtist">{{track?.artists[0]}}</p> 
+                                    <p class="trackPopularity">{{track?.popularity}}</p>                       
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div [style.display]="search.length > 0 ? 'block' : 'none'"
+                [style.justify-content]="search.length > 0 ? 'center' : 'flex-start'"
+                style="display: flex; width: 100%; justify-content: center;"
+                class="test">
+                <div class="contentSearch">
+                    <div *ngFor="let track of search"> <!-- Renommé pour clarté -->
                         <div class="boxInfoTracks">
-                            <img src="{{track?.albumImageUrl}}" alt="img album">                
+                            <img src="{{track?.album?.images[0]?.url}}" alt="img album">
                             <p class="trackName">{{track?.name}}</p>
                             <div class="boxMoreInfoTracks">
-                                <p class="trackArtist">{{track?.artists[0]}}</p> 
+                                <p class="trackArtist">{{track?.artists[0]?.name}}</p> 
                                 <p class="trackPopularity">{{track?.popularity}}</p>                       
                             </div>
                         </div>

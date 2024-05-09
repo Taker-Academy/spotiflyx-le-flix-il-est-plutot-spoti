@@ -125,7 +125,6 @@ export class HomeComponent {
   catchAllSpotifyCategoriesTracks(categories: string[]) {
     this.http.get<{token: string}>('http://localhost:3000/api/spotify/connection').pipe(
         switchMap((response) => {
-            console.log("DEBUGGGG")
             if (response.token) {
                 let tokenSpotify = response.token;
                 let params = new HttpParams().append('tokenSpotify', tokenSpotify);
@@ -140,7 +139,6 @@ export class HomeComponent {
         })
     ).subscribe({
         next: (response: any) => {
-            console.log("DEBUGGGG")
             this.tabCategoriesTracks = response
             this.doneRequest = true
         },
@@ -151,12 +149,26 @@ export class HomeComponent {
   }
 
   searchedTerms : string[] = []
+  search: any[] = []
   searchRequest() {
     if (this.searchForm.valid) {
       const searchTerm = this.searchForm.value.searchInput
       this.searchedTerms.push(searchTerm)
-      console.log(this.searchedTerms)
       this.searchForm.reset()
+      const params = new HttpParams().set('query', searchTerm);
+
+      this.http.get<{searchTab: any}>('http://localhost:3000/api/spotify/search/track', {
+        params: {input: searchTerm}
+      })
+      .subscribe({
+        next: (response: any) => {
+          this.search = response
+          console.log(this.search)
+        },
+        error: (error) => {
+          console.error("Error Search function", error)
+        }
+      });
     }
   }
 
@@ -219,4 +231,6 @@ export class HomeComponent {
       return true
     }
   }
+
+  
 }
