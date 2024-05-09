@@ -9,6 +9,12 @@ import { HeaderComponent } from '../../header/header.component';
 interface UpdateProfileResponse {
   authToken: string;
 }
+interface UserInfoProfile {
+  bio: string;
+  birthday: string;
+  phone: string;
+  website: string;
+}
 @Component({
   selector: 'app-account-info',
   standalone: true,
@@ -37,6 +43,33 @@ export class AccountInfoComponent {
         phone: ['', Validators.pattern('^[0-9]*$')],
         website: ['']
       });
+    }
+
+    ngOnInit(): void {
+      this.printValues();
+    }
+
+    printValues(): void {
+      const token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      this.http.get<UserInfoProfile>('http://localhost:3000/profile/account-info', { headers })
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.profileForm.patchValue({
+                bio: response.bio,
+                birthday: response.birthday,
+                phone: response.phone,
+                website: response.website
+              });
+            } else {
+              console.log('No user data in response');
+            }
+          },
+          error: (error) => {
+            console.log('Error:', error);
+          }
+        });
     }
 
     saveChanges() {

@@ -9,6 +9,14 @@ import { HeaderComponent } from '../header/header.component';
 interface UpdateProfileResponse {
   authToken: string;
 }
+interface UserProfile {
+  id: number;
+  profileImage: string;
+  username: string;
+  firstName: string;
+  email: string;
+  company: string;
+}
 
 @Component({
   selector: 'app-profile-page',
@@ -28,6 +36,8 @@ interface UpdateProfileResponse {
   styleUrl: './profile-page.component.css'
 })
 export class ProfilePageComponent {
+  profileImage: string = "../../../../../spotiflyx-le-flix-il-est-plutot-spoti/back/src/controller/uploads/profileImages/1.png";
+  selectedFile: File;
   profileForm: FormGroup;
   emailProtectionLink = 'https://example.com';
   emailWhenCommented: boolean;
@@ -38,11 +48,60 @@ export class ProfilePageComponent {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
     this.profileForm = this.formBuilder.group({
+      id: '',
       username: [''],
       firstName: [''],
-      email: ['', Validators.email],
-      company: ['']
+      email: [''],
+      company: [''],
+      profileImage: ''
     });
+  }
+
+  ngOnInit(): void {
+    this.printValues();
+    console.log(this.profileImage);
+  }
+
+  printValues(): void {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get<UserProfile>('http://localhost:3000/profile', { headers })
+    .subscribe({
+      next: (response) => {
+        if (response) {
+          this.profileForm.patchValue({
+            id : response.id,
+            username: response.username,
+            firstName: response.firstName,
+            email: response.email,
+            company: response.company
+          });
+          this.profileImage = `../../../../../spotiflyx-le-flix-il-est-plutot-spoti/back/src/controller/uploads/profileImages/${response.id}.png`;
+        } else {
+          console.log('No user data in response');
+        }
+      },
+      error: (error) => {
+        console.log('Error:', error);
+      }
+    });
+  }
+
+  onFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    this.selectedFile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target) {
+        // console.log(e.target)
+        this.profileImage = e.target.result as string;
+        this.profileForm.patchValue({
+          profileImage: e.target.result
+        });
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
   saveChanges() {
@@ -50,6 +109,7 @@ export class ProfilePageComponent {
       console.log("frontend | Try submit update request")
       const token = localStorage.getItem('token');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      console.log(this.profileForm)
       this.http.patch<UpdateProfileResponse>('http://localhost:3000/profile', this.profileForm.value, { headers })
         .subscribe({
           next: (response) => {

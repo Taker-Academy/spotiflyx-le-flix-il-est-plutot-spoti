@@ -9,6 +9,13 @@ import { HeaderComponent } from '../../header/header.component';
 interface UpdateProfileResponse {
   authToken: string;
 }
+interface UserSocialLinksProfile {
+  Twitter: string;
+  Facebook: string;
+  Google: string;
+  LinkedIn: string;
+  Instagram: string;
+}
 @Component({
   selector: 'app-account-social-links',
   standalone: true,
@@ -38,6 +45,34 @@ export class AccountSocialLinksComponent {
       LinkedIn: [''],
       Instagram: ['']
     });
+  }
+
+  ngOnInit(): void {
+    this.printValues();
+  }
+
+  printValues(): void {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get<UserSocialLinksProfile>('http://localhost:3000/profile/account-social-links', { headers })
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.profileForm.patchValue({
+              Twitter: response.Twitter,
+              Facebook: response.Facebook,
+              Google: response.Google,
+              LinkedIn: response.LinkedIn,
+              Instagram: response.Instagram
+            });
+          } else {
+            console.log('No user data in response');
+          }
+        },
+        error: (error) => {
+          console.log('Error:', error);
+        }
+      });
   }
 
   saveChanges() {

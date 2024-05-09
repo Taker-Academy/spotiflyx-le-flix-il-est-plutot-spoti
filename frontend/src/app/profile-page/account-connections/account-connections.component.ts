@@ -40,11 +40,11 @@ export class AccountConnectionsComponent {
       // Ajoutez votre logique pour supprimer la connexion Google ici...
     }
 
-    connectToFacebook(): void {
+    connectToSpotify(): void {
       // Ajoutez votre logique pour se connecter à Facebook ici...
     }
 
-    connectToInstagram(): void {
+    connectToYoutube(): void {
       // Ajoutez votre logique pour se connecter à Instagram ici...
     }
 
