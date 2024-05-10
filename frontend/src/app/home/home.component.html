@@ -37,16 +37,16 @@
                                 <p class="boxPopDate">{{album?.releaseDate}}</p>
                             </div>
                         </div>
-                    </div>            
+                    </div>
                 </div>
             </div>
-    
+
             <div [style.display]="!typeSettings ? 'initial' : 'none'">
                 <div class="popContent">
                     <!-- 5 popular video -->
                 </div>
             </div>
-    
+
             <div class="categories">
                 <h2>Catégories :</h2>
                 <div class="typeSettings">
@@ -55,14 +55,14 @@
                 </div>
                 <div [style.display]="typeCategories ? 'block' : 'none'">
                     <div class="contentCategoriesMusic">
-                        <section *ngFor="let category of categories" 
-                                 class="boxCategories" 
+                        <section *ngFor="let category of categories"
+                                 class="boxCategories"
                                  (click)="addCategory(category)"
                                  [style.background-color]="categoryAddedOrNot(category) ? 'rgba(111, 111, 111, 0.5)' : null">
                             <p class="boxCategoriesTitle">{{ category }}</p>
                             <i class="fa-solid fa-music"></i>
                         </section>
-                    </div>            
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,11 +79,11 @@
                     <div class="allTrack">
                         <div *ngFor="let track of category.tracks" class="boxTrack">
                             <div class="boxInfoTracks">
-                                <img src="{{track?.albumImageUrl}}" alt="img album">                
+                                <img src="{{track?.albumImageUrl}}" alt="img album">
                                 <p class="trackName">{{track?.name}}</p>
                                 <div class="boxMoreInfoTracks">
-                                    <p class="trackArtist">{{track?.artists[0]}}</p> 
-                                    <p class="trackPopularity">{{track?.popularity}}</p>                       
+                                    <p class="trackArtist">{{track?.artists[0]}}</p>
+                                    <p class="trackPopularity">{{track?.popularity}}</p>
                                 </div>
                             </div>
                         </div>
@@ -100,8 +100,8 @@
                             <img src="{{track?.album?.images[0]?.url}}" alt="img album">
                             <p class="trackName">{{track?.name}}</p>
                             <div class="boxMoreInfoTracks">
-                                <p class="trackArtist">{{track?.artists[0]?.name}}</p> 
-                                <p class="trackPopularity">{{track?.popularity}}</p>                       
+                                <p class="trackArtist">{{track?.artists[0]?.name}}</p>
+                                <p class="trackPopularity">{{track?.popularity}}</p>
                             </div>
                         </div>
                     </div>

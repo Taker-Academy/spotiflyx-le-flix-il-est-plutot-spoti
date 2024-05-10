@@ -21,7 +21,7 @@ services:
     environment:
       DATABASE_URL: postgres://db_user:db_password@postgres/db_name
     volumes:
-      - /home/jules/Documents/TakerAcademy/spotiflyx/back:/app
+      - /home/mathieu/Taker-Academy/project-4/spotiflyx-le-flix-il-est-plutot-spoti/back:/app
     ports:
       - "3000:3000"
     command: npm run start
@@ -34,8 +34,8 @@ services:
   #   build: ./frontend
   #   container_name: spotiflyx_frontend
   #   ports:
-  #     - "80:80"
-  #   command: npm start
+  #     - "4200:4200"
+  #   command: npm run start
   #   depends_on:
   #     - backend
   #   networks:

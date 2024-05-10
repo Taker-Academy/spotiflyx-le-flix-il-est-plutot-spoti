@@ -15,6 +15,8 @@ export class User {
     @Column()
     password: string
     @Column({ default: '' })
+    profileImage: string;
+    @Column({ default: '' })
     username: string;
     @Column({ default: '' })
     company: string;
