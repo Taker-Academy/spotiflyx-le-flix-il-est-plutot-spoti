@@ -96,7 +96,7 @@
                 class="test">
                 <div class="contentSearch">
                     <div *ngFor="let track of search"> <!-- Renommé pour clarté -->
-                        <div class="boxInfoTracks">
+                        <div class="boxInfoTracks" onmouseover="boolButton()" onmouseout="boolButtonLeft()">
                             <img src="{{track?.album?.images[0]?.url}}" alt="img album">
                             <p class="trackName">{{track?.name}}</p>
                             <div class="boxMoreInfoTracks">
