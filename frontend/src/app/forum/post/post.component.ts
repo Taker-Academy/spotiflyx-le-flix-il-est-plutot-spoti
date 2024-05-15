@@ -54,13 +54,10 @@ export class PostComponent {
   saveChanges() {
     if (this.PostForm.valid) {
       console.log("frontend | Try submit update request")
-      const token = localStorage.getItem('token');
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      console.log(this.PostForm)
-      this.http.patch<UpdatePostResponse>('http://localhost:3000/forum/post', this.PostForm.value, { headers })
+      this.http.post<UpdatePostResponse>('http://localhost:3000/forum/post', this.PostForm.value)
         .subscribe({
           next: (response) => {
-            if (response && response.authToken) {
+            if (response.authToken) {
               localStorage.setItem('token', response.authToken);
               this.navigateTo('forum');
             } else {
@@ -68,11 +65,9 @@ export class PostComponent {
             }
           },
           error: (error) => {
-            console.log('Error:', error);
+            console.log(error);
           }
         });
-    } else {
-      console.log('Form is invalid');
     }
   }
 
