@@ -24,7 +24,7 @@ export class YoutubeController {
     //             const video = res.data.items[0];
     //             const details = {
     //                 title: video.snippet.title,
-    //                 description: video.snippet.description,
+    //                 description: video.snippet.descrip   tion,
     //                 videoId: video.id,
     //                 thumbnail: video.snippet.thumbnails.default.url,
     //                 viewCount: video.statistics.viewCount,
