@@ -38,4 +38,6 @@ export class User {
     LinkedIn: string;
     @Column({ default: '' })
     Instagram: string;
+    @Column("simple-array", { default: '{}' })
+    favoriteMusicId: string[];
 }

@@ -256,7 +256,6 @@ input[type="text"] {
 
 .boxInfoTracks:hover {
     background-color: rgba(45, 45, 45, 0.5);
-    transform: scale(1.1);
     cursor: pointer;
 }
 
@@ -305,7 +304,6 @@ input[type="text"] {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* margin-left: calc(81vw - 20rem - 3rem); */
     color: white;
     width: calc(81vw - 20rem - 3rem);
     flex-wrap: wrap;
@@ -367,4 +365,210 @@ input[type="text"] {
 
 .content h2 {
     text-align: start;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden; /* Ensure the button does not overflow the container */
+}
+
+.overlay-button {
+    position: absolute;
+    margin: 0;
+    top: 73%; /* Start the button from below the container */
+    left: 80%;
+    transform: translate(-50%, 0); /* Adjust horizontally to the center */
+    background-color: #1ED760;
+    color: black;
+    border: none;
+    padding: 10px 11px;
+    border-radius: 200px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.image-container:hover .overlay-button:hover {
+    color: white;
+    cursor: default;
+}
+
+.image-container:hover .overlay-button {
+    opacity: 1;
+    transform: translate(-50%, -25%); /* Move the button into view */
+}
+
+.image-container .overlay-button {
+    animation: fadeInOut 0.5s;
+}
+
+@keyframes fadeInOut {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 25%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -25%);
+    }
+}
+
+@keyframes slideUpFadeIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+}
+
+@keyframes slideDownFadeOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+.musicBar {
+    position: fixed;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.musicBar.show {
+    display: flex;
+    flex-direction: space-between;
+    animation: slideUpFadeIn 0.5s forwards;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.musicBar.hide {
+    display: block;
+    animation: slideDownFadeOut 0.5s forwards;
+}
+
+.progress-container {
+    flex: 1;
+    height: 3px;
+    background-color: #555;
+    width: 300px;
+    border-radius: 5px;
+    margin: 0 10px;
+    overflow: hidden;
+  }
+
+.progress-bar {
+    height: 100%;
+    background-color: white;
+    width: 50px;
+    transition: width 0.1s;
+}
+
+.barPlay {
+    display: flex;
+    flex-direction: column;
+}
+.barPlayBottom {
+    display: flex;
+    align-items: center;
+}
+
+.barPlayBottom p {
+    margin: 0;
+    font-size: 8px;
+    font-weight: 400;
+    color: white;
+}
+
+.playButton i {
+    margin: 0;
+    width: 30px;
+    padding: 14px 11px;
+    border-radius: 200px;
+    background-color: white;
+}
+
+.barPlayTop {
+    margin-bottom: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nextPrevButton {
+    color: #8e8d8d;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: 0.1s;
+}
+.nextPrevButton:hover {
+    color: white;
+}
+.fa-backward-step {
+    margin-right: 13px;
+}
+.fa-forward-step {
+    margin-left: 13px;
+}
+.barInfoMusic {
+    width: 250px;
+    display: flex;
+    align-items: center;
+}
+.barInfoMusic img{
+    width: 50px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+.barInfoMusicArtist {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-left: 10px;
+}
+.barInfoMusicArtist p {
+    margin: 0;
+    font-size: 8px;
+}
+.barArtistName {
+    color: #8e8d8d;
+    padding-top: 5px;
+}
+.barName {
+    font-weight: 700;
+    color: white;
+}
+
+.barSettings {
+    width: 250px;
+}
+
+.fa-bookmark {
+    margin-left: 30px;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.fa-bookmark:hover {
+    color: rgb(243, 251, 5);
+}
+
+.favorites {
+    margin-top: 30px;
+    height: 400px;
 }

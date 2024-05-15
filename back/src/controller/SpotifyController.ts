@@ -4,9 +4,12 @@ import { Repository } from 'typeorm';
 import { User } from "../entity/User"
 import axios from 'axios';
 const Spotify = require('node-spotify-api');
+import * as jwt from 'jsonwebtoken';
 
 const client_id: string = 'a82c9a8de55d4ade8fe892edad84ed6c';
 const client_secret: string = 'd0097c1aa55e4e02af5695a3fd7aac63';
+
+const player = require('play-sound')();
 
 const spotify = new Spotify({
     id: client_id,
@@ -138,6 +141,8 @@ export class SpotifyController {
     }
     async searchTrack(request: Request, response: Response) {
         try {
+            console.log('searching for track')
+            console.log(request.query.input)
             spotify.search({ type: 'track', query: request.query.input, limit: 15 }, function(err, data) {
                 if (err) {
                   return console.log('Erreur lors de la récupération des données : ' + err);
@@ -149,4 +154,62 @@ export class SpotifyController {
             response.status(500).send('Failed to fetch research')
         }
     }
+
+    async listenTrack(request: Request, response: Response) {
+        const trackId = request.body.params.input
+
+        spotify
+        .request(`https://api.spotify.com/v1/tracks/${trackId}`)
+        .then(function(data) {
+            console.log('Les informations de la piste sont les suivantes : ', data);
+
+            const previewUrl = data.preview_url;
+            if (previewUrl) {
+                console.log('URL de prévisualisation :', previewUrl);
+            player.play(previewUrl, function(err) {
+                if (err) {
+                    console.error('Erreur lors de la lecture de l\'extrait audio :', err);
+                } else {
+                    console.log('Lecture de l\'extrait audio...')
+                    response.json({previewUrl})
+                }
+            });
+            } else {
+                console.log('Aucun extrait disponible pour cette piste.');
+            }
+        })
+        .catch(function(err) {
+            console.error('Une erreur est survenue !', err);
+        });
+    }
+
+    async delFavoriteMusic(request, response, next) {
+        try {
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+
+            const favoriteMusicId = request.body.favoriteMusicId;
+            if (!favoriteMusicId) {
+                response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
+                return;
+            }
+
+            user.favoriteMusicId = user.favoriteMusicId.filter(music => music !== favoriteMusicId);
+            await this.userRepository.save(user);
+
+            console.log('Musique retirée des favoris.')
+            response.status(200).json({ message: 'Musique retirée des favoris.' });
+            return;
+        } catch (error) {
+            response.status(500).json({ error: 'Erreur interne du serveur.' });
+            return;
+        }
+    }
+
 }

@@ -113,6 +113,21 @@ export const Routes = [{
     controller: spotifyController,
     action: "searchTrack"
 }, {
+    method: "post",
+    route: "/api/spotify/listen/track",
+    controller: spotifyController,
+    action: "listenTrack"
+}, {
+    method: "post",
+    route: "/api/spotify/favorites/add",
+    controller: userController,
+    action: "newFavoriteMusic"
+}, {
+    method: "post",
+    route: "/api/spotify/favorites/del",
+    controller: spotifyController,
+    action: "delFavoriteMusic"
+}, {
     method: "get",
     route: "/api/spotify/search/track",
     controller: spotifyController,
@@ -122,4 +137,5 @@ export const Routes = [{
     route: "/forum/post",
     controller: postController,
     action: "createPost",
-}]
+}
+]

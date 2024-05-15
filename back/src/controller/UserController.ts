@@ -408,4 +408,37 @@ export class UserController {
             return;
         }
     }
+
+    async newFavoriteMusic(request: Request, response: Response, next: NextFunction) {
+        try {
+            console.log("Ajout d'une musique aux favoris.")
+            const token = request.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                console.log("Utilisateur non trouvé.")
+                response.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+
+            const favoriteMusicId = request.body.favoriteMusicId;
+            if (!favoriteMusicId) {
+                console.log("Mauvaise requête, paramètres manquants ou invalides.")
+                response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
+                return;
+            }
+
+            user.favoriteMusicId.push(favoriteMusicId);
+            await this.userRepository.save(user);
+
+            console.log('Musique ajoutée aux favoris.')
+            response.status(200).json({ message: 'Musique ajoutée aux favoris.' });
+            return;
+        } catch (error) {
+            console.log(error);
+            response.status(500).json({ error: 'Erreur interne du serveur.' });
+            return;
+        }
+    }
 }

@@ -4,4 +4,5 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
+RUN apt-get update && apt-get install -y mplayer
 CMD ["npm", "run", "start"]
