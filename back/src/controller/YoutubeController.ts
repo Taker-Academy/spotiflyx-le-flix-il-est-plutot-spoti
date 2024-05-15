@@ -10,25 +10,6 @@ const apiKey: string = 'AIzaSyCV9lBY6woAh7yPvx5o_jNpeOzFXVCD7u8';
 export class YoutubeController {
     private userRepository = AppDataSource.getRepository(User)
 
-    // async connectYoutubeAPI(request: Request, response: Response) {
-    //     const data = {
-    //         client_id: '824180368949-tssbjqffhjmb43ft55udfdrq6etfj8ep.apps.googleusercontent.com',
-    //         client_secret: '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',
-    //         redirect_uri:'http://localhost:4200/home',
-    //         grant_type: 'authorization_code',
-    //         code: request.query.code,
-    //     };
-
-    //     try {
-    //         const res = await axios.post('https://oauth2.googleapis.com/token', querystring.stringify(data));
-    //         const token = res.data.access_token;
-    //         response.json({token});
-    //     } catch(error) {
-    //         console.error('Error fetching token:', error);
-    //         response.status(500).json({ error: 'Internal Server Error' });
-    //     }
-    // }
-
     async getVideoDetails(request: Request, response: Response) {
         const videoId = request.query.videoId;
         try {
