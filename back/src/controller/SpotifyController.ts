@@ -5,16 +5,21 @@ import { User } from "../entity/User"
 import axios from 'axios';
 const Spotify = require('node-spotify-api');
 import * as jwt from 'jsonwebtoken';
+const dotenv = require('dotenv');
 
-const client_id: string = 'a82c9a8de55d4ade8fe892edad84ed6c';
-const client_secret: string = 'd0097c1aa55e4e02af5695a3fd7aac63';
+// Charger les variables d'environnement depuis le fichier .env
+dotenv.config();
+
+// Utiliser les variables d'environnement
+const client_id: string = process.env.SPOTIFY_CLIENT_ID || '';
+const client_secret: string = process.env.SPOTIFY_CLIENT_SECRET || '';
 
 const player = require('play-sound')();
 
 const spotify = new Spotify({
     id: client_id,
     secret: client_secret
-  });
+});
 
 export class SpotifyController {
     private userRepository = AppDataSource.getRepository(User)
@@ -103,20 +108,19 @@ export class SpotifyController {
                 let tracks = [];
                 // Parcourir les playlists et obtenir les tracks
                 for (let playlist of playlistsRes.data.playlists.items) {
-                    if (tracks.length >= 5) break; // Arrêter si nous avons déjà 5 tracks
+                    if (tracks.length >= 5) break;
                     const tracksUrl = `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`;
                     const trackRes = await axios.get(tracksUrl, {
                         headers: { 'Authorization': `Bearer ${tokenSpotify}` }
                     });
-                    // Ajouter les tracks au tableau jusqu'à atteindre 5
                     trackRes.data.items.forEach(item => {
                         if (tracks.length < 5 && item.track) {
                             tracks.push({
                                 name: item.track.name,
                                 id: item.track.id,
-                                artists: item.track.artists.map(artist => artist.name), // Liste des noms des artistes
+                                artists: item.track.artists.map(artist => artist.name),
                                 albumName: item.track.album.name,
-                                albumImageUrl: item.track.album.images[0]?.url, // Image de l'album
+                                albumImageUrl: item.track.album.images[0]?.url,
                                 duration_ms: item.track.duration_ms,
                                 popularity: item.track.popularity,
                                 preview_url: item.track.preview_url,
@@ -126,13 +130,11 @@ export class SpotifyController {
                         }
                     });
                 }
-                // Ajouter les résultats pour la catégorie actuelle
                 tracksPerCategory.push({
                     category: category,
                     tracks: tracks
                 });
             }
-            // Envoyer la réponse avec les tracks par catégorie
             response.json(tracksPerCategory);
         } catch (error) {
             console.error('Error fetching category tracks:', categories ,error);
@@ -141,8 +143,6 @@ export class SpotifyController {
     }
     async searchTrack(request: Request, response: Response) {
         try {
-            console.log('searching for track')
-            console.log(request.query.input)
             spotify.search({ type: 'track', query: request.query.input, limit: 15 }, function(err, data) {
                 if (err) {
                   return console.log('Erreur lors de la récupération des données : ' + err);
@@ -150,7 +150,6 @@ export class SpotifyController {
                 response.json(data.tracks.items.map(track => track))
             });
         } catch (error) {
-            console.log('error feching research')
             response.status(500).send('Failed to fetch research')
         }
     }
@@ -161,16 +160,13 @@ export class SpotifyController {
         spotify
         .request(`https://api.spotify.com/v1/tracks/${trackId}`)
         .then(function(data) {
-            console.log('Les informations de la piste sont les suivantes : ', data);
 
             const previewUrl = data.preview_url;
             if (previewUrl) {
-                console.log('URL de prévisualisation :', previewUrl);
             player.play(previewUrl, function(err) {
                 if (err) {
                     console.error('Erreur lors de la lecture de l\'extrait audio :', err);
                 } else {
-                    console.log('Lecture de l\'extrait audio...')
                     response.json({previewUrl})
                 }
             });
@@ -186,7 +182,7 @@ export class SpotifyController {
     async delFavoriteMusic(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -203,7 +199,6 @@ export class SpotifyController {
             user.favoriteMusicId = user.favoriteMusicId.filter(music => music !== favoriteMusicId);
             await this.userRepository.save(user);
 
-            console.log('Musique retirée des favoris.')
             response.status(200).json({ message: 'Musique retirée des favoris.' });
             return;
         } catch (error) {
