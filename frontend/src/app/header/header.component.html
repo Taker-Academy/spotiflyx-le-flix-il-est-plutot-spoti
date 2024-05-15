@@ -7,7 +7,12 @@
         <a routerLink="/home" (click)="navigateTo('/home')">Home</a>
         <a routerLink="/about">About</a>
         <a routerLink="/services">Services</a>
-        <a>EN</a>
+        <div class="dropdown">
+          <a routerLink="/forum" class="dropbtn" (click)="navigateTo('/forum')">Forum</a>
+          <div class="dropdown-content">
+            <a routerLink="/forum/post" (click)="navigateTo('/forum/post')">Post</a>
+          </div>
+        </div>
       </nav>
       <div class="icons">
         <div class="search-form" id="search-form">

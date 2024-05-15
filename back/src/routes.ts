@@ -1,9 +1,13 @@
 import { SpotifyController } from "./controller/SpotifyController";
+import { YoutubeController } from "./controller/YoutubeController";
 import { UserController } from "./controller/UserController"
+import { PostController } from "./controller/PostController";
 import * as multer from 'multer';
 
 const userController = new UserController();
 const spotifyController = new SpotifyController();
+const youtubeController = new YoutubeController();
+const postController = new PostController();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -70,6 +74,11 @@ export const Routes = [{
     action: "connectSpotifyAPI"
 }, {
     method: "get",
+    route: "/api/youtube/trending",
+    controller: youtubeController,
+    action: "getPopularVideos"
+}, {
+    method: "get",
     route: "/api/spotify/popular-content",
     controller: spotifyController,
     action: "popularContent"
@@ -78,6 +87,16 @@ export const Routes = [{
     route: "/api/spotify/categories",
     controller: spotifyController,
     action: "allCategories"
+}, {
+    method: "get",
+    route: "/api/youtube/categories",
+    controller: youtubeController,
+    action: "allCategoriesYoutube"
+}, {
+    method: "get",
+    route: "/api/youtube/categories/videos",
+    controller: youtubeController,
+    action: "categoryVideos"
 }, {
     method: "get",
     route: "/api/spotify/categories/tracks",
@@ -108,5 +127,15 @@ export const Routes = [{
     route: "/api/spotify/favorites/del",
     controller: spotifyController,
     action: "delFavoriteMusic"
+}, {
+    method: "get",
+    route: "/api/spotify/search/track",
+    controller: spotifyController,
+    action: "getUserInfo"
+}, {
+    method: "post",
+    route: "/forum/post",
+    controller: postController,
+    action: "createPost",
 }
 ]

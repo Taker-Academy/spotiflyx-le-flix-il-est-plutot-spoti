@@ -10,6 +10,8 @@ import { AccountConnectionsComponent } from './profile-page/account-connections/
 import { AccountInfoComponent } from './profile-page/account-info/account-info.component';
 import { AccountNotificationsComponent } from './profile-page/account-notifications/account-notifications.component';
 import { AccountSocialLinksComponent } from './profile-page/account-social-links/account-social-links.component';
+import { ForumComponent } from './forum/forum.component';
+import { PostComponent } from './forum/post/post.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent},
@@ -24,5 +26,7 @@ export const routes: Routes = [
     { path: 'profile/account-info', component: AccountInfoComponent},
     { path: 'profile/account-notifications', component: AccountNotificationsComponent},
     { path: 'profile/account-social-links', component: AccountSocialLinksComponent},
+    { path: 'forum', component: ForumComponent},
+    { path: 'forum/post', component: PostComponent},
     { path: '**', redirectTo: ''},
 ];

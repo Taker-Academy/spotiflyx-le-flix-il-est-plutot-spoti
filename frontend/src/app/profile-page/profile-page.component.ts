@@ -129,7 +129,6 @@ export class ProfilePageComponent {
     }
   }
 
-
   navigateTo(route: string) {
     this.router.navigate([route]);
   }

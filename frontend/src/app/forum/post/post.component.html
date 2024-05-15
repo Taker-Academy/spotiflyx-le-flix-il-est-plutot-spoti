@@ -1,0 +1,121 @@
+<app-header></app-header>
+<div class="container-wrapper">
+    <div class="container">
+        <div class="wrapper">
+            <section class="post">
+                <header>Create Post</header>
+                <form [formGroup]="PostForm" (ngSubmit)="saveChanges()">
+                    <div class="content">
+                        <img src="../../../assets/logoEmpty.png" alt="logo">
+                        <div class="details">
+                            <p>User</p>
+                            <div class="privacy" (click)="activateContainer()">
+                                <i class="fas fa-user-friends"></i>
+                                <span>Friends</span>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" placeholder="Title" formControlName="Title">
+                    <input type="text" placeholder="Link" formControlName="Link">
+                    <textarea placeholder="" spellcheck="false" required formControlName="Content"></textarea>
+                    <div class="theme-emoji">
+                        <img src="../../../assets/fb-icons/theme.svg" alt="theme">
+                        <img src="../../../assets/fb-icons/smile.svg" alt="smile">
+                    </div>
+                    <div class="options">
+                        <p>Add to Your Post</p>
+                        <ul class="list">
+                            <li>
+                                <img src="../../../assets/fb-icons/gallery.svg" alt="gallery" (click)="fileInput.click()">
+                                <input type="file" accept="image/*" #fileInput (change)="onFileChange($event)" style="display: none;">
+                            </li>
+                            <li><img src="../../../assets/fb-icons/tag.svg" alt="gallery"></li>
+                            <li><img src="../../../assets/fb-icons/emoji.svg" alt="emoji" (click)="toggleEmojis()"></li>
+                            <li><img src="../../../assets/fb-icons/mic.svg" alt="gallery"></li>
+                            <li><img src="../../../assets/fb-icons/more.svg" alt="gallery" (click)="openYoutubeDialog()"></li>
+                        </ul>
+                        <div *ngIf="showEmojis" (clickOutside)="showEmojis = false">
+                            <p>Emojis:</p>
+                            <ul class="emoji-list">
+                              <li *ngFor="let emoji of getEmojis()" (click)="selectEmoji(emoji)">{{emoji}}</li>
+                            </ul>
+                          </div>
+                    </div>
+                    <button>Post</button>
+                </form>
+            </section>
+            <section class="audience">
+                <header class="arrow-back" (click)="deactivateContainer()">
+                    <i class="fas fa-arrow-left"></i>
+                </header>
+                <div class="content">
+                    <p>Who can see your post?</p>
+                    <span>Your post will show up in News Feed, on your profile and in search results.</span>
+                </div>
+                <ul class="list">
+                    <li>
+                        <div class="column">
+                            <div class="icon"><i class="fas fa-globe-asia"></i></div>
+                            <div class="details">
+                                <p>Public</p>
+                                <span>Anyone on or off Facebook</span>
+                            </div>
+                        </div>
+                        <div class="radio"></div>
+                    </li>
+                    <li class="active">
+                        <div class="column">
+                            <div class="icon"><i class="fas fa-user-friends"></i></div>
+                            <div class="details">
+                                <p>Friends</p>
+                                <span>Your friends on Facebook</span>
+                            </div>
+                        </div>
+                        <div class="radio"></div>
+                    </li>
+                    <li>
+                        <div class="column">
+                            <div class="icon"><i class="fas fa-user"></i></div>
+                            <div class="details">
+                                <p>Specific</p>
+                                <span>Only show to some friends</span>
+                            </div>
+                        </div>
+                        <div class="radio"></div>
+                    </li>
+                    <li>
+                        <div class="column">
+                            <div class="icon"><i class="fas fa-lock"></i></div>
+                            <div class="details">
+                                <p>Only me</p>
+                                <span>Only you can see your post</span>
+                            </div>
+                        </div>
+                        <div class="radio"></div>
+                    </li>
+                    <li>
+                        <div class="column">
+                            <div class="icon"><i class="fas fa-cog"></i></div>
+                            <div class="details">
+                                <p>Custom</p>
+                                <span>Include and exclude friends</span>
+                            </div>
+                        </div>
+                        <div class="radio"></div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+<script>
+    const container = document.querySelector(".container"),
+    privacy = container.querySelector(".post .privacy"),
+    arrowBack = container.querySelector(".audience .arrow-back");
+    privacy.addEventListener("click", () => {
+        container.classList.add("active");
+    });
+    arrowBack.addEventListener("click", () => {
+        container.classList.remove("active");
+    });
+</script>
