@@ -92,5 +92,21 @@ export const Routes = [{
     method: "get",
     route: "/api/spotify/search/track",
     controller: spotifyController,
-    action: "getUserInfo"
-}]
+    action: "searchTrack"
+}, {
+    method: "post",
+    route: "/api/spotify/listen/track",
+    controller: spotifyController,
+    action: "listenTrack"
+}, {
+    method: "post",
+    route: "/api/spotify/favorites/add",
+    controller: userController,
+    action: "newFavoriteMusic"
+}, {
+    method: "post",
+    route: "/api/spotify/favorites/del",
+    controller: spotifyController,
+    action: "delFavoriteMusic"
+}
+]

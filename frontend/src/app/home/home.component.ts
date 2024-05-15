@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { HttpClient, HttpClientModule, HttpHandler, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHandler, HttpParams, HttpHeaders } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { switchMap } from 'rxjs/operators';
 import { HeaderComponent } from '../header/header.component';
 import { NgModule } from '@angular/core';
+import { trace } from 'console';
+import { Observable } from 'rxjs';
 
 interface PopularTracksResponse {
   popularTracks: Track[];
@@ -154,7 +156,6 @@ export class HomeComponent {
     if (this.searchForm.valid) {
       const searchTerm = this.searchForm.value.searchInput
       this.searchedTerms.push(searchTerm)
-      this.searchForm.reset()
       const params = new HttpParams().set('query', searchTerm);
 
       this.http.get<{searchTab: any}>('http://localhost:3000/api/spotify/search/track', {
@@ -233,10 +234,190 @@ export class HomeComponent {
   }
 
   boolButtonListen: boolean = false
+
   boolButton() {
     this.boolButtonListen = true
   }
+
   boolButtonLeft() {
     this.boolButtonListen = false
+  }
+
+  
+  playedAudio: { url: string, audio: HTMLAudioElement }[] = []
+  currentAudio: HTMLAudioElement | null = null
+  private audioDuration: number = 0;
+  audioDurationFormatted: string = '0:00';
+  remainingTime: number = 0;
+  progress: number = 0;
+  private timer: any;
+  isPaused: boolean = false;
+  
+  isMusicPlaying(): boolean {
+    return this.currentAudio instanceof HTMLAudioElement;
+  }
+
+  isMusicPause(): boolean {
+    return this.isPaused;
+  }
+
+  listenMusic(idMusic: any) {
+    this.http.post('http://localhost:3000/api/spotify/listen/track', {
+        params: {input: idMusic}
+    })
+    .subscribe({
+      next: (response: any) => {
+        if (this.currentAudio) {
+          this.currentAudio.pause();
+          this.currentAudio.currentTime = 0;
+        }
+
+        // Créer et lire le nouvel audio
+        const newAudio = new Audio(response.previewUrl);
+        newAudio.play().catch(error => {
+          console.error("Error playing audio", error);
+        });
+
+        // Ajouter la nouvelle musique à l'historique des musiques jouées
+        this.playedAudio.push({ url: response.previewUrl, audio: newAudio });
+
+        // Mettre à jour l'audio actuel
+        this.currentAudio = newAudio;
+
+        this.currentAudio.addEventListener('loadedmetadata', () => {
+          this.audioDuration = this.currentAudio?.duration || 0;
+          this.audioDurationFormatted = this.getFormattedTime(this.audioDuration);
+          this.updateProgress();
+        });
+
+        this.currentAudio.addEventListener('timeupdate', () => {
+          this.updateProgress();
+        });
+
+        this.currentAudio.addEventListener('ended', () => {
+          this.clearProgress();
+        });
+
+        this.isPaused = false;
+      },
+      error: (error) => {
+        console.error("Error Search function", error)
+      }
+    });
+  }
+
+  togglePause() {
+    if (this.currentAudio) {
+      if (this.isPaused) {
+        this.currentAudio.play().catch(error => {
+          console.error("Error resuming audio", error);
+        });
+      } else {
+        this.currentAudio.pause();
+      }
+      this.isPaused = !this.isPaused;
+    }
+  }
+
+  updateProgress() {
+    if (this.currentAudio) {
+      const currentTime = this.currentAudio.currentTime;
+      this.remainingTime = this.audioDuration - currentTime;
+      this.progress = (currentTime / this.audioDuration) * 100;
+    }
+  }
+
+  clearProgress() {
+    this.remainingTime = 0;
+    this.progress = 0;
+    this.isPaused = false;
+  }
+
+  getFormattedTime(time: number): string {
+    const minutes: number = Math.floor(time / 60);
+    const seconds: number = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+  }
+
+  infoTrack: any = []
+  infoMusicBar(track: string[]) {
+    this.infoTrack = track
+    console.log(this.infoTrack)
+  }
+
+
+  isHovered: boolean = false;
+  boolFavorite: boolean = false;
+  favoriteMusic: { id: string, img: string, name: string, artist: string }[] = [];
+
+  // Vérifie si une musique est en favoris
+  checkIfFavorite(idMusic: string): boolean {
+    return this.favoriteMusic.some(music => music.id === idMusic);
+  }
+
+  // Ajoute ou retire une musique des favoris
+  addFavorite(idMusic: string, imgMusic: string, nameMusic: string, artistMusic: string): void {
+    const isAlreadyFavorite = this.checkIfFavorite(idMusic);
+    this.boolFavorite = !isAlreadyFavorite;
+    
+    if (this.boolFavorite) {
+      this.favoriteMusic.push({
+        id: idMusic,
+        img: imgMusic,
+        name: nameMusic,
+        artist: artistMusic
+      });
+      this.addFavoriteRequest(idMusic);
+    } else {
+      const index = this.favoriteMusic.findIndex(music => music.id === idMusic);
+      if (index !== -1) {
+        this.favoriteMusic.splice(index, 1);
+        this.delFavoriteRequest(idMusic);
+      }
+    }
+  }
+  
+  // requête pour ajouter une musique en favoris
+  addFavoriteRequest(idMusic: string): void {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No token found');
+      return;
+    }
+  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = { favoriteMusicId: idMusic };
+  
+    this.http.post('http://localhost:3000/api/spotify/favorites/add', body, { headers })
+      .subscribe({
+        next: (response) => {
+          console.log('Music added to favorites successfully:', response);
+        },
+        error: (error) => {
+          console.error('Error adding music to favorites:', error);
+        }
+      });
+  }
+  
+  // requête pour retirer une musique des favoris
+  delFavoriteRequest(idMusic: string): void {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No token found');
+      return;
+    }
+  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = { favoriteMusicId: idMusic };
+  
+    this.http.post('http://localhost:3000/api/spotify/favorites/del', body, { headers })
+      .subscribe({
+        next: (response) => {
+          console.log('Music removed from favorites successfully:', response);
+        },
+        error: (error) => {
+          console.error('Error removing music from favorites:', error);
+        }
+      });
   }
 }
