@@ -10,35 +10,35 @@ const apiKey: string = 'AIzaSyCV9lBY6woAh7yPvx5o_jNpeOzFXVCD7u8';
 export class YoutubeController {
     private userRepository = AppDataSource.getRepository(User)
 
-    // async getVideoDetails(request: Request, response: Response) {
-    //     const videoId = request.query.videoId;
-    //     try {
-    //         const res = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
-    //             params: {
-    //                 part: 'snippet,contentDetails,statistics',
-    //                 id: videoId,
-    //                 key: apiKey
-    //             }
-    //         });
-    //         if (res.data.items.length > 0) {
-    //             const video = res.data.items[0];
-    //             const details = {
-    //                 title: video.snippet.title,
-    //                 description: video.snippet.descrip   tion,
-    //                 videoId: video.id,
-    //                 thumbnail: video.snippet.thumbnails.default.url,
-    //                 viewCount: video.statistics.viewCount,
-    //                 duration: video.contentDetails.duration
-    //             };
-    //             response.json(details);
-    //         } else {
-    //             response.status(404).json({ error: 'Video not found' });
-    //         }
-    //     } catch(error) {
-    //         console.error('Error fetching video details:', error);
-    //         response.status(500).json({ error: 'Failed to fetch video details' });
-    //     }
-    // }
+    async getVideoDetails(request: Request, response: Response) {
+        const videoId = request.query.videoId;
+        try {
+            const res = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
+                params: {
+                    part: 'snippet,contentDetails,statistics',
+                    id: videoId,
+                    key: apiKey
+                }
+            });
+            if (res.data.items.length > 0) {
+                const video = res.data.items[0];
+                const details = {
+                    title: video.snippet.title,
+                    description: video.snippet.descrip,
+                    videoId: video.id,
+                    thumbnail: video.snippet.thumbnails.default.url,
+                    viewCount: video.statistics.viewCount,
+                    duration: video.contentDetails.duration
+                };
+                response.json(details);
+            } else {
+                response.status(404).json({ error: 'Video not found' });
+            }
+        } catch(error) {
+            console.error('Error fetching video details:', error);
+            response.status(500).json({ error: 'Failed to fetch video details' });
+        }
+    }
 
     async getPopularVideos(request: Request, response: Response) {
         try {

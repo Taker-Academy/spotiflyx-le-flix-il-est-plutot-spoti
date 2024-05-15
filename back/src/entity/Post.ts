@@ -7,19 +7,19 @@ export class Post {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'text' })
+    @Column({ default: '' })
     Title: string;
-    @Column({ type: 'text' })
+    @Column({ default: '' })
     Content: string;
-    @Column({ type: 'text' })
+    @Column({ default: '' })
     Link: string;
     @Column({ type: 'int' })
     postsCount: number;
     @Column({ type: 'int' })
     topicsCount: number;
-    @Column({ type: 'text' })
+    @Column({ default: '' })
     lastPostTitle: string;
-    @Column({ type: 'text' })
+    @Column({ default: '' })
     lastPostAuthor: string;
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     lastPostDate: Date;
