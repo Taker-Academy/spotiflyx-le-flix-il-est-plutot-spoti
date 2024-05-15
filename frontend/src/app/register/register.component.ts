@@ -41,7 +41,7 @@ export class RegisterComponent {
   register() {
     if (this.registerForm.valid) {
       console.log("frontend | Try submit register request")
-      this.http.post<RegisterResponse>('http://localhost:3000/', this.registerForm.value)
+      this.http.post<RegisterResponse>('http://localhost:3000/register', this.registerForm.value)
         .subscribe({
           next: (response) => {
             if (response.token) {

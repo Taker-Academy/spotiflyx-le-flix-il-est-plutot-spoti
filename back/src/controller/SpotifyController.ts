@@ -27,7 +27,6 @@ export class SpotifyController {
                 },
                 data: 'grant_type=client_credentials'
               };
-
             const res = await axios(authOptions);
             const token = res.data.access_token;
             response.json({token});
@@ -39,11 +38,9 @@ export class SpotifyController {
 
     async popularContent(request: Request, response: Response) {
         const tokenSpotify = request.query.tokenSpotify as string;
-
         if (!tokenSpotify) {
             return response.status(400).send('Spotify access token is required');
         }
-
         try {
             const spotifyResponse = await axios.get('https://api.spotify.com/v1/browse/new-releases', {
                 headers: {
@@ -55,7 +52,6 @@ export class SpotifyController {
                     limit: 5
                 }
             });
-
             const popularTracks = spotifyResponse.data.albums.items.map(item => ({
                 title: item.name,
                 artist: item.artists.map(artist => artist.name).join(', '),
@@ -63,7 +59,6 @@ export class SpotifyController {
                 trackUrl: item.external_urls.spotify,
                 albumImage: item.images[0].url
             }));
-
             response.json(popularTracks);
         } catch (error) {
             response.status(500).json({ error: 'Internal Server Error' });
@@ -72,17 +67,14 @@ export class SpotifyController {
 
     async allCategories(request: Request, response: Response) {
         const tokenSpotify = request.query.tokenSpotify as string;
-
         if (!tokenSpotify) {
             return response.status(400).send('Spotify access token is required');
         }
-
         const url = 'https://api.spotify.com/v1/browse/categories';
         const headers = {
             'Authorization': `Bearer ${tokenSpotify}`,  // Authentification avec le token OAuth
             'Content-Type': 'application/json'
         };
-
         try {
             const spotifyResponse = await axios.get(url, { headers });  // Envoi de la requête à Spotify
             const categories = spotifyResponse.data.categories.items;  // Extraction des catégories
@@ -95,30 +87,24 @@ export class SpotifyController {
     async categoryTracks(request: Request, response: Response) {
         const tokenSpotify = request.query.tokenSpotify;
         const categories = request.query.category;
-
         // s'assurer que categories est toujours un tableau
         const categoriesArray = Array.isArray(categories) ? categories : [categories];
-    
         try {
             let tracksPerCategory = [];
-            
             for (let category of categoriesArray) {
                 // Obtenir les playlists pour chaque catégorie
                 const playlistsUrl = `https://api.spotify.com/v1/browse/categories/${category}/playlists`;
                 const playlistsRes = await axios.get(playlistsUrl, {
                     headers: { 'Authorization': `Bearer ${tokenSpotify}` }
                 });
-
                 let tracks = [];
                 // Parcourir les playlists et obtenir les tracks
                 for (let playlist of playlistsRes.data.playlists.items) {
                     if (tracks.length >= 5) break; // Arrêter si nous avons déjà 5 tracks
-    
                     const tracksUrl = `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`;
                     const trackRes = await axios.get(tracksUrl, {
                         headers: { 'Authorization': `Bearer ${tokenSpotify}` }
                     });
-    
                     // Ajouter les tracks au tableau jusqu'à atteindre 5
                     trackRes.data.items.forEach(item => {
                         if (tracks.length < 5 && item.track) {
@@ -137,14 +123,12 @@ export class SpotifyController {
                         }
                     });
                 }
-    
                 // Ajouter les résultats pour la catégorie actuelle
                 tracksPerCategory.push({
                     category: category,
                     tracks: tracks
                 });
             }
-    
             // Envoyer la réponse avec les tracks par catégorie
             response.json(tracksPerCategory);
         } catch (error) {
@@ -152,7 +136,6 @@ export class SpotifyController {
             response.status(500).send('Failed to fetch tracks');
         }
     }
-
     async searchTrack(request: Request, response: Response) {
         try {
             spotify.search({ type: 'track', query: request.query.input, limit: 15 }, function(err, data) {

@@ -69,6 +69,7 @@ export class HomeComponent {
   typeSettings: boolean = true
   typeCategories: boolean = true
   tokenSp: string
+  tokenYt: string;
   doneRequest: boolean = false
 
   constructor (private globalService : GlobalService, private http: HttpClient, private formBuilder: FormBuilder) {
@@ -79,6 +80,8 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.catchSpotifyToken()
+    this.popularVideoContent()
+    this.catchAllYoutubeCategories()
   }
 
   // récuperer le token spotify
@@ -98,6 +101,21 @@ export class HomeComponent {
     });
   }
 
+  catchYoutubeToken() {
+    this.http.get<{token: string}>('http://localhost:3000/api/youtube/connection')
+    .subscribe({
+      next: (response) => {
+        if (response.token) {
+          this.popularVideoContent();
+          this.tokenYt = response.token;
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
   popularAlbumTab: any = []
   // récuperer des musiques et des vidéos populaire
   popularMusicContent(tokenSpotify: string) {
@@ -107,6 +125,21 @@ export class HomeComponent {
     .subscribe({
       next: (response: any) => {
         this.popularAlbumTab = response
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  popularVideoTab: any[] = [];
+
+  popularVideoContent() {
+    this.http.get('http://localhost:3000/api/youtube/trending')
+    .subscribe({
+      next: (response: any) => {
+        this.popularVideoTab = response;
+        console.log(this.popularVideoTab)
       },
       error: (error) => {
         console.error(error);
@@ -172,6 +205,65 @@ export class HomeComponent {
     }
   }
 
+  videoCategory: any[] = [];
+
+  catchAllYoutubeCategories() {
+    this.http.get('http://localhost:3000/api/youtube/categories')
+    .subscribe({
+      next: (response: any) => {
+        this.videoCategory = response.map((category: any) => category.title);
+        this.catchAllYoutubeCategoriesVideos(this.videoCategory);
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    });
+  }
+
+  videoCategoryTaked: any = [];
+
+  catchAllYoutubeCategoriesVideos(categories: any[]) {
+    for (const category of categories) {
+      this.http.get('http://localhost:3000/api/youtube/categories/videos', {
+        params: { categoryId: category.id }
+      })
+      .subscribe({
+        next: (response: any) => {
+          this.videoCategoryTaked.push({
+            title: response.title,
+            videos: response.videos
+          });
+        },
+        error: (error) => {
+          console.error('Error fetching category videos:', error);
+        }
+      });
+    }
+  }
+
+  videoSearch: any[] = [];
+
+  videoSearchRequest() {
+    if (this.searchForm.valid) {
+      const searchTerm = this.searchForm.value.searchInput;
+      this.searchedTerms.push(searchTerm);
+      this.searchForm.reset();
+
+      this.http.get('http://localhost:3000/api/youtube/search', {
+        params: { input: searchTerm }
+      })
+      .subscribe({
+        next: (response: any) => {
+          this.videoSearch = response;
+          console.log(this.videoSearch);
+        },
+        error: (error) => {
+          console.error("Error YouTube Search function", error);
+        }
+      });
+    }
+  }
+
   settingsMusic() {
     if (this.typeSettings == false) {
       return
@@ -232,5 +324,5 @@ export class HomeComponent {
     }
   }
 
-  
+
 }

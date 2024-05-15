@@ -150,6 +150,9 @@ input[type="text"] {
     margin: 0;
     display: flex;
     align-items: start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     margin-bottom: 5px;
 }
 
@@ -294,7 +297,7 @@ input[type="text"] {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-left: calc(81vw - 20rem - 3rem);
+    /* margin-left: calc(81vw - 20rem - 3rem); */
     color: white;
     width: calc(81vw - 20rem - 3rem);
     flex-wrap: wrap;
