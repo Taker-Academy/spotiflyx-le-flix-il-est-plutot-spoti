@@ -137,5 +137,10 @@ export const Routes = [{
     route: "/forum/post",
     controller: postController,
     action: "createPost",
+}, {
+    method: "delete",
+    route: "/profile",
+    controller: userController,
+    action: "deleteUser",
 }
 ]

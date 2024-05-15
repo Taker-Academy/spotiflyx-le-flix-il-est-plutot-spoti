@@ -132,17 +132,20 @@ export class ProfilePageComponent {
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
-  connectToTwitter(): void {
-    // Ajoutez votre logique pour se connecter à Twitter ici...
-  }
-  removeGoogleConnection(): void {
-    // Ajoutez votre logique pour supprimer la connexion Google ici...
-  }
-  connectToFacebook(): void {
-    // Ajoutez votre logique pour se connecter à Facebook ici...
-  }
-  connectToInstagram(): void {
-    // Ajoutez votre logique pour se connecter à Instagram ici...
+
+  onDeleteAccount() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.delete('http://localhost:3000/profile', { headers }).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.navigateTo('login');
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
   cancel(): void {

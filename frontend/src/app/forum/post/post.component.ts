@@ -53,11 +53,13 @@ export class PostComponent {
 
   saveChanges() {
     if (this.PostForm.valid) {
+      const token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       console.log("frontend | Try submit update request")
-      this.http.post<UpdatePostResponse>('http://localhost:3000/forum/post', this.PostForm.value)
+      this.http.post<UpdatePostResponse>('http://localhost:3000/forum/post', this.PostForm.value, { headers })
         .subscribe({
           next: (response) => {
-            if (response.authToken) {
+            if (response && response.authToken) {
               localStorage.setItem('token', response.authToken);
               this.navigateTo('forum');
             } else {

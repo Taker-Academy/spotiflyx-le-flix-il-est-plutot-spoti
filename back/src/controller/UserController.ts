@@ -9,12 +9,14 @@ import * as multer from 'multer';
 import * as fs from 'fs';
 import * as path from 'path'
 import { profile } from "console";
+import { Post } from "../entity/Post";
 
 const upload = multer({ storage: multer.memoryStorage() });
 
 export class UserController {
 
     private userRepository = AppDataSource.getRepository(User)
+    private postRepository = AppDataSource.getRepository(Post)
 
     async all(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.find()
@@ -351,18 +353,38 @@ export class UserController {
             return;
         }
     }
-    async remove(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id)
 
-        let userToRemove = await this.userRepository.findOneBy({ id })
-
-        if (!userToRemove) {
-            return "this user not exist"
+    async deleteUser(req: Request, res: Response) {
+        try {
+            const token = req.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, '1234');
+            const userId = decodedToken.id;
+            const user = await this.userRepository.findOne({ where: { id: userId } });
+            if (!user) {
+                res.status(404).json({ message: "Utilisateur non trouvé." });
+                return;
+            }
+            const userPosts = await this.postRepository.find({ where: { user: user } });
+            if (userPosts.length > 0) {
+                res.status(400).json({ message: "Impossible de supprimer l'utilisateur car il a encore des posts actifs." });
+                return;
+            }
+            await this.userRepository.delete(user.id);
+            return res.status(200).json({
+                ok: true,
+                data: {
+                    id: user.id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    removed: true
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ ok: false, message: "Erreur interne du serveur" });
+            return;
         }
-
-        await this.userRepository.remove(userToRemove)
-
-        return "user has been removed"
     }
 
     async supportMail(request: Request, response: Response)
