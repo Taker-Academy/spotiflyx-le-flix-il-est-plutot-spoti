@@ -61,14 +61,14 @@ export class UserController {
                 port: 465, // Port standard pour SMTP
                 secure: true, // Vrai pour le port 465, faux pour les autres ports
                 auth: {
-                    user: "contact.spotiflyx@gmail.com", // Remplacez par votre adresse email
-                    pass: "xdsr kvyu lkaw qnwx", // Remplacez par votre mot de passe
+                    user: process.env.EMAIL_ADDRESS,
+                    pass: process.env.EMAIL_PASSWORD,
                 },
             });
             // Configuration de l'email à envoyer
             let mailOptions = {
-                from: `"Spotiflyx" <contact.spotiflyx@gmail.com>`,
-                to: "juleslordet@gmail.com",
+                from: `"Spotiflyx" <${process.env.EMAIL_ADRESS}>`,
+                to: `${email}`,
                 subject: `Confirme ton adresse e-mail`,
                 text: `pas html`,
                 html: `
@@ -105,7 +105,7 @@ export class UserController {
                 console.log(`Message sent: ${info.messageId}`);
             });
             console.log("database | Register request OK")
-            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, '1234', { expiresIn: '1h' });
+            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName, lastName: user.lastName }, process.env.HASH_PASSWORD, { expiresIn: '1h' });
             response.status(200).json({ token: token });
             return;
         } catch (error) {
@@ -134,7 +134,7 @@ export class UserController {
                 return;
             }
             console.log("database | request OK")
-            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName }, '1234', { expiresIn: '1h' });
+            const token = jwt.sign({ email: user.email, id: user.id, firstName: user.firstName }, process.env.HASH_PASSWORD, { expiresIn: '1h' });
             response.status(200).json({ token: token });
             return;
         } catch (error) {
@@ -147,7 +147,7 @@ export class UserController {
     async updateProfile(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -184,7 +184,7 @@ export class UserController {
     async printGeneralValues(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -212,7 +212,7 @@ export class UserController {
     async changePassword(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -247,7 +247,7 @@ export class UserController {
     async updateProfileInfo(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -276,7 +276,7 @@ export class UserController {
     async printInfoValues(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -300,7 +300,7 @@ export class UserController {
     async updateSocialLinks(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -330,7 +330,7 @@ export class UserController {
     async printSocialLinksValues(request, response, next) {
         try {
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
@@ -369,25 +369,25 @@ export class UserController {
     {
         try {
             console.log("database | Catch request post mail");
-            const { object, message, firstName, lastName, email} = request.body; // Ajout de l'email ici
-            if (!object || !message || !email || !firstName || !lastName) { // Vérifiez aussi que l'email est présent
+            const { object, message, firstName, lastName, email} = request.body;
+            if (!object || !message || !email || !firstName || !lastName) {
                 response.status(400).json({ error: 'Mauvaise requête, paramètres manquants ou invalides.' });
                 return;
             }
             // Configuration nodemailer
             let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com", // Remplacez par l'adresse SMTP de votre fournisseur d'email
-                port: 465, // Port standard pour SMTP
-                secure: true, // Vrai pour le port 465, faux pour les autres ports
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true,
                 auth: {
-                    user: "contact.spotiflyx@gmail.com", // Remplacez par votre adresse email
-                    pass: "xdsr kvyu lkaw qnwx", // Remplacez par votre mot de passe
+                    user: process.env.EMAIL_ADRESS,
+                    pass: "xdsr kvyu lkaw qnwx",
                 },
             });
             // Configuration de l'email à envoyer
             let mailOptions = {
                 from: `"${firstName} ${lastName}" <${email}>`, // Expéditeur formé par les variables firstName, lastName et email
-                to: "juleslordet@gmail.com", // Destinataire fixe
+                to: `${email}`, // Destinataire fixe
                 subject: `Support : ${object}`, // Sujet de l'email, formé dynamiquement
                 text: `${message}`, // Corps de l'email en texte simple, inséré dynamiquement
             };
@@ -413,7 +413,7 @@ export class UserController {
         try {
             console.log("Ajout d'une musique aux favoris.")
             const token = request.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, '1234');
+            const decodedToken = jwt.verify(token, process.env.HASH_PASSWORD);
             const userId = decodedToken.id;
             const user = await this.userRepository.findOne({ where: { id: userId } });
             if (!user) {
