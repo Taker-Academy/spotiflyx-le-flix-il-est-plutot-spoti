@@ -6,6 +6,7 @@ import axios from 'axios';
 import * as querystring from 'querystring';
 
 const apiKey: string = 'AIzaSyCV9lBY6woAh7yPvx5o_jNpeOzFXVCD7u8';
+const client_secret: string = process.env.SPOTIFY_CLIENT_SECRET || '';
 
 export class YoutubeController {
     private userRepository = AppDataSource.getRepository(User)
