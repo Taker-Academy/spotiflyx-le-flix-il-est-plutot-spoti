@@ -324,5 +324,11 @@ export class HomeComponent {
     }
   }
 
-
+  boolButtonListen: boolean = false
+  boolButton() {
+    this.boolButtonListen = true
+  }
+  boolButtonLeft() {
+    this.boolButtonListen = false
+  }
 }
